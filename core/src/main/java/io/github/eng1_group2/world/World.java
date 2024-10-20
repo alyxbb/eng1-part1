@@ -4,6 +4,7 @@ package io.github.eng1_group2.world;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.Main;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 
@@ -23,7 +24,7 @@ public class World {
     }
 
     public void render(Viewport viewport) {
-        int gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
+        int gridUnit = Math.round(Math.min(((viewport.getWorldWidth()) * (1-Main.UI_RATIO ))/ gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
 
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
