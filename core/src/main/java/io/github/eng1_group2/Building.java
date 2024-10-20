@@ -6,4 +6,8 @@ public class Building {
     public Building(BuildingType type) {
         this.type = type;
     }
+
+    public BuildingType getType() {
+        return type;
+    }
 }
