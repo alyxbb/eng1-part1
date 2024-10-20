@@ -25,7 +25,7 @@ public class World {
     }
 
     public void render(Viewport viewport) {
-        int gridUnit = Math.round(Math.min((viewport.getWorldWidth())/ gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
+        int gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
 
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
