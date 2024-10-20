@@ -8,18 +8,21 @@ import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
 import io.github.eng1_group2.utils.Vec2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class World {
     private final Vec2 gridSize = new Vec2(10, 10);
-    private final HashMap<Vec2, Building> buildings;
+    private final List<Building> buildings;
+
 
     public World() {
-        this.buildings = new HashMap<>();
-        this.buildings.put(new Vec2(2, 3), new Building(new BuildingType("house", Color.RED)));
-        this.buildings.put(new Vec2(0, 1), new Building(new BuildingType("lecture_theatre", Color.BLUE)));
-        this.buildings.put(new Vec2(0, 2), new Building(new BuildingType("cafe", Color.GREEN)));
+        this.buildings = new ArrayList<>();
+        this.buildings.add(new Building(new BuildingType("house", Color.RED,new Vec2(2,2)),new Vec2(3, 4)));
+        this.buildings.add(new Building(new BuildingType("lecture_theatre", Color.BLUE,new Vec2(1,1)),new Vec2(0, 1)));
+        this.buildings.add(new Building(new BuildingType("cafe", Color.GREEN,new Vec2(3,1)),new Vec2(0, 2)));
     }
 
     public void renderBuildings(Camera camera) {
@@ -40,11 +43,9 @@ public class World {
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (var entry : this.buildings.entrySet()) {
-            Vec2 coords = entry.getKey();
-            Building building = entry.getValue();
+        for (var building: this.buildings) {
             shapeRenderer.setColor(building.getType().color());
-            shapeRenderer.rect(coords.x() * gridUnit, coords.y() * gridUnit, gridUnit, gridUnit);
+            shapeRenderer.rect(building.getOrigin().x() * gridUnit, building.getOrigin().y() * gridUnit, gridUnit * building.getType().size().x(), gridUnit * building.getType().size().y());
         }
         shapeRenderer.end();
     }
