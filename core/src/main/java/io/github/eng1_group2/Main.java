@@ -9,17 +9,16 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import static com.badlogic.gdx.Gdx.graphics;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
+ */
 public class Main extends ApplicationAdapter {
+    private static final int VIEWPORT_WIDTH = 500;
+    private static final int VIEWPORT_HEIGHT = 500;
+    Camera camera;
     private SpriteBatch batch;
     private Texture image;
     private World world;
-    Camera camera;
-    private static final int VIEWPORT_WIDTH = 500;
-    private static final int VIEWPORT_HEIGHT = 500;
-
-
-
 
     @Override
     public void create() {
@@ -28,8 +27,8 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         world = new World();
-        camera = new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT * (height / width));
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight/2f,0);
+        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * (height / width));
+        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
     }
 
@@ -46,7 +45,6 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         world.renderBuildings(camera);
     }
-
 
 
     @Override
