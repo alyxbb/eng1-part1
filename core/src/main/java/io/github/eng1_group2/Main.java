@@ -2,11 +2,11 @@ package io.github.eng1_group2;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.world.World;
 
 
@@ -16,7 +16,7 @@ import io.github.eng1_group2.world.World;
 public class Main extends ApplicationAdapter {
     private static final int VIEWPORT_WIDTH = 500;
     private static final int VIEWPORT_HEIGHT = 500;
-    private Camera camera;
+    private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
     private World world;
@@ -28,23 +28,20 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         world = new World();
-        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT * (height / width));
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-        camera.update();
+        viewport = new ScreenViewport();
+
     }
 
-    /*@Override
+    @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = VIEWPORT_WIDTH;
-        camera.viewportHeight = VIEWPORT_HEIGHT * (height / width);
-        camera.update();
-    }*/
+
+        viewport.update(width, height, true);
+    }
 
     @Override
     public void render() {
-        camera.update();
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        world.renderBuildings(camera);
+        world.render(viewport);
     }
 
     @Override
