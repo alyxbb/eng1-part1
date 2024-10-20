@@ -13,13 +13,10 @@ public class World {
     HashMap<Vec2, Building> buildings;
 
     public World() {
-
         this.buildings = new HashMap<>();
         this.buildings.put(new Vec2(2, 3), new Building(new BuildingType("house", Color.RED)));
         this.buildings.put(new Vec2(0, 1), new Building(new BuildingType("lecture_theatre", Color.BLUE)));
         this.buildings.put(new Vec2(0, 2), new Building(new BuildingType("cafe", Color.GREEN)));
-
-
     }
 
     public void renderBuildings(Camera camera) {
@@ -40,7 +37,6 @@ public class World {
         shapeRenderer.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
 
         for (var entry : this.buildings.entrySet()) {
             Vec2 coords = entry.getKey();
