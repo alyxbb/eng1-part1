@@ -1,9 +1,9 @@
 package io.github.eng1_group2.world;
 
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
@@ -24,19 +24,20 @@ public class World {
         this.buildings.add(new Building(new BuildingType("cafe", Color.GREEN, new Vec2(3, 1)), new Vec2(0, 2)));
     }
 
-    public void renderBuildings(Camera camera) {
-        int gridUnit = Math.round(Math.min(camera.viewportWidth / gridSize.x(), camera.viewportHeight / gridSize.y()));
+    public void render(Viewport viewport) {
+        int gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
 
         ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1f);
         // draw grid lines
-        for (int i = 0; i < gridSize.x(); i++) {
+        // skip the first one so we only do internal lines
+        for (int i = 1; i < gridSize.x(); i++) {
             shapeRenderer.line(i * gridUnit, 0, i * gridUnit, gridSize.y() * gridUnit);
         }
-        for (int i = 0; i < gridSize.y(); i++) {
+        for (int i = 1; i < gridSize.y(); i++) {
             shapeRenderer.line(0, i * gridUnit, gridSize.x() * gridUnit, i * gridUnit);
         }
         shapeRenderer.end();
