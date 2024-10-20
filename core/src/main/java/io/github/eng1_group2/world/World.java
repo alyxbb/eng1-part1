@@ -23,7 +23,7 @@ public class World {
     }
 
     public void renderBuildings(Camera camera) {
-        int gridUnit = Math.round(Math.min(camera.viewportWidth / gridSize.getX(), camera.viewportHeight / gridSize.getY()));
+        int gridUnit = Math.round(Math.min(camera.viewportWidth / gridSize.x(), camera.viewportHeight / gridSize.y()));
 
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -31,11 +31,11 @@ public class World {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1f);
         // draw grid lines
-        for (int i = 0; i < gridSize.getX(); i++) {
-            shapeRenderer.line(i * gridUnit, 0, i * gridUnit, gridSize.getY() * gridUnit);
+        for (int i = 0; i < gridSize.x(); i++) {
+            shapeRenderer.line(i * gridUnit, 0, i * gridUnit, gridSize.y() * gridUnit);
         }
-        for (int i = 0; i < gridSize.getY(); i++) {
-            shapeRenderer.line(0, i * gridUnit, gridSize.getX() * gridUnit, i * gridUnit);
+        for (int i = 0; i < gridSize.y(); i++) {
+            shapeRenderer.line(0, i * gridUnit, gridSize.x() * gridUnit, i * gridUnit);
         }
         shapeRenderer.end();
 
@@ -43,8 +43,8 @@ public class World {
         for (var entry : this.buildings.entrySet()) {
             Vec2 coords = entry.getKey();
             Building building = entry.getValue();
-            shapeRenderer.setColor(building.getType().getColor());
-            shapeRenderer.rect(coords.getX() * gridUnit, coords.getY() * gridUnit, gridUnit, gridUnit);
+            shapeRenderer.setColor(building.getType().color());
+            shapeRenderer.rect(coords.x() * gridUnit, coords.y() * gridUnit, gridUnit, gridUnit);
         }
         shapeRenderer.end();
     }
