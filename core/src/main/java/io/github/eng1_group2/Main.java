@@ -39,14 +39,14 @@ public class Main extends ApplicationAdapter {
         image = new Texture("libgdx.png");
         world = new World(this.registries);
         viewport = new ScreenViewport();
-        ui = new UI(UI_RATIO,viewport);
+        ui = new UI(UI_RATIO, viewport);
 
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        ui.resize(UI_RATIO,viewport);
+        ui.resize(UI_RATIO, viewport);
     }
 
     @Override
