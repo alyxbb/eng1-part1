@@ -1,13 +1,14 @@
 package io.github.eng1_group2;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import io.github.eng1_group2.world.World;
 
-import static com.badlogic.gdx.Gdx.graphics;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
@@ -15,15 +16,15 @@ import static com.badlogic.gdx.Gdx.graphics;
 public class Main extends ApplicationAdapter {
     private static final int VIEWPORT_WIDTH = 500;
     private static final int VIEWPORT_HEIGHT = 500;
-    Camera camera;
+    private Camera camera;
     private SpriteBatch batch;
     private Texture image;
     private World world;
 
     @Override
     public void create() {
-        float width = graphics.getWidth();
-        float height = graphics.getHeight();
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         world = new World();
@@ -45,7 +46,6 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         world.renderBuildings(camera);
     }
-
 
     @Override
     public void dispose() {

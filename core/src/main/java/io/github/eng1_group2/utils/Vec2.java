@@ -1,4 +1,4 @@
-package io.github.eng1_group2;
+package io.github.eng1_group2.utils;
 
 public class Vec2 {
     private final int x;
