@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class UI {
-    private float startX;
-    private final Viewport viewport;
     public static final float UI_RATIO = 0.8f;
+    private final Viewport viewport;
+    private float startX;
 
 
     public UI(Viewport viewport) {
