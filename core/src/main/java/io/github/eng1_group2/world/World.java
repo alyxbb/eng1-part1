@@ -52,7 +52,7 @@ public class World extends InputAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (var building : this.buildings) {
             shapeRenderer.setColor(building.getType().color());
-            shapeRenderer.rect(building.getOrigin().x() * gridUnit, building.getOrigin().y() * gridUnit, gridUnit * building.getType().size().x(), gridUnit * building.getType().size().y());
+            shapeRenderer.rect(building.getBoundingBox().getOrigin().x() * gridUnit, building.getBoundingBox().getOrigin().y() * gridUnit, gridUnit * building.getBoundingBox().getSize().x(), gridUnit * building.getBoundingBox().getSize().y());
         }
         shapeRenderer.end();
     }
@@ -67,7 +67,7 @@ public class World extends InputAdapter {
         }
         Building building = new Building(buildingType, location);
         for (Building testBuilding: buildings){
-            if (testBuilding.intersects(building)) {
+            if (testBuilding.getBoundingBox().intersects(building.getBoundingBox())) {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
         }

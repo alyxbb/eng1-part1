@@ -1,31 +1,24 @@
 package io.github.eng1_group2.world.building;
 
+import io.github.eng1_group2.components.BoundingBox;
 import io.github.eng1_group2.utils.Vec2;
 
 public class Building {
     private final BuildingType type;
-    private final Vec2 origin;
+    private final BoundingBox boundingBox;
 
     public Building(BuildingType type, Vec2 origin) {
         this.type = type;
-        this.origin = origin;
+        this.boundingBox = new BoundingBox(origin, type.size());
     }
 
-    public Vec2 getOrigin() {
-        return origin;
+    public BoundingBox getBoundingBox() {
+        return boundingBox;
     }
 
-    public BuildingType getType() {
+    /*public BuildingType getType() {
         return type;
-    }
+    }*/
 
-    public boolean intersects(Building other) {
-        if (this.origin.x() < other.origin.x() + other.type.size().x() &&
-            other.origin.x() < this.origin.x() + this.type.size().x() &&
-            this.origin.y() < other.origin.y() + other.type.size().y() &&
-            other.origin.y() < this.origin.y() + this.type.size().y()) {
-            return true;
-        }
-        return false;
-    }
+
 }
