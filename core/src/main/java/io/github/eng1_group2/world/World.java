@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
-import io.github.eng1_group2.UI;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
