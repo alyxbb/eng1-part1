@@ -20,11 +20,9 @@ jobs:
       - name: Ensure gradlew is executable
         run: chmod +x ./gradlew
       - name: Build with gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
+        run: ./gradlew build
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Artifacts
-          path: build/distributions/*.zip
+          name: artifacts-${{ matrix.os }}
+          path: lwjgl3/build/distributions/*.zip
