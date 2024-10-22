@@ -16,6 +16,7 @@ public class Registries {
         this.buildingTypes.register(new BuildingType("house", "House", Color.RED, new Vec2(2, 2)));
         this.buildingTypes.register(new BuildingType("lecture_theatre", "Lecture Theatre", Color.BLUE, new Vec2(1, 1)));
         this.buildingTypes.register(new BuildingType("cafe", "Cafe", Color.GREEN, new Vec2(3, 1)));
+        this.buildingTypes.register(new BuildingType("user_placed", "User Placed", Color.CHARTREUSE, new Vec2(2,3)));
     }
 
     public void freezeAll() {

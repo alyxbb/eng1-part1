@@ -34,21 +34,23 @@ public class Main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
-        world = new World(this.registries);
         viewport = new ScreenViewport();
         ui = new UI(viewport);
+        world = new World(registries, viewport);
+        Gdx.input.setInputProcessor(world);
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         ui.resize();
+        world.resize();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        world.render(viewport);
+        world.render();
         ui.render();
     }
 

@@ -18,4 +18,14 @@ public class Building {
     public BuildingType getType() {
         return type;
     }
+
+    public boolean intersects(Building other) {
+        if (this.origin.x() < other.origin.x() + other.type.size().x() &&
+            other.origin.x() < this.origin.x() + this.type.size().x() &&
+            this.origin.y() < other.origin.y() + other.type.size().y() &&
+            other.origin.y() < this.origin.y() + this.type.size().y()) {
+            return true;
+        }
+        return false;
+    }
 }
