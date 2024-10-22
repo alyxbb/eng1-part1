@@ -16,9 +16,9 @@ public class Building {
         return boundingBox;
     }
 
-    /*public BuildingType getType() {
+    public BuildingType getType() {
         return type;
-    }*/
+    }
 
 
 }

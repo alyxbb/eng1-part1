@@ -1,7 +1,6 @@
 package io.github.eng1_group2.components;
 
 import io.github.eng1_group2.utils.Vec2;
-import io.github.eng1_group2.world.building.Building;
 
 public class BoundingBox {
 
@@ -27,12 +26,9 @@ public class BoundingBox {
     }
 
     public boolean intersects(BoundingBox other) {
-        if (this.origin.x() < other.getFarCorner().x() &&
+        return this.origin.x() < other.getFarCorner().x() &&
             other.origin.x() < this.getFarCorner().x() &&
             this.origin.y() < other.getFarCorner().y() &&
-            other.origin.y() < this.getFarCorner().y()) {
-            return true;
-        }
-        return false;
+            other.origin.y() < this.getFarCorner().y();
     }
 }

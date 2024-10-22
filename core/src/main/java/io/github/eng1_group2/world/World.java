@@ -58,15 +58,15 @@ public class World extends InputAdapter {
     }
 
     public void resize() {
-        gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));;
+        gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
-        if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y() ) {
+        if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
             throw new IllegalArgumentException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location);
-        for (Building testBuilding: buildings){
+        for (Building testBuilding : buildings) {
             if (testBuilding.getBoundingBox().intersects(building.getBoundingBox())) {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
@@ -75,13 +75,13 @@ public class World extends InputAdapter {
     }
 
 
-
     public Vec2 screenPosToGridSquare(Vector2 screenPos) {
-        if (screenPos.x < 0 || screenPos.y < 0){
-            throw new IllegalArgumentException("screenpos must be positive");
+
+        if (screenPos.x < 0 || screenPos.y < 0) {
+            throw new IllegalArgumentException("screenpos must be +ve");
         }
-        Vec2 gridPos = new Vec2((int) screenPos.x/gridUnit, (int) screenPos.y/gridUnit);
-        if (gridPos.x()>=gridSize.x() || gridPos.y()>=gridSize.y()){
+        Vec2 gridPos = new Vec2((int) screenPos.x / gridUnit, (int) screenPos.y / gridUnit);
+        if (gridPos.x() >= gridSize.x() || gridPos.y() >= gridSize.y()) {
             throw new IllegalArgumentException("position is not in the grid");
         }
         return gridPos;
@@ -89,11 +89,11 @@ public class World extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 touchPos = new Vector2(screenX,screenY);
+        Vector2 touchPos = new Vector2(screenX, screenY);
         viewport.unproject(touchPos);
         try {
             Vec2 gridSquare = screenPosToGridSquare(touchPos);
-            addBuilding(registries.getBuildingTypes().get("user_placed") ,gridSquare);
+            addBuilding(registries.getBuildingTypes().get("user_placed"), gridSquare);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
             return false;
