@@ -18,7 +18,6 @@ public class Main extends ApplicationAdapter {
     private static final int VIEWPORT_WIDTH = 500;
     private static final int VIEWPORT_HEIGHT = 500;
     private Registries registries;
-    public static final float UI_RATIO = 0.8f;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
@@ -39,21 +38,20 @@ public class Main extends ApplicationAdapter {
         image = new Texture("libgdx.png");
         world = new World(this.registries);
         viewport = new ScreenViewport();
-        ui = new UI(UI_RATIO, viewport);
-
+        ui = new UI(viewport);
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        ui.resize(UI_RATIO, viewport);
+        ui.resize();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         world.render(viewport);
-        ui.render(viewport);
+        ui.render();
     }
 
     @Override

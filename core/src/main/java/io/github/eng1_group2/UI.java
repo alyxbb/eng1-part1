@@ -5,16 +5,20 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class UI {
     private float startX;
+    private final Viewport viewport;
+    public static final float UI_RATIO = 0.8f;
 
-    public UI(float uiRatio, Viewport viewport) {
+
+    public UI(Viewport viewport) {
+        this.viewport = viewport;
     }
 
     // in the constructor the viewport has no width but resize always gets called at init
-    public void resize(float uiRatio, Viewport viewport) {
-        this.startX = viewport.getWorldWidth() * uiRatio;
+    public void resize() {
+        this.startX = viewport.getWorldWidth() * UI_RATIO;
     }
 
-    public void render(Viewport viewport) {
+    public void render() {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
