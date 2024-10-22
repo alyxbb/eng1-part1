@@ -95,7 +95,6 @@ public class World extends InputAdapter {
             addBuilding(registries.getBuildingTypes().get("user_placed"), gridSquare);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
-            return false;
         }
         return true;
     }
