@@ -1,12 +1,11 @@
 package io.github.eng1_group2.world;
 
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.eng1_group2.registry.Registries;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
-import io.github.eng1_group2.world.building.BuildingType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +15,11 @@ public class World {
     private final Vec2 gridSize = new Vec2(10, 10);
     private final List<Building> buildings;
 
-
-    public World() {
+    public World(Registries registries) {
         this.buildings = new ArrayList<>();
-        this.buildings.add(new Building(new BuildingType("house", Color.RED, new Vec2(2, 2)), new Vec2(3, 4)));
-        this.buildings.add(new Building(new BuildingType("lecture_theatre", Color.BLUE, new Vec2(1, 1)), new Vec2(0, 1)));
-        this.buildings.add(new Building(new BuildingType("cafe", Color.GREEN, new Vec2(3, 1)), new Vec2(0, 2)));
+        this.buildings.add(new Building(registries.getBuildingTypes().get("house"), new Vec2(3, 4)));
+        this.buildings.add(new Building(registries.getBuildingTypes().get("lecture_theatre"), new Vec2(0, 1)));
+        this.buildings.add(new Building(registries.getBuildingTypes().get("cafe"), new Vec2(0, 2)));
     }
 
     public void render(Viewport viewport) {

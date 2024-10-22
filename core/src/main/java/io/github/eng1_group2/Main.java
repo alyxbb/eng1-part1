@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.eng1_group2.registry.Registries;
 import io.github.eng1_group2.world.World;
 
 
@@ -16,6 +17,7 @@ import io.github.eng1_group2.world.World;
 public class Main extends ApplicationAdapter {
     private static final int VIEWPORT_WIDTH = 500;
     private static final int VIEWPORT_HEIGHT = 500;
+    private Registries registries;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
@@ -25,11 +27,16 @@ public class Main extends ApplicationAdapter {
     public void create() {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
+
+        // Initialise and load all dynamic objects (building types, events, etc.)
+        this.registries = new Registries();
+        this.registries.loadAll();
+        this.registries.freezeAll();
+
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
-        world = new World();
+        world = new World(this.registries);
         viewport = new ScreenViewport();
-
     }
 
     @Override
