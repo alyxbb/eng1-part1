@@ -4,7 +4,7 @@ import io.github.eng1_group2.utils.Vec2;
 
 public class BoundingBox {
 
-    //always bottom left
+    // always bottom left
     private final Vec2 origin;
     private final Vec2 size;
 
@@ -21,14 +21,27 @@ public class BoundingBox {
         return size;
     }
 
-    public Vec2 getFarCorner() {
-        return origin.add(size);
+    public int getBottomEdge() {
+        return origin.y();
     }
 
+    public int getLeftEdge() {
+        return origin.x();
+    }
+
+    public int getTopEdge() {
+        return origin.y() + size.y();
+    }
+
+    public int getRightEdge() {
+        return origin.x() + size.x();
+    }
+
+
     public boolean intersects(BoundingBox other) {
-        return this.origin.x() < other.getFarCorner().x() &&
-            other.origin.x() < this.getFarCorner().x() &&
-            this.origin.y() < other.getFarCorner().y() &&
-            other.origin.y() < this.getFarCorner().y();
+        return this.getLeftEdge() < other.getRightEdge() &&
+            other.getLeftEdge() < this.getRightEdge() &&
+            this.getBottomEdge() < other.getTopEdge() &&
+            other.getBottomEdge() < this.getTopEdge();
     }
 }

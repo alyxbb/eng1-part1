@@ -19,8 +19,8 @@ public class World extends InputAdapter {
     private final Vec2 gridSize = new Vec2(10, 10);
     private final List<Building> buildings;
     private final Viewport viewport;
-    private int gridUnit;
     private final Registries registries;
+    private int gridUnit;
 
     public World(Registries registries, Viewport viewport) {
         this.buildings = new ArrayList<>();
@@ -61,6 +61,9 @@ public class World extends InputAdapter {
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
+        if (location.x() < 0 || location.y() < 0) {
+            throw new IllegalArgumentException("location must be positive");
+        }
         if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
             throw new IllegalArgumentException("building would extend outside grid");
         }
@@ -75,9 +78,8 @@ public class World extends InputAdapter {
 
 
     public Vec2 screenPosToGridSquare(Vector2 screenPos) {
-
         if (screenPos.x < 0 || screenPos.y < 0) {
-            throw new IllegalArgumentException("screenpos must be +ve");
+            throw new IllegalArgumentException("screenpos must be positive");
         }
         Vec2 gridPos = new Vec2((int) screenPos.x / gridUnit, (int) screenPos.y / gridUnit);
         if (gridPos.x() >= gridSize.x() || gridPos.y() >= gridSize.y()) {
