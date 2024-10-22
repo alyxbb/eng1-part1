@@ -18,7 +18,7 @@ public class Main extends ApplicationAdapter {
     private static final int VIEWPORT_WIDTH = 500;
     private static final int VIEWPORT_HEIGHT = 500;
     private Registries registries;
-    public static final float UI_RATIO = 0.2f;
+    public static final float UI_RATIO = 0.8f;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;

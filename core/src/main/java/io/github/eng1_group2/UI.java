@@ -11,7 +11,7 @@ public class UI {
 
     //in the constructor the viewport has no width but resize always gets called at init
     public void resize(float uiRatio, Viewport viewport) {
-        this.startX = viewport.getWorldWidth() * (1.0f - uiRatio);
+        this.startX = viewport.getWorldWidth() * uiRatio;
 
     }
 
