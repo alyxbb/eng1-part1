@@ -15,13 +15,12 @@ import io.github.eng1_group2.world.World;
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class Main extends ApplicationAdapter {
-    private static final int VIEWPORT_WIDTH = 500;
-    private static final int VIEWPORT_HEIGHT = 500;
     private Registries registries;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
     private World world;
+    private UI ui;
 
     @Override
     public void create() {
@@ -37,17 +36,20 @@ public class Main extends ApplicationAdapter {
         image = new Texture("libgdx.png");
         world = new World(this.registries);
         viewport = new ScreenViewport();
+        ui = new UI(viewport);
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        ui.resize();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         world.render(viewport);
+        ui.render();
     }
 
     @Override
