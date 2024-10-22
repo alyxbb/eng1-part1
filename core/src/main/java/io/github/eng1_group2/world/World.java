@@ -78,7 +78,7 @@ public class World extends InputAdapter {
 
     public Vec2 screenPosToGridSquare(Vector2 screenPos) {
         if (screenPos.x < 0 || screenPos.y < 0){
-            throw new IllegalArgumentException("screenpos must be +ve");
+            throw new IllegalArgumentException("screenpos must be positive");
         }
         Vec2 gridPos = new Vec2((int) screenPos.x/gridUnit, (int) screenPos.y/gridUnit);
         if (gridPos.x()>=gridSize.x() || gridPos.y()>=gridSize.y()){
