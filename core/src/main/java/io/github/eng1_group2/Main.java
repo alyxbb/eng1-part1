@@ -15,8 +15,6 @@ import io.github.eng1_group2.world.World;
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class Main extends ApplicationAdapter {
-    private static final int VIEWPORT_WIDTH = 500;
-    private static final int VIEWPORT_HEIGHT = 500;
     private Registries registries;
     private Viewport viewport;
     private SpriteBatch batch;
