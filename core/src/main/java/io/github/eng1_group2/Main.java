@@ -2,6 +2,7 @@ package io.github.eng1_group2;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -21,6 +22,7 @@ public class Main extends ApplicationAdapter {
     private Texture image;
     private World world;
     private UI ui;
+    private InputMultiplexer inputMultiplexer;
 
     @Override
     public void create() {
@@ -34,21 +36,24 @@ public class Main extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
-        world = new World(this.registries);
         viewport = new ScreenViewport();
         ui = new UI(viewport);
+        world = new World(registries, viewport);
+        inputMultiplexer = new InputMultiplexer(world);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         ui.resize();
+        world.resize();
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        world.render(viewport);
+        world.render();
         ui.render();
     }
 
