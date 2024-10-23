@@ -21,27 +21,27 @@ public class BoundingBox {
         return size;
     }
 
-    public int getBottomEdge() {
+    public int getBottom() {
         return origin.y();
     }
 
-    public int getLeftEdge() {
+    public int getLeft() {
         return origin.x();
     }
 
-    public int getTopEdge() {
+    public int getTop() {
         return origin.y() + size.y();
     }
 
-    public int getRightEdge() {
+    public int getRight() {
         return origin.x() + size.x();
     }
 
 
     public boolean intersects(BoundingBox other) {
-        return this.getLeftEdge() < other.getRightEdge() &&
-            other.getLeftEdge() < this.getRightEdge() &&
-            this.getBottomEdge() < other.getTopEdge() &&
-            other.getBottomEdge() < this.getTopEdge();
+        return this.getLeft() < other.getRight() &&
+            other.getLeft() < this.getRight() &&
+            this.getBottom() < other.getTop() &&
+            other.getBottom() < this.getTop();
     }
 }
