@@ -19,5 +19,4 @@ public class Building {
     public BuildingType getType() {
         return type;
     }
-
 }
