@@ -38,7 +38,7 @@ public class World extends InputAdapter {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1f);
         // draw grid lines
-        // skip the first one so we only do internal lines
+        // skip the first one, so we only do internal lines
         for (int i = 1; i < gridSize.x(); i++) {
             shapeRenderer.line(i * gridUnit, 0, i * gridUnit, gridSize.y() * gridUnit);
         }
