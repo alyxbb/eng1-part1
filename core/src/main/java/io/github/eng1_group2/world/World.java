@@ -96,7 +96,6 @@ public class World extends InputAdapter {
             throw new IllegalArgumentException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location, this.main);
-        //TODO readd collision checks and make the grid buttons still clickable when theres a building on top
         for (Building testBuilding : buildings) {
             if (testBuilding.overlaps(building)) {
                 throw new IllegalArgumentException("building would intersect with a building");
