@@ -3,12 +3,14 @@ package io.github.eng1_group2;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.utils.CodecAssetLoader;
 import io.github.eng1_group2.world.World;
 
 
@@ -16,6 +18,7 @@ import io.github.eng1_group2.world.World;
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class Main extends ApplicationAdapter {
+    private AssetManager assetManager;
     private Registries registries;
     private Viewport viewport;
     private SpriteBatch batch;
@@ -31,9 +34,13 @@ public class Main extends ApplicationAdapter {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
 
+        this.assetManager = new AssetManager();
+        CodecAssetLoader loader = new CodecAssetLoader();
+        loader.prepare(this.assetManager);
+
         // Initialise and load all dynamic objects (building types, events, etc.)
         this.registries = new Registries();
-        this.registries.loadAll();
+        this.registries.loadAllFrom(loader);
         this.registries.freezeAll();
 
         batch = new SpriteBatch();
