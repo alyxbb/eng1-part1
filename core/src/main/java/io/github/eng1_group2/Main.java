@@ -31,9 +31,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-
         this.assetManager = new AssetManager();
         CodecAssetLoader loader = new CodecAssetLoader();
         loader.prepare(this.assetManager);
@@ -49,7 +46,7 @@ public class Main extends ApplicationAdapter {
 
         ui = new UI(this);
         world = new World(this);
-        inputMultiplexer = new InputMultiplexer(world, ui.getStage());
+        inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 

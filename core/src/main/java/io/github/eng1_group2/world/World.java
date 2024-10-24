@@ -1,9 +1,20 @@
 package io.github.eng1_group2.world;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
 import io.github.eng1_group2.utils.Vec2;
@@ -19,43 +30,65 @@ public class World extends InputAdapter {
     private final List<Building> buildings;
     private int gridUnit;
     private final Main main;
+    private final Table map;
+    private final Stage stage;
 
     public World(Main main) {
+
+        this.main = main;
+
+        this.stage = new Stage(this.main.getViewport());
+
+        //TODO: get textures from json
+        Texture texture = new Texture(Gdx.files.internal("MiniWorldSprites/Ground/TexturedGrass.png"));
+        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture,16,0,16,16));
+
+        this.map = new Table();
+        this.map.setDebug(UI.DEBUG, true);
+        for (int i = 0; i < gridSize.y(); i++) {
+            for (int j = 0; j < gridSize.x(); j++) {
+                Button button = new Button(textureRegionDrawable);
+                this.map.add(button);
+                int gridX = j;
+                int gridY = gridSize.y()-i-1;
+                button.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        addBuilding(main.getUi().getSelectedBuilding(),new Vec2(gridX, gridY));
+                    }
+                });
+            }
+            this.map.row();
+        }
+        this.stage.addActor(this.map);
+
         this.buildings = new ArrayList<>();
         var buildingTypes = main.getRegistries().getBuildingTypes();
-        this.buildings.add(new Building(buildingTypes.get("house"), new Vec2(3, 4)));
-        this.buildings.add(new Building(buildingTypes.get("lecture_theatre"), new Vec2(0, 1)));
-        this.buildings.add(new Building(buildingTypes.get("cafe"), new Vec2(0, 2)));
-        this.main = main;
+        addBuilding(buildingTypes.get("house"), new Vec2(3, 4));
+        addBuilding(buildingTypes.get("lecture_theatre"), new Vec2(0, 1));
+        addBuilding(buildingTypes.get("cafe"), new Vec2(0, 3));
+
     }
 
 
     public void render() {
-        ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(main.getViewport().getCamera().combined);
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1f);
-        // draw grid lines
-        // skip the first one, so we only do internal lines
-        for (int i = 1; i < gridSize.x(); i++) {
-            shapeRenderer.line(i * gridUnit, 0, i * gridUnit, gridSize.y() * gridUnit);
-        }
-        for (int i = 1; i < gridSize.y(); i++) {
-            shapeRenderer.line(0, i * gridUnit, gridSize.x() * gridUnit, i * gridUnit);
-        }
-        shapeRenderer.end();
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (var building : this.buildings) {
-            shapeRenderer.setColor(building.getType().colour());
-            shapeRenderer.rect(building.getBoundingBox().getOrigin().x() * gridUnit, building.getBoundingBox().getOrigin().y() * gridUnit, gridUnit * building.getBoundingBox().getSize().x(), gridUnit * building.getBoundingBox().getSize().y());
-        }
-        shapeRenderer.end();
+        float delta = Gdx.graphics.getDeltaTime();
+        this.stage.act(delta);
+        this.stage.draw();
     }
 
     public void resize() {
         gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / gridSize.x(), main.getViewport().getWorldHeight() / gridSize.y()));
+        this.map.setPosition(0, 0);
+        this.map.setWidth(gridUnit * gridSize.x());
+        this.map.setHeight(gridUnit * gridSize.y());
+        for (Cell cell: this.map.getCells()) {
+            cell.width(gridUnit);
+            cell.height(gridUnit);
+        }
+        for (Building building: this.buildings){
+            building.resize();
+        }
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
@@ -65,13 +98,27 @@ public class World extends InputAdapter {
         if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
             throw new IllegalArgumentException("building would extend outside grid");
         }
-        Building building = new Building(buildingType, location);
-        for (Building testBuilding : buildings) {
-            if (testBuilding.getBoundingBox().intersects(building.getBoundingBox())) {
+        Building building = new Building(buildingType, location, this);
+        //TODO readd collision checks and make the grid buttons still clickable when theres a building on top
+        /*for (Building testBuilding : buildings) {
+            if (testBuilding.bou.intersects(building.getBoundingBox())) {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
-        }
+        }*/
         buildings.add(building);
+        this.stage.addActor(building);
+        System.out.println("placed building");
+    }
+
+    public Vector2 gridSquareToScreenPos(Vec2 gridPos) {
+        if (gridPos.x() < 0 || gridPos.y() < 0) {
+            throw new IllegalArgumentException("gridpos must be positive");
+        }
+        if (gridSize.x() <= gridPos.x() || gridSize.y() <= gridPos.y()) {
+            throw new IllegalArgumentException("gridpos is too large");
+        }
+        Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y()* gridUnit);
+        return screenPos;
     }
 
 
@@ -86,20 +133,13 @@ public class World extends InputAdapter {
         return gridPos;
     }
 
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        Vector2 touchPos = new Vector2(screenX, screenY);
-        main.getViewport().unproject(touchPos);
-        if (main.getViewport().getWorldWidth() * UI.UI_RATIO < touchPos.x) {
-            return false;
-        }
-        try {
-            Vec2 gridSquare = screenPosToGridSquare(touchPos);
-            addBuilding(main.getUi().getSelectedBuilding(), gridSquare);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-        }
-        return true;
+
+    public int getGridUnit() {
+        return gridUnit;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

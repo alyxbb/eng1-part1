@@ -1,6 +1,7 @@
 {
     "id": "house",
     "name": "House",
-    "colour": "#ff0000",
-    "size": [2, 2]
+    "texture": "MiniWorldSprites/Buildings/Red/RedHouses.png",
+    "size": [1, 1],
+    "textureOrigin": [16,48]
 }

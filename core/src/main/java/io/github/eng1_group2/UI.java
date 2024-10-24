@@ -46,6 +46,7 @@ public class UI {
                 }
             });
         }
+        selectedBuilding = main.getRegistries().getBuildingTypes().iterator().next();
 
         ScrollPane buildingSelectorScroller = new ScrollPane(buildingSelector);
 
