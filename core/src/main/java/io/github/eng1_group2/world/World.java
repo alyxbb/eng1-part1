@@ -4,11 +4,8 @@ package io.github.eng1_group2.world;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
-import io.github.eng1_group2.registry.Registries;
-import io.github.eng1_group2.registry.Registry;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
@@ -94,7 +91,7 @@ public class World extends InputAdapter {
 
         Vector2 touchPos = new Vector2(screenX, screenY);
         main.getViewport().unproject(touchPos);
-        if (main.getViewport().getWorldWidth() * UI.UI_RATIO < touchPos.x){
+        if (main.getViewport().getWorldWidth() * UI.UI_RATIO < touchPos.x) {
             return false;
         }
         try {

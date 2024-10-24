@@ -36,8 +36,8 @@ public class UI {
 
         VerticalGroup buildingSelector = new VerticalGroup();
 
-        for (BuildingType buildingType: main.getRegistries().getBuildingTypes()){
-            Button button = new TextButton(buildingType.name(),style);
+        for (BuildingType buildingType : main.getRegistries().getBuildingTypes()) {
+            Button button = new TextButton(buildingType.name(), style);
             buildingSelector.addActor(button);
             button.addListener(new ChangeListener() {
                 @Override
@@ -53,7 +53,7 @@ public class UI {
 
         this.stage = new Stage(this.main.getViewport());
         this.stage.addActor(this.table);
-        this.table.setDebug(DEBUG,true);
+        this.table.setDebug(DEBUG, true);
         this.table.add(pauseButton).top().right();
         this.table.row();
         this.table.add(buildingSelectorScroller).expand();
@@ -67,8 +67,8 @@ public class UI {
     public void resize() {
         Viewport viewport = main.getViewport();
         this.startX = viewport.getWorldWidth() * UI_RATIO;
-        this.table.setPosition(startX,0);
-        this.table.setWidth(viewport.getScreenWidth()-startX);
+        this.table.setPosition(startX, 0);
+        this.table.setWidth(viewport.getScreenWidth() - startX);
         this.table.setHeight(viewport.getWorldHeight());
     }
 

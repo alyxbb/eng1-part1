@@ -17,6 +17,12 @@ import io.github.eng1_group2.world.World;
  */
 public class Main extends ApplicationAdapter {
     private Registries registries;
+    private Viewport viewport;
+    private SpriteBatch batch;
+    private Texture image;
+    private World world;
+    private UI ui;
+    private InputMultiplexer inputMultiplexer;
 
     public Registries getRegistries() {
         return registries;
@@ -25,13 +31,6 @@ public class Main extends ApplicationAdapter {
     public Viewport getViewport() {
         return viewport;
     }
-
-    private Viewport viewport;
-    private SpriteBatch batch;
-    private Texture image;
-    private World world;
-    private UI ui;
-    private InputMultiplexer inputMultiplexer;
 
     @Override
     public void create() {
@@ -49,7 +48,7 @@ public class Main extends ApplicationAdapter {
 
         ui = new UI(this);
         world = new World(this);
-        inputMultiplexer = new InputMultiplexer(world,ui.getStage());
+        inputMultiplexer = new InputMultiplexer(world, ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
