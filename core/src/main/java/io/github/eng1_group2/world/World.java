@@ -18,7 +18,7 @@ public class World extends InputAdapter {
     private final Vec2 gridSize = new Vec2(10, 10);
     private final List<Building> buildings;
     private int gridUnit;
-    private Main main;
+    private final Main main;
 
     public World(Main main) {
         this.buildings = new ArrayList<>();

@@ -24,13 +24,7 @@ public class Main extends ApplicationAdapter {
     private UI ui;
     private InputMultiplexer inputMultiplexer;
 
-    public Registries getRegistries() {
-        return registries;
-    }
 
-    public Viewport getViewport() {
-        return viewport;
-    }
 
     @Override
     public void create() {
@@ -70,6 +64,15 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         image.dispose();
+    }
+
+
+    public Registries getRegistries() {
+        return registries;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
     }
 
     public UI getUi() {
