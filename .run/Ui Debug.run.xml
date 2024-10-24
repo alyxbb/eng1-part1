@@ -11,6 +11,7 @@
     </extension>
     <method v="2">
       <option name="Make" enabled="true" />
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="generateAssetList" externalProjectPath="$PROJECT_DIR$/core" vmOptions="" scriptParameters="" />
     </method>
   </configuration>
 </component>

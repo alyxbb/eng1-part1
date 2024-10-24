@@ -1,6 +1,10 @@
 package io.github.eng1_group2.registry;
 
+import com.mojang.serialization.Codec;
+import io.github.eng1_group2.utils.CodecAssetLoader;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -14,10 +18,12 @@ import java.util.Map;
 public class Registry<T extends RegistryObject> implements Iterable<T> {
     private final String name;
     private final Map<String, T> contents;
+    private final Codec<T> codec;
     private boolean frozen = false;
 
-    public Registry(String name) {
+    public Registry(String name, Codec<T> codec) {
         this.name = name;
+        this.codec = codec;
         this.contents = new HashMap<>();
     }
 
@@ -26,6 +32,13 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
             throw new IllegalArgumentException("`" + id + "` not in registry `" + this.name + "`");
         }
         return this.contents.get(id);
+    }
+
+    public void loadFrom(CodecAssetLoader loader) {
+        List<T> items = loader.findByType(this.name, this.codec);
+        for (var item : items) {
+            this.register(item);
+        }
     }
 
     public void register(T object) {

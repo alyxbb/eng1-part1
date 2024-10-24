@@ -48,7 +48,7 @@ public class World extends InputAdapter {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         for (var building : this.buildings) {
-            shapeRenderer.setColor(building.getType().color());
+            shapeRenderer.setColor(building.getType().colour());
             shapeRenderer.rect(building.getBoundingBox().getOrigin().x() * gridUnit, building.getBoundingBox().getOrigin().y() * gridUnit, gridUnit * building.getBoundingBox().getSize().x(), gridUnit * building.getBoundingBox().getSize().y());
         }
         shapeRenderer.end();
