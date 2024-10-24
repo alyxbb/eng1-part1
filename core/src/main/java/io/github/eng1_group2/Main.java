@@ -28,7 +28,6 @@ public class Main extends ApplicationAdapter {
     private InputMultiplexer inputMultiplexer;
 
 
-
     @Override
     public void create() {
         this.assetManager = new AssetManager();

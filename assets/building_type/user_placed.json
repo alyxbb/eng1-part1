@@ -2,6 +2,12 @@
     "id": "user_placed",
     "name": "User placed",
     "texture": "MiniWorldSprites/Buildings/Red/RedResources.png",
-    "size": [1, 1],
-    "textureOrigin": [16,48]
+    "size": [
+        1,
+        1
+    ],
+    "textureOrigin": [
+        16,
+        48
+    ]
 }

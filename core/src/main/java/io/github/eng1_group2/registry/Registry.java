@@ -4,8 +4,8 @@ import com.mojang.serialization.Codec;
 import io.github.eng1_group2.utils.CodecAssetLoader;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**

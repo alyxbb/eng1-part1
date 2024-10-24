@@ -2,6 +2,12 @@
     "id": "lecture_theatre",
     "name": "Lecture Theatre",
     "texture": "MiniWorldSprites/Buildings/Red/RedKeep.png",
-    "size": [2, 2],
-    "textureOrigin": [0, 0]
+    "size": [
+        2,
+        2
+    ],
+    "textureOrigin": [
+        0,
+        0
+    ]
 }

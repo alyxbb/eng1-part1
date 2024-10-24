@@ -4,16 +4,14 @@ package io.github.eng1_group2.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
@@ -28,10 +26,10 @@ import java.util.List;
 public class World extends InputAdapter {
     private final Vec2 gridSize = new Vec2(10, 10);
     private final List<Building> buildings;
-    private int gridUnit;
     private final Main main;
     private final Table map;
     private final Stage stage;
+    private int gridUnit;
 
     public World(Main main) {
 
@@ -41,7 +39,7 @@ public class World extends InputAdapter {
 
         //TODO: get textures from json
         Texture texture = new Texture(Gdx.files.internal("MiniWorldSprites/Ground/TexturedGrass.png"));
-        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture,16,0,16,16));
+        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
 
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);
@@ -50,11 +48,11 @@ public class World extends InputAdapter {
                 Button button = new Button(textureRegionDrawable);
                 this.map.add(button);
                 int gridX = j;
-                int gridY = gridSize.y()-i-1;
+                int gridY = gridSize.y() - i - 1;
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        addBuilding(main.getUi().getSelectedBuilding(),new Vec2(gridX, gridY));
+                        addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
                     }
                 });
             }
@@ -82,11 +80,11 @@ public class World extends InputAdapter {
         this.map.setPosition(0, 0);
         this.map.setWidth(gridUnit * gridSize.x());
         this.map.setHeight(gridUnit * gridSize.y());
-        for (Cell cell: this.map.getCells()) {
+        for (Cell cell : this.map.getCells()) {
             cell.width(gridUnit);
             cell.height(gridUnit);
         }
-        for (Building building: this.buildings){
+        for (Building building : this.buildings) {
             building.resize();
         }
     }
@@ -117,7 +115,7 @@ public class World extends InputAdapter {
         if (gridSize.x() <= gridPos.x() || gridSize.y() <= gridPos.y()) {
             throw new IllegalArgumentException("gridpos is too large");
         }
-        Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y()* gridUnit);
+        Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
         return screenPos;
     }
 
@@ -132,7 +130,6 @@ public class World extends InputAdapter {
         }
         return gridPos;
     }
-
 
 
     public int getGridUnit() {

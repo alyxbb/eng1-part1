@@ -1,33 +1,31 @@
 package io.github.eng1_group2.world.building;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.World;
 
 public class Building extends Actor {
     private final BuildingType type;
-    private Vec2 origin;
     private final World world;
     private final TextureRegion textureRegion;
+    private Vec2 origin;
 
     public Building(BuildingType type, Vec2 origin, World world) {
         this.type = type;
         this.origin = origin;
         this.world = world;
         Vector2 screenPos = world.gridSquareToScreenPos(origin);
-        this.setBounds(screenPos.x, screenPos.y,world.getGridUnit()*this.type.size().x(),world.getGridUnit()* this.type.size().y());
-        this.textureRegion = new TextureRegion(new Texture(this.type.texturePath()),this.type.textureOrigin().x(), this.type.textureOrigin().y(), this.type.size().x() * 16, this.type.size().y() * 16);
+        this.setBounds(screenPos.x, screenPos.y, world.getGridUnit() * this.type.size().x(), world.getGridUnit() * this.type.size().y());
+        this.textureRegion = new TextureRegion(new Texture(this.type.texturePath()), this.type.textureOrigin().x(), this.type.textureOrigin().y(), this.type.size().x() * 16, this.type.size().y() * 16);
     }
 
-    public void resize(){
+    public void resize() {
         Vector2 screenPos = world.gridSquareToScreenPos(origin);
-        this.setBounds(screenPos.x, screenPos.y, world.getGridUnit()*this.type.size().x(), world.getGridUnit()*this.type.size().y());
+        this.setBounds(screenPos.x, screenPos.y, world.getGridUnit() * this.type.size().x(), world.getGridUnit() * this.type.size().y());
     }
 
 
@@ -37,6 +35,6 @@ public class Building extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(this.textureRegion, this.getX(),this.getY(),this.getWidth(),this.getHeight());
+        batch.draw(this.textureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 }
