@@ -1,6 +1,7 @@
 package io.github.eng1_group2.registry;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  *
  * @param <T> The type of object stored in this registry. Must implement {@link RegistryObject}
  */
-public class Registry<T extends RegistryObject> {
+public class Registry<T extends RegistryObject> implements Iterable<T> {
     private final String name;
     private final Map<String, T> contents;
     private boolean frozen = false;
@@ -43,5 +44,10 @@ public class Registry<T extends RegistryObject> {
             throw new IllegalStateException("`" + this.name + "` is frozen");
         }
         this.frozen = true;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return contents.values().iterator();
     }
 }

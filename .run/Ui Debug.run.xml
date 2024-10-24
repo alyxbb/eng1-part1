@@ -1,7 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run game" type="Application" factoryName="Application">
+  <configuration default="false" name="Ui Debug" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="io.github.eng1_group2.lwjgl3.Lwjgl3Launcher" />
     <module name="eng1-part1.lwjgl3.main" />
+    <option name="VM_PARAMETERS" value="-Dunisim.ui_debug=true" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="io.github.eng1_group2.lwjgl3.*" />

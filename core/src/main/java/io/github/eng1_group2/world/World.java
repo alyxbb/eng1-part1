@@ -5,7 +5,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.eng1_group2.Main;
+import io.github.eng1_group2.UI;
 import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.registry.Registry;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
@@ -17,23 +20,22 @@ import java.util.List;
 public class World extends InputAdapter {
     private final Vec2 gridSize = new Vec2(10, 10);
     private final List<Building> buildings;
-    private final Viewport viewport;
-    private final Registries registries;
     private int gridUnit;
+    private Main main;
 
-    public World(Registries registries, Viewport viewport) {
+    public World(Main main) {
         this.buildings = new ArrayList<>();
-        this.buildings.add(new Building(registries.getBuildingTypes().get("house"), new Vec2(3, 4)));
-        this.buildings.add(new Building(registries.getBuildingTypes().get("lecture_theatre"), new Vec2(0, 1)));
-        this.buildings.add(new Building(registries.getBuildingTypes().get("cafe"), new Vec2(0, 2)));
-        this.viewport = viewport;
-        this.registries = registries;
+        var buildingTypes = main.getRegistries().getBuildingTypes();
+        this.buildings.add(new Building(buildingTypes.get("house"), new Vec2(3, 4)));
+        this.buildings.add(new Building(buildingTypes.get("lecture_theatre"), new Vec2(0, 1)));
+        this.buildings.add(new Building(buildingTypes.get("cafe"), new Vec2(0, 2)));
+        this.main = main;
     }
 
 
     public void render() {
         ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+        shapeRenderer.setProjectionMatrix(main.getViewport().getCamera().combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(0.7f, 0.7f, 0.7f, 1f);
@@ -56,7 +58,7 @@ public class World extends InputAdapter {
     }
 
     public void resize() {
-        gridUnit = Math.round(Math.min((viewport.getWorldWidth()) / gridSize.x(), viewport.getWorldHeight() / gridSize.y()));
+        gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / gridSize.x(), main.getViewport().getWorldHeight() / gridSize.y()));
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
@@ -89,11 +91,15 @@ public class World extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         Vector2 touchPos = new Vector2(screenX, screenY);
-        viewport.unproject(touchPos);
+        main.getViewport().unproject(touchPos);
+        if (main.getViewport().getWorldWidth() * UI.UI_RATIO < touchPos.x){
+            return false;
+        }
         try {
             Vec2 gridSquare = screenPosToGridSquare(touchPos);
-            addBuilding(registries.getBuildingTypes().get("user_placed"), gridSquare);
+            addBuilding(main.getUi().getSelectedBuilding(), gridSquare);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }

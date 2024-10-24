@@ -17,6 +17,15 @@ import io.github.eng1_group2.world.World;
  */
 public class Main extends ApplicationAdapter {
     private Registries registries;
+
+    public Registries getRegistries() {
+        return registries;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
+
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
@@ -37,9 +46,10 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         viewport = new ScreenViewport();
-        ui = new UI(viewport);
-        world = new World(registries, viewport);
-        inputMultiplexer = new InputMultiplexer(world);
+
+        ui = new UI(this);
+        world = new World(this);
+        inputMultiplexer = new InputMultiplexer(world,ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -61,5 +71,9 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         image.dispose();
+    }
+
+    public UI getUi() {
+        return ui;
     }
 }
