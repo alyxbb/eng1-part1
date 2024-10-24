@@ -55,7 +55,7 @@ public class World extends InputAdapter {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
                         } catch (IllegalArgumentException e) {
-                            System.out.println(e);
+                            System.out.println(e.getMessage());
                         }
                     }
                 });
