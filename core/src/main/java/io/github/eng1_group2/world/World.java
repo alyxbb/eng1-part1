@@ -54,7 +54,7 @@ public class World extends InputAdapter {
                     public void changed(ChangeEvent event, Actor actor) {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
-                        } catch (IllegalArgumentException e){
+                        } catch (IllegalArgumentException e) {
                             System.out.println(e);
                         }
                     }

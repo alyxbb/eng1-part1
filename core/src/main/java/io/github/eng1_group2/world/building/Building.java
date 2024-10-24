@@ -24,7 +24,7 @@ public class Building extends Actor {
         Vector2 screenPos = main.getWorld().gridSquareToScreenPos(origin);
         this.setBounds(screenPos.x, screenPos.y, main.getWorld().getGridUnit() * this.type.size().x(), main.getWorld().getGridUnit() * this.type.size().y());
         this.textureRegion = new TextureRegion(main.getAssetManager().get(this.type.texturePath(), Texture.class), this.type.textureOrigin().x(), this.type.textureOrigin().y(), this.type.size().x() * 16, this.type.size().y() * 16);
-        this.boundingBox = new Rectangle(origin.x(),origin.y(),this.type.size().x(),this.type.size().y());
+        this.boundingBox = new Rectangle(origin.x(), origin.y(), this.type.size().x(), this.type.size().y());
         this.setTouchable(Touchable.disabled);
     }
 
@@ -43,8 +43,8 @@ public class Building extends Actor {
         batch.draw(this.textureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
-    public boolean overlaps(Building other){
-        if (this.boundingBox.overlaps(other.boundingBox)){
+    public boolean overlaps(Building other) {
+        if (this.boundingBox.overlaps(other.boundingBox)) {
             return true;
         }
         return false;
