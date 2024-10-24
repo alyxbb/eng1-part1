@@ -52,7 +52,11 @@ public class World extends InputAdapter {
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
-                        addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
+                        try {
+                            addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
                     }
                 });
             }
@@ -92,12 +96,11 @@ public class World extends InputAdapter {
             throw new IllegalArgumentException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location, this.main);
-        //TODO readd collision checks and make the grid buttons still clickable when theres a building on top
-        /*for (Building testBuilding : buildings) {
-            if (testBuilding.bou.intersects(building.getBoundingBox())) {
+        for (Building testBuilding : buildings) {
+            if (testBuilding.overlaps(building)) {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
-        }*/
+        }
         buildings.add(building);
         this.stage.addActor(building);
         System.out.println("placed building");
