@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,10 +41,10 @@ public class Main extends ApplicationAdapter {
         this.registries.loadAllFrom(loader);
         this.registries.freezeAll();
 
-        for (BuildingType buildingType:this.registries.getBuildingTypes()){
+        for (BuildingType buildingType : this.registries.getBuildingTypes()) {
             assetManager.load(buildingType.texturePath(), Texture.class);
         }
-        assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png",Texture.class);
+        assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
         while (!assetManager.update()) {
             System.out.println("Loading assets...");
         }

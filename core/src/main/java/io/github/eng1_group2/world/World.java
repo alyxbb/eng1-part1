@@ -38,7 +38,7 @@ public class World extends InputAdapter {
         this.stage = new Stage(this.main.getViewport());
 
         //TODO: get textures from json
-        Texture texture =  main.getAssetManager().get("MiniWorldSprites/Ground/TexturedGrass.png",Texture.class);
+        Texture texture = main.getAssetManager().get("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
         TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
 
         this.map = new Table();
