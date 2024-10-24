@@ -7,5 +7,6 @@ public final class GdxCodecs {
     public static final Codec<Color> COLOUR = Codec.STRING.xmap(Color::valueOf, Color::toString);
 
     // Prevent initialisation
-    private GdxCodecs() {}
+    private GdxCodecs() {
+    }
 }

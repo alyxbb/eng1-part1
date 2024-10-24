@@ -11,7 +11,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
 import io.github.eng1_group2.utils.CodecAssetLoader;
+import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.World;
+import io.github.eng1_group2.world.building.BuildingType;
 
 
 /**
@@ -28,12 +30,8 @@ public class Main extends ApplicationAdapter {
     private InputMultiplexer inputMultiplexer;
 
 
-
     @Override
     public void create() {
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-
         this.assetManager = new AssetManager();
         CodecAssetLoader loader = new CodecAssetLoader();
         loader.prepare(this.assetManager);
@@ -43,13 +41,26 @@ public class Main extends ApplicationAdapter {
         this.registries.loadAllFrom(loader);
         this.registries.freezeAll();
 
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        for (BuildingType buildingType : this.registries.getBuildingTypes()) {
+            assetManager.load(buildingType.texturePath(), Texture.class);
+        }
+        assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
+        while (!assetManager.update()) {
+            System.out.println("Loading assets...");
+        }
+
         viewport = new ScreenViewport();
 
         ui = new UI(this);
+
         world = new World(this);
-        inputMultiplexer = new InputMultiplexer(world, ui.getStage());
+        var buildingTypes = getRegistries().getBuildingTypes();
+
+        world.addBuilding(buildingTypes.get("house"), new Vec2(3, 4));
+        world.addBuilding(buildingTypes.get("lecture_theatre"), new Vec2(0, 1));
+        world.addBuilding(buildingTypes.get("cafe"), new Vec2(0, 3));
+
+        inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -69,8 +80,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        assetManager.dispose();
     }
 
 
@@ -82,7 +92,15 @@ public class Main extends ApplicationAdapter {
         return viewport;
     }
 
+    public World getWorld() {
+        return world;
+    }
+
     public UI getUi() {
         return ui;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
     }
 }

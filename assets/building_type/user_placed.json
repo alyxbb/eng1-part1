@@ -1,6 +1,13 @@
 {
     "id": "user_placed",
     "name": "User placed",
-    "colour": "#7fff00",
-    "size": [2, 3]
+    "texture": "MiniWorldSprites/Buildings/Red/RedResources.png",
+    "size": [
+        1,
+        1
+    ],
+    "textureOrigin": [
+        16,
+        48
+    ]
 }
