@@ -20,6 +20,4 @@ public record BuildingType(String id, String name, String texturePath, Vec2 size
     public String getId() {
         return this.id;
     }
-
-
 }

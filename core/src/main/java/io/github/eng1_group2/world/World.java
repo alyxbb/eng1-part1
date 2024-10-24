@@ -38,7 +38,7 @@ public class World extends InputAdapter {
         this.stage = new Stage(this.main.getViewport());
 
         //TODO: get textures from json
-        Texture texture = new Texture(Gdx.files.internal("MiniWorldSprites/Ground/TexturedGrass.png"));
+        Texture texture =  main.getAssetManager().get("MiniWorldSprites/Ground/TexturedGrass.png",Texture.class);
         TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
 
         this.map = new Table();
@@ -61,11 +61,6 @@ public class World extends InputAdapter {
         this.stage.addActor(this.map);
 
         this.buildings = new ArrayList<>();
-        var buildingTypes = main.getRegistries().getBuildingTypes();
-        addBuilding(buildingTypes.get("house"), new Vec2(3, 4));
-        addBuilding(buildingTypes.get("lecture_theatre"), new Vec2(0, 1));
-        addBuilding(buildingTypes.get("cafe"), new Vec2(0, 3));
-
     }
 
 
@@ -96,7 +91,7 @@ public class World extends InputAdapter {
         if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
             throw new IllegalArgumentException("building would extend outside grid");
         }
-        Building building = new Building(buildingType, location, this);
+        Building building = new Building(buildingType, location, this.main);
         //TODO readd collision checks and make the grid buttons still clickable when theres a building on top
         /*for (Building testBuilding : buildings) {
             if (testBuilding.bou.intersects(building.getBoundingBox())) {
