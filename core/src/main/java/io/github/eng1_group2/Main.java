@@ -24,6 +24,8 @@ public class Main extends ApplicationAdapter {
     private UI ui;
     private InputMultiplexer inputMultiplexer;
 
+
+
     @Override
     public void create() {
         float width = Gdx.graphics.getWidth();
@@ -37,9 +39,10 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         image = new Texture("libgdx.png");
         viewport = new ScreenViewport();
-        ui = new UI(viewport);
-        world = new World(registries, viewport);
-        inputMultiplexer = new InputMultiplexer(world);
+
+        ui = new UI(this);
+        world = new World(this);
+        inputMultiplexer = new InputMultiplexer(world, ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
@@ -61,5 +64,18 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         image.dispose();
+    }
+
+
+    public Registries getRegistries() {
+        return registries;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
+    }
+
+    public UI getUi() {
+        return ui;
     }
 }
