@@ -41,7 +41,6 @@ public class Main extends ApplicationAdapter {
         this.registries = new Registries();
         this.registries.loadAllFrom(loader);
         this.registries.freezeAll();
-
         for (BuildingType buildingType : this.registries.getBuildingTypes()) {
             assetManager.load(buildingType.texturePath(), Texture.class);
         }
@@ -54,18 +53,13 @@ public class Main extends ApplicationAdapter {
         }
 
         viewport = new ScreenViewport();
-
         ui = new UI(this);
-
         world = new World(this);
-
 
         var featureTypes = getRegistries().getFeatureTypes();
         world.addFeature(featureTypes.get("road"), new Vec2(14, 0), new Vec2(1, 20));
         world.addFeature(featureTypes.get("road"), new Vec2(0, 4), new Vec2(14, 1));
-
         world.addFeature(featureTypes.get("lake"), new Vec2(5, 8), new Vec2(8, 5));
-
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);

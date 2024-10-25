@@ -19,6 +19,7 @@ public class UI {
     private final Stage stage;
     private final Table table;
     private final Label balanceIndicator;
+    private final Label warningBox;
     private float startX;
     private BuildingType selectedBuilding;
 
@@ -53,6 +54,9 @@ public class UI {
         }
         selectedBuilding = main.getRegistries().getBuildingTypes().iterator().next();
 
+        labelStyle.font = new BitmapFont();
+        this.warningBox = new Label("", labelStyle);
+
         ScrollPane buildingSelectorScroller = new ScrollPane(buildingSelector);
 
         this.table = new Table();
@@ -64,6 +68,8 @@ public class UI {
         this.table.add(pauseButton).top().right();
         this.table.row();
         this.table.add(buildingSelectorScroller).colspan(2).expand();
+        this.table.row();
+        this.table.add(warningBox).bottom().colspan(2);
     }
 
     public Stage getStage() {
@@ -96,5 +102,9 @@ public class UI {
 
     public BuildingType getSelectedBuilding() {
         return selectedBuilding;
+    }
+
+    public void setWarningMessage(String message) {
+        this.warningBox.setText(message);
     }
 }
