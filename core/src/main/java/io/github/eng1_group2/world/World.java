@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
+import io.github.eng1_group2.utils.BuildException;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
@@ -58,8 +59,8 @@ public class World extends InputAdapter {
                     public void changed(ChangeEvent event, Actor actor) {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
+                        } catch (BuildException e) {
+                            main.getUi().SetWarningMessage(e.getMessage());
                         }
                     }
                 });
@@ -96,25 +97,25 @@ public class World extends InputAdapter {
         }
     }
 
-    public void addBuilding(BuildingType buildingType, Vec2 location) {
+    public void addBuilding(BuildingType buildingType, Vec2 location) throws BuildException {
         if (buildingType.cost() > balance) {
-            throw new IllegalArgumentException("Insufficient funds");
+            throw new BuildException("Insufficient funds");
         }
         if (location.x() < 0 || location.y() < 0) {
-            throw new IllegalArgumentException("location must be positive");
+            throw new BuildException("location must be positive");
         }
         if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
-            throw new IllegalArgumentException("building would extend outside grid");
+            throw new BuildException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location, this.main);
         for (Building testBuilding : buildings) {
             if (testBuilding.overlaps(building)) {
-                throw new IllegalArgumentException("building would intersect with a building");
+                throw new BuildException("building would intersect with a building");
             }
         }
         for (Feature feature : features) {
             if (building.overlaps(feature)) {
-                throw new IllegalArgumentException("building would intersect with a feature");
+                throw new BuildException("building would intersect with a feature");
             }
         }
         buildings.add(building);
