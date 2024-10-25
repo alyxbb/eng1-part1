@@ -1,0 +1,6 @@
+{
+    "id": "lake",
+    "name": "Lake",
+    "texture": "MiniWorldSprites/Ground/Shore.png",
+    "textureOrigin": [64,0]
+}

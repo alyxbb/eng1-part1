@@ -14,6 +14,7 @@ import io.github.eng1_group2.utils.CodecAssetLoader;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.World;
 import io.github.eng1_group2.world.building.BuildingType;
+import io.github.eng1_group2.world.feature.FeatureType;
 
 
 /**
@@ -44,6 +45,9 @@ public class Main extends ApplicationAdapter {
         for (BuildingType buildingType : this.registries.getBuildingTypes()) {
             assetManager.load(buildingType.texturePath(), Texture.class);
         }
+        for (FeatureType featureType: this.registries.getFeatureTypes()){
+            assetManager.load(featureType.texturePath(), Texture.class);
+        }
         assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
         while (!assetManager.update()) {
             System.out.println("Loading assets...");
@@ -54,11 +58,14 @@ public class Main extends ApplicationAdapter {
         ui = new UI(this);
 
         world = new World(this);
-        var buildingTypes = getRegistries().getBuildingTypes();
 
-        world.addBuilding(buildingTypes.get("house"), new Vec2(3, 4));
-        world.addBuilding(buildingTypes.get("lecture_theatre"), new Vec2(0, 1));
-        world.addBuilding(buildingTypes.get("cafe"), new Vec2(0, 3));
+
+        var featureTypes = getRegistries().getFeatureTypes();
+        world.addFeature(featureTypes.get("road"), new Vec2(14,0),new Vec2(1,20));
+        world.addFeature(featureTypes.get("road"), new Vec2(0,4),new Vec2(14,1));
+
+        world.addFeature(featureTypes.get("lake"), new Vec2(5,8), new Vec2(8,5));
+
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);

@@ -18,14 +18,17 @@ import io.github.eng1_group2.UI;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
+import io.github.eng1_group2.world.feature.Feature;
+import io.github.eng1_group2.world.feature.FeatureType;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class World extends InputAdapter {
-    private final Vec2 gridSize = new Vec2(10, 10);
+    private final Vec2 gridSize = new Vec2(20, 20);
     private final List<Building> buildings;
+    private final List<Feature> features;
     private final Main main;
     private final Table map;
     private final Stage stage;
@@ -64,6 +67,7 @@ public class World extends InputAdapter {
         }
         this.stage.addActor(this.map);
 
+        this.features = new ArrayList<>();
         this.buildings = new ArrayList<>();
     }
 
@@ -86,6 +90,9 @@ public class World extends InputAdapter {
         for (Building building : this.buildings) {
             building.resize();
         }
+        for (Feature feature: this.features) {
+            feature.resize();
+        }
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
@@ -101,9 +108,27 @@ public class World extends InputAdapter {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
         }
+        for (Feature feature: features) {
+            if (building.overlaps(feature)){
+                throw new IllegalArgumentException("building would intersect with a feature");
+            }
+        }
         buildings.add(building);
         this.stage.addActor(building);
         System.out.println("placed building");
+    }
+
+    public void addFeature(FeatureType featureType, Vec2 location, Vec2 size) {
+        if (location.x() < 0 || location.y() < 0) {
+            throw new IllegalArgumentException("location must be positive");
+        }
+        if (location.x() + size.x() > gridSize.x() || location.y() + size.y() > gridSize.y()) {
+            throw new IllegalArgumentException("building would extend outside grid");
+        }
+        Feature feature = new Feature(featureType,location,size,main);
+        features.add(feature);
+        this.stage.addActor(feature);
+        System.out.println("placed feature");
     }
 
     public Vector2 gridSquareToScreenPos(Vec2 gridPos) {

@@ -10,6 +10,7 @@
       </pattern>
     </extension>
     <method v="2">
+      <option name="Gradle.BeforeRunTask" enabled="true" tasks="generateAssetList" externalProjectPath="$PROJECT_DIR$/core" vmOptions="" scriptParameters="" />
       <option name="Make" enabled="true" />
     </method>
   </configuration>

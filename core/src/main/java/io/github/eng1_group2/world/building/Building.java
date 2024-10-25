@@ -8,9 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import io.github.eng1_group2.Main;
+import io.github.eng1_group2.utils.hasBoundingBox;
 import io.github.eng1_group2.utils.Vec2;
 
-public class Building extends Actor {
+public class Building extends Actor implements hasBoundingBox {
     private final BuildingType type;
     private final Main main;
     private final TextureRegion textureRegion;
@@ -33,20 +34,17 @@ public class Building extends Actor {
         this.setBounds(screenPos.x, screenPos.y, main.getWorld().getGridUnit() * this.type.size().x(), main.getWorld().getGridUnit() * this.type.size().y());
     }
 
-
-    public BuildingType getType() {
-        return type;
-    }
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.textureRegion, this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
-    public boolean overlaps(Building other) {
-        if (this.boundingBox.overlaps(other.boundingBox)) {
-            return true;
-        }
-        return false;
+    public boolean overlaps(hasBoundingBox other) {
+        return this.boundingBox.overlaps(other.getBoundingBox());
+    }
+
+    @Override
+    public Rectangle getBoundingBox() {
+        return this.boundingBox;
     }
 }
