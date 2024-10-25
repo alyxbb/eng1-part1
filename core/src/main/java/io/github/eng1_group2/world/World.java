@@ -123,12 +123,11 @@ public class World extends InputAdapter {
             throw new IllegalArgumentException("location must be positive");
         }
         if (location.x() + size.x() > gridSize.x() || location.y() + size.y() > gridSize.y()) {
-            throw new IllegalArgumentException("building would extend outside grid");
+            throw new IllegalArgumentException("feature would extend outside grid");
         }
         Feature feature = new Feature(featureType, location, size, main);
         features.add(feature);
         this.stage.addActor(feature);
-        System.out.println("placed feature");
     }
 
     public Vector2 gridSquareToScreenPos(Vec2 gridPos) {

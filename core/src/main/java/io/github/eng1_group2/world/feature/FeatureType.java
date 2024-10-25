@@ -6,7 +6,6 @@ import io.github.eng1_group2.registry.RegistryObject;
 import io.github.eng1_group2.utils.Vec2;
 
 public record FeatureType(String id, String name, String texturePath, Vec2 textureOrigin) implements RegistryObject {
-
     public static final Codec<FeatureType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(FeatureType::id),
         Codec.STRING.fieldOf("name").forGetter(FeatureType::name),
