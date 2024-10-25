@@ -33,6 +33,7 @@ public class World extends InputAdapter {
     private final Table map;
     private final Stage stage;
     private int gridUnit;
+    private int balance = 10000000;
 
     public World(Main main) {
 
@@ -96,6 +97,9 @@ public class World extends InputAdapter {
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
+        if (buildingType.cost()>balance){
+            throw new IllegalArgumentException("Insufficient funds");
+        }
         if (location.x() < 0 || location.y() < 0) {
             throw new IllegalArgumentException("location must be positive");
         }
@@ -116,6 +120,7 @@ public class World extends InputAdapter {
         buildings.add(building);
         this.stage.addActor(building);
         System.out.println("placed building");
+        balance -= buildingType.cost();
     }
 
     public void addFeature(FeatureType featureType, Vec2 location, Vec2 size) {
@@ -160,5 +165,9 @@ public class World extends InputAdapter {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public int getBalance() {
+        return balance;
     }
 }

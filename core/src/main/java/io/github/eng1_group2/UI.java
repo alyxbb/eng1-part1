@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,6 +20,7 @@ public class UI {
     private final Table table;
     private float startX;
     private BuildingType selectedBuilding;
+    private final Label balanceIndicator;
 
 
     public UI(Main main) {
@@ -33,7 +35,10 @@ public class UI {
                 System.out.println("clicky clicky click click");
             }
         });
-
+        LabelStyle labelStyle = new LabelStyle();
+        labelStyle.font = new BitmapFont();
+        Label balanceIndicator = new Label("£", labelStyle);
+        this.balanceIndicator = balanceIndicator;
         VerticalGroup buildingSelector = new VerticalGroup();
 
         for (BuildingType buildingType : main.getRegistries().getBuildingTypes()) {
@@ -55,9 +60,10 @@ public class UI {
         this.stage = new Stage(this.main.getViewport());
         this.stage.addActor(this.table);
         this.table.setDebug(DEBUG, true);
+        this.table.add(balanceIndicator).top().left();
         this.table.add(pauseButton).top().right();
         this.table.row();
-        this.table.add(buildingSelectorScroller).expand();
+        this.table.add(buildingSelectorScroller).colspan(2).expand();
     }
 
     public Stage getStage() {
@@ -74,6 +80,7 @@ public class UI {
     }
 
     public void render() {
+        this.balanceIndicator.setText(String.format("£%,d", main.getWorld().getBalance()));
         Viewport viewport = main.getViewport();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);

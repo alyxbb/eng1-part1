@@ -6,14 +6,15 @@ import io.github.eng1_group2.registry.RegistryObject;
 import io.github.eng1_group2.utils.Vec2;
 
 public record BuildingType(String id, String name, String texturePath, Vec2 size,
-                           Vec2 textureOrigin) implements RegistryObject {
+                           Vec2 textureOrigin, int cost) implements RegistryObject {
 
     public static final Codec<BuildingType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(BuildingType::id),
         Codec.STRING.fieldOf("name").forGetter(BuildingType::name),
         Codec.STRING.fieldOf("texture").forGetter(BuildingType::texturePath),
         Vec2.CODEC.fieldOf("size").forGetter(BuildingType::size),
-        Vec2.CODEC.fieldOf("textureOrigin").forGetter(BuildingType::textureOrigin)
+        Vec2.CODEC.fieldOf("textureOrigin").forGetter(BuildingType::textureOrigin),
+        Codec.INT.fieldOf("cost").forGetter(BuildingType::cost)
     ).apply(instance, BuildingType::new));
 
     @Override
