@@ -14,14 +14,21 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
+import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.registry.RegistryOps;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CodecAssetLoader {
+    private final RegistryOps<JsonElement, JsonOps> registryOps;
     private AssetManager manager;
     private List<String> assetList;
     private boolean loaded = false;
+
+    public CodecAssetLoader(Registries registries) {
+        registryOps = new RegistryOps<>(JsonOps.INSTANCE, registries);
+    }
 
     public void prepare(AssetManager manager) {
         if (this.loaded) {
@@ -36,9 +43,9 @@ public class CodecAssetLoader {
                 manager.load(asset, String.class);
             }
         }
-        while (!manager.update()) {
-            System.out.println("Loading assets...");
-        }
+        System.out.print("Preparing registry objects... ");
+        manager.finishLoading();
+        System.out.println("Done!");
         this.loaded = true;
     }
 
@@ -52,7 +59,7 @@ public class CodecAssetLoader {
                 // Found one!!!
                 String content = this.manager.get(asset);
                 JsonElement ele = JsonParser.parseString(content);
-                DataResult<T> result = codec.decode(JsonOps.INSTANCE, ele).map(Pair::getFirst);
+                DataResult<T> result = codec.decode(registryOps, ele).map(Pair::getFirst);
                 T t = result.getOrThrow(JsonParseException::new);
                 assets.add(t);
             }

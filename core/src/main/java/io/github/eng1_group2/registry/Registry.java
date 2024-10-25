@@ -27,6 +27,14 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
         this.contents = new HashMap<>();
     }
 
+    public boolean contains(String id) {
+        return this.contents.containsKey(id);
+    }
+
+    public boolean contains(T object) {
+        return this.contents.containsValue(object);
+    }
+
     public T get(String id) {
         if (!this.contents.containsKey(id)) {
             throw new IllegalArgumentException("`" + id + "` not in registry `" + this.name + "`");
@@ -45,7 +53,7 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
         if (this.frozen) {
             throw new IllegalStateException("`" + this.name + "` is frozen");
         }
-        String id = object.getId();
+        String id = object.id();
         if (this.contents.containsKey(id)) {
             throw new IllegalArgumentException("`" + id + "` is already registered in `" + this.name + "`");
         }
@@ -62,5 +70,9 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return contents.values().iterator();
+    }
+
+    public String getName() {
+        return name;
     }
 }
