@@ -3,10 +3,12 @@ package io.github.eng1_group2.world.building;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.github.eng1_group2.registry.RegistryObject;
+import io.github.eng1_group2.registry.TexturedRegistryObject;
 import io.github.eng1_group2.utils.Vec2;
 
 public record BuildingType(String id, String name, String texturePath, Vec2 size,
-                           Vec2 textureOrigin, int cost) implements RegistryObject {
+                           Vec2 textureOrigin, int cost) implements RegistryObject, TexturedRegistryObject.Simple {
+    public static final String REGISTRY_NAME = "building_type";
 
     public static final Codec<BuildingType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("id").forGetter(BuildingType::id),
@@ -16,9 +18,4 @@ public record BuildingType(String id, String name, String texturePath, Vec2 size
         Vec2.CODEC.fieldOf("textureOrigin").forGetter(BuildingType::textureOrigin),
         Codec.INT.fieldOf("cost").forGetter(BuildingType::cost)
     ).apply(instance, BuildingType::new));
-
-    @Override
-    public String getId() {
-        return this.id;
-    }
 }

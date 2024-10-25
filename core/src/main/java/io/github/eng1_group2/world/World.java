@@ -20,14 +20,14 @@ import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.Building;
 import io.github.eng1_group2.world.building.BuildingType;
 import io.github.eng1_group2.world.feature.Feature;
-import io.github.eng1_group2.world.feature.FeatureType;
+import io.github.eng1_group2.world.feature.FeatureConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class World extends InputAdapter {
-    private final Vec2 gridSize = new Vec2(20, 20);
+    private final WorldConfig config;
     private final List<Building> buildings;
     private final List<Feature> features;
     private final Main main;
@@ -36,24 +36,23 @@ public class World extends InputAdapter {
     private int gridUnit;
     private int balance = 10000000;
 
-    public World(Main main) {
-
+    public World(Main main, WorldConfig config) {
         this.main = main;
+        this.config = config;
 
         this.stage = new Stage(this.main.getViewport());
 
-        //TODO: get textures from json
-        Texture texture = main.getAssetManager().get("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
+        Texture texture = main.getAssetManager().get(config.backgroundTexture(), Texture.class);
         TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
 
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);
-        for (int i = 0; i < gridSize.y(); i++) {
-            for (int j = 0; j < gridSize.x(); j++) {
+        for (int i = 0; i < config.mapSize().y(); i++) {
+            for (int j = 0; j < config.mapSize().x(); j++) {
                 Button button = new Button(textureRegionDrawable);
                 this.map.add(button);
                 int gridX = j;
-                int gridY = gridSize.y() - i - 1;
+                int gridY = config.mapSize().y() - i - 1;
                 button.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -71,8 +70,11 @@ public class World extends InputAdapter {
 
         this.features = new ArrayList<>();
         this.buildings = new ArrayList<>();
-    }
 
+        for (FeatureConfig feature : config.features()) {
+            this.addFeature(feature);
+        }
+    }
 
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
@@ -81,11 +83,11 @@ public class World extends InputAdapter {
     }
 
     public void resize() {
-        gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / gridSize.x(), main.getViewport().getWorldHeight() / gridSize.y()));
+        gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / config.mapSize().x(), main.getViewport().getWorldHeight() / config.mapSize().y()));
         this.map.setPosition(0, 0);
-        this.map.setWidth(gridUnit * gridSize.x());
-        this.map.setHeight(gridUnit * gridSize.y());
-        for (Cell cell : this.map.getCells()) {
+        this.map.setWidth(gridUnit * config.mapSize().x());
+        this.map.setHeight(gridUnit * config.mapSize().y());
+        for (Cell<?> cell : this.map.getCells()) {
             cell.width(gridUnit);
             cell.height(gridUnit);
         }
@@ -104,7 +106,7 @@ public class World extends InputAdapter {
         if (location.x() < 0 || location.y() < 0) {
             throw new BuildException("location must be positive");
         }
-        if (location.x() + buildingType.size().x() > gridSize.x() || location.y() + buildingType.size().y() > gridSize.y()) {
+        if (location.x() + buildingType.size().x() > config.mapSize().x() || location.y() + buildingType.size().y() > config.mapSize().y()) {
             throw new BuildException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location, this.main);
@@ -124,14 +126,14 @@ public class World extends InputAdapter {
         balance -= buildingType.cost();
     }
 
-    public void addFeature(FeatureType featureType, Vec2 location, Vec2 size) {
-        if (location.x() < 0 || location.y() < 0) {
+    public void addFeature(FeatureConfig featureConfig) {
+        if (featureConfig.position().x() < 0 || featureConfig.position().y() < 0) {
             throw new IllegalArgumentException("location must be positive");
         }
-        if (location.x() + size.x() > gridSize.x() || location.y() + size.y() > gridSize.y()) {
+        if (featureConfig.position().x() + featureConfig.size().x() > config.mapSize().x() || featureConfig.position().y() + featureConfig.size().y() > config.mapSize().y()) {
             throw new IllegalArgumentException("feature would extend outside grid");
         }
-        Feature feature = new Feature(featureType, location, size, main);
+        Feature feature = new Feature(featureConfig, this);
         features.add(feature);
         this.stage.addActor(feature);
     }
@@ -140,7 +142,7 @@ public class World extends InputAdapter {
         if (gridPos.x() < 0 || gridPos.y() < 0) {
             throw new IllegalArgumentException("gridpos must be positive");
         }
-        if (gridSize.x() <= gridPos.x() || gridSize.y() <= gridPos.y()) {
+        if (config.mapSize().x() <= gridPos.x() || config.mapSize().y() <= gridPos.y()) {
             throw new IllegalArgumentException("gridpos is too large");
         }
         Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
@@ -153,12 +155,15 @@ public class World extends InputAdapter {
             throw new IllegalArgumentException("screenpos must be positive");
         }
         Vec2 gridPos = new Vec2((int) screenPos.x / gridUnit, (int) screenPos.y / gridUnit);
-        if (gridPos.x() >= gridSize.x() || gridPos.y() >= gridSize.y()) {
+        if (gridPos.x() >= config.mapSize().x() || gridPos.y() >= config.mapSize().y()) {
             throw new IllegalArgumentException("position is not in the grid");
         }
         return gridPos;
     }
 
+    public Main getMain() {
+        return main;
+    }
 
     public int getGridUnit() {
         return gridUnit;

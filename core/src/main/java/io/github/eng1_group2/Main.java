@@ -11,10 +11,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
 import io.github.eng1_group2.utils.CodecAssetLoader;
-import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.World;
-import io.github.eng1_group2.world.building.BuildingType;
-import io.github.eng1_group2.world.feature.FeatureType;
 
 
 /**
@@ -30,36 +27,23 @@ public class Main extends ApplicationAdapter {
     private UI ui;
     private InputMultiplexer inputMultiplexer;
 
-
     @Override
     public void create() {
         this.assetManager = new AssetManager();
-        CodecAssetLoader loader = new CodecAssetLoader();
+        this.registries = new Registries();
+
+        CodecAssetLoader loader = new CodecAssetLoader(this.registries);
         loader.prepare(this.assetManager);
 
         // Initialise and load all dynamic objects (building types, events, etc.)
-        this.registries = new Registries();
         this.registries.loadAllFrom(loader);
+        this.registries.loadAllTextures(this.assetManager);
         this.registries.freezeAll();
-        for (BuildingType buildingType : this.registries.getBuildingTypes()) {
-            assetManager.load(buildingType.texturePath(), Texture.class);
-        }
-        for (FeatureType featureType : this.registries.getFeatureTypes()) {
-            assetManager.load(featureType.texturePath(), Texture.class);
-        }
-        assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
-        while (!assetManager.update()) {
-            System.out.println("Loading assets...");
-        }
 
         viewport = new ScreenViewport();
         ui = new UI(this);
-        world = new World(this);
 
-        var featureTypes = getRegistries().getFeatureTypes();
-        world.addFeature(featureTypes.get("road"), new Vec2(14, 0), new Vec2(1, 20));
-        world.addFeature(featureTypes.get("road"), new Vec2(0, 4), new Vec2(14, 1));
-        world.addFeature(featureTypes.get("lake"), new Vec2(5, 8), new Vec2(8, 5));
+        world = new World(this, this.registries.getWorldConfigs().get("default"));
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -83,7 +67,6 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         assetManager.dispose();
     }
-
 
     public Registries getRegistries() {
         return registries;
