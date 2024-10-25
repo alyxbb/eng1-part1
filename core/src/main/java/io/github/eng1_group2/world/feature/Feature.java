@@ -16,8 +16,8 @@ public class Feature extends Actor implements hasBoundingBox {
     private final TextureRegion textureRegion;
     private final Rectangle boundingBox;
     private final Main main;
-    private Vec2 origin;
     private final Vec2 size;
+    private Vec2 origin;
 
     public Feature(FeatureType type, Vec2 origin, Vec2 size, Main main) {
         this.type = type;
@@ -25,15 +25,15 @@ public class Feature extends Actor implements hasBoundingBox {
         this.main = main;
         this.size = size;
         Vector2 screenPos = main.getWorld().gridSquareToScreenPos(origin);
-        this.setBounds(screenPos.x,screenPos.y, main.getWorld().getGridUnit() * size.x(), main.getWorld().getGridUnit() * size.y());
-        this.textureRegion = new TextureRegion(main.getAssetManager().get(this.type.texturePath(), Texture.class),this.type.textureOrigin().x(), this.type.textureOrigin().y(),16,16);
+        this.setBounds(screenPos.x, screenPos.y, main.getWorld().getGridUnit() * size.x(), main.getWorld().getGridUnit() * size.y());
+        this.textureRegion = new TextureRegion(main.getAssetManager().get(this.type.texturePath(), Texture.class), this.type.textureOrigin().x(), this.type.textureOrigin().y(), 16, 16);
         this.boundingBox = new Rectangle(origin.x(), origin.y(), size.x(), size.y());
         this.setTouchable(Touchable.disabled);
     }
 
     public void resize() {
         Vector2 screenPos = main.getWorld().gridSquareToScreenPos(origin);
-        this.setBounds(screenPos.x,screenPos.y, main.getWorld().getGridUnit() * size.x(), main.getWorld().getGridUnit() * size.y());
+        this.setBounds(screenPos.x, screenPos.y, main.getWorld().getGridUnit() * size.x(), main.getWorld().getGridUnit() * size.y());
     }
 
     @Override
@@ -41,8 +41,7 @@ public class Feature extends Actor implements hasBoundingBox {
         int gridUnit = main.getWorld().getGridUnit();
         for (int i = 0; i < size.x(); i++) {
             for (int j = 0; j < size.y(); j++) {
-                batch.draw(this.textureRegion, this.getX()+gridUnit * i, this.getY() + gridUnit * j, gridUnit, gridUnit);
-
+                batch.draw(this.textureRegion, this.getX() + gridUnit * i, this.getY() + gridUnit * j, gridUnit, gridUnit);
             }
         }
     }

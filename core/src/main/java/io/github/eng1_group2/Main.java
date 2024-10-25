@@ -45,7 +45,7 @@ public class Main extends ApplicationAdapter {
         for (BuildingType buildingType : this.registries.getBuildingTypes()) {
             assetManager.load(buildingType.texturePath(), Texture.class);
         }
-        for (FeatureType featureType: this.registries.getFeatureTypes()){
+        for (FeatureType featureType : this.registries.getFeatureTypes()) {
             assetManager.load(featureType.texturePath(), Texture.class);
         }
         assetManager.load("MiniWorldSprites/Ground/TexturedGrass.png", Texture.class);
@@ -61,10 +61,10 @@ public class Main extends ApplicationAdapter {
 
 
         var featureTypes = getRegistries().getFeatureTypes();
-        world.addFeature(featureTypes.get("road"), new Vec2(14,0),new Vec2(1,20));
-        world.addFeature(featureTypes.get("road"), new Vec2(0,4),new Vec2(14,1));
+        world.addFeature(featureTypes.get("road"), new Vec2(14, 0), new Vec2(1, 20));
+        world.addFeature(featureTypes.get("road"), new Vec2(0, 4), new Vec2(14, 1));
 
-        world.addFeature(featureTypes.get("lake"), new Vec2(5,8), new Vec2(8,5));
+        world.addFeature(featureTypes.get("lake"), new Vec2(5, 8), new Vec2(8, 5));
 
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());

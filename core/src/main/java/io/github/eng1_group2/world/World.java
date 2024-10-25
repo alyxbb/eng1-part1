@@ -90,7 +90,7 @@ public class World extends InputAdapter {
         for (Building building : this.buildings) {
             building.resize();
         }
-        for (Feature feature: this.features) {
+        for (Feature feature : this.features) {
             feature.resize();
         }
     }
@@ -108,8 +108,8 @@ public class World extends InputAdapter {
                 throw new IllegalArgumentException("building would intersect with a building");
             }
         }
-        for (Feature feature: features) {
-            if (building.overlaps(feature)){
+        for (Feature feature : features) {
+            if (building.overlaps(feature)) {
                 throw new IllegalArgumentException("building would intersect with a feature");
             }
         }
@@ -125,7 +125,7 @@ public class World extends InputAdapter {
         if (location.x() + size.x() > gridSize.x() || location.y() + size.y() > gridSize.y()) {
             throw new IllegalArgumentException("building would extend outside grid");
         }
-        Feature feature = new Feature(featureType,location,size,main);
+        Feature feature = new Feature(featureType, location, size, main);
         features.add(feature);
         this.stage.addActor(feature);
         System.out.println("placed feature");

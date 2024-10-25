@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import io.github.eng1_group2.Main;
-import io.github.eng1_group2.utils.hasBoundingBox;
 import io.github.eng1_group2.utils.Vec2;
+import io.github.eng1_group2.utils.hasBoundingBox;
 
 public class Building extends Actor implements hasBoundingBox {
     private final BuildingType type;
