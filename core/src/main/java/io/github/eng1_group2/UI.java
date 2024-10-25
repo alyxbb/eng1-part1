@@ -18,9 +18,9 @@ public class UI {
     private final Main main;
     private final Stage stage;
     private final Table table;
+    private final Label balanceIndicator;
     private float startX;
     private BuildingType selectedBuilding;
-    private final Label balanceIndicator;
 
 
     public UI(Main main) {

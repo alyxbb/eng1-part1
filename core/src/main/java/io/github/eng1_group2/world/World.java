@@ -97,7 +97,7 @@ public class World extends InputAdapter {
     }
 
     public void addBuilding(BuildingType buildingType, Vec2 location) {
-        if (buildingType.cost()>balance){
+        if (buildingType.cost() > balance) {
             throw new IllegalArgumentException("Insufficient funds");
         }
         if (location.x() < 0 || location.y() < 0) {
