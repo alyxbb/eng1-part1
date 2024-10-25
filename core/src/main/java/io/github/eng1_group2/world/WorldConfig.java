@@ -29,7 +29,7 @@ public record WorldConfig(
     @Override
     public List<String> getTexturePaths() {
         return List.of(
-            this.backgroundTexture
+                this.backgroundTexture
         );
     }
 }
