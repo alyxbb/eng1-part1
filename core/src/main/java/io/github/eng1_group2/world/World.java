@@ -60,7 +60,7 @@ public class World extends InputAdapter {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
                         } catch (BuildException e) {
-                            main.getUi().SetWarningMessage(e.getMessage());
+                            main.getUi().setWarningMessage(e.getMessage());
                         }
                     }
                 });

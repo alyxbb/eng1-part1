@@ -104,7 +104,7 @@ public class UI {
         return selectedBuilding;
     }
 
-    public void SetWarningMessage(String message) {
+    public void setWarningMessage(String message) {
         this.warningBox.setText(message);
     }
 }
