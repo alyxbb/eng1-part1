@@ -107,7 +107,7 @@ public class World extends InputAdapter {
             throw new BuildException("location must be positive");
         }
         if (location.x() + buildingType.size().x() > config.mapSize().x() || location.y() + buildingType.size().y() > config.mapSize().y()) {
-            throw new IllegalArgumentException("building would extend outside grid");
+            throw new BuildException("building would extend outside grid");
         }
         Building building = new Building(buildingType, location, this.main);
         for (Building testBuilding : buildings) {
