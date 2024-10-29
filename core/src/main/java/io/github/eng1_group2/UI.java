@@ -43,7 +43,7 @@ public class UI {
         this.balanceIndicator = balanceIndicator;
         VerticalGroup buildingSelector = new VerticalGroup();
 
-        this.timer = new Label("00:00",labelStyle);
+        this.timer = new Label("00:00", labelStyle);
 
         for (BuildingType buildingType : main.getRegistries().getBuildingTypes()) {
             Button button = new TextButton(buildingType.name(), style);
@@ -93,7 +93,7 @@ public class UI {
     public void render() {
         this.balanceIndicator.setText(String.format("£%,d", main.getWorld().getBalance()));
         int timeRemaining = (int) main.getTimer().getTimeRemaining();
-        this.timer.setText(String.format("%d:%d",timeRemaining/60,timeRemaining%60));
+        this.timer.setText(String.format("%d:%d", timeRemaining / 60, timeRemaining % 60));
         Viewport viewport = main.getViewport();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);

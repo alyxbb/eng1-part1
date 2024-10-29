@@ -1,6 +1,5 @@
 package io.github.eng1_group2.world.building;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,9 +15,9 @@ public abstract class AbstractBuilding extends Actor implements HasBoundingBox {
     protected final Main main;
     private final TextureRegion textureRegion;
     private final Rectangle boundingBox;
-    private Vec2 origin;
+    private final Vec2 origin;
 
-    public AbstractBuilding(BuildingType type, Vec2 origin, Main main, TextureRegion textureRegion){
+    public AbstractBuilding(BuildingType type, Vec2 origin, Main main, TextureRegion textureRegion) {
         this.type = type;
         this.origin = origin;
         this.main = main;

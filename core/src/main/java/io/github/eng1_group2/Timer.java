@@ -4,13 +4,12 @@ import com.badlogic.gdx.Gdx;
 import io.github.eng1_group2.world.building.IncompleteBuilding;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Timer {
     private static final float TOTAL_TIME = 5 * 60;
-    private float timeRemaining;
     private final List<IncompleteBuilding> incompleteBuildings;
+    private float timeRemaining;
 
     public Timer() {
         timeRemaining = TOTAL_TIME;
@@ -31,7 +30,7 @@ public class Timer {
         return timeRemaining;
     }
 
-    public void registerBuilding(IncompleteBuilding building){
+    public void registerBuilding(IncompleteBuilding building) {
         incompleteBuildings.add(building);
     }
 

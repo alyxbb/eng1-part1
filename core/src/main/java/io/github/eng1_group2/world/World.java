@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
-import io.github.eng1_group2.world.building.*;
 import io.github.eng1_group2.utils.Vec2;
+import io.github.eng1_group2.world.building.*;
 import io.github.eng1_group2.world.feature.Feature;
 import io.github.eng1_group2.world.feature.FeatureConfig;
 
@@ -124,11 +124,12 @@ public class World extends InputAdapter {
         System.out.println("placed building");
         balance -= buildingType.cost();
     }
+
     public void completeBuilding(IncompleteBuilding incompleteBuilding) {
         buildings.remove(incompleteBuilding);
         incompleteBuilding.remove();
         main.getTimer().unregisterBuilding(incompleteBuilding);
-        Building building = new Building(incompleteBuilding.getType(),new Vec2((int) incompleteBuilding.getBoundingBox().x,(int) incompleteBuilding.getBoundingBox().y),main);
+        Building building = new Building(incompleteBuilding.getType(), new Vec2((int) incompleteBuilding.getBoundingBox().x, (int) incompleteBuilding.getBoundingBox().y), main);
         buildings.add(building);
         this.stage.addActor(building);
     }

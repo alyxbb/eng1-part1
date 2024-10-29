@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.utils.Vec2;
 
-public class IncompleteBuilding extends AbstractBuilding{
+public class IncompleteBuilding extends AbstractBuilding {
     private float buildTimeRemaining;
+
     public IncompleteBuilding(BuildingType type, Vec2 origin, Main main) {
         super(type,
             origin,
@@ -24,7 +25,7 @@ public class IncompleteBuilding extends AbstractBuilding{
 
     public void update(float delta) {
         buildTimeRemaining -= delta;
-        if (buildTimeRemaining <= 0){
+        if (buildTimeRemaining <= 0) {
             main.getWorld().completeBuilding(this);
         }
     }
