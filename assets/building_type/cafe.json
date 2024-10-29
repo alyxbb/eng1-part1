@@ -1,14 +1,13 @@
 {
     "id": "cafe",
     "name": "Cafe",
-    "texture": "MiniWorldSprites/Buildings/Red/RedShip.png",
+    "texture": {
+        "path": "MiniWorldSprites/Buildings/Red/RedShip.png",
+        "origin": [0,0]
+    },
     "size": [
         2,
         2
-    ],
-    "textureOrigin": [
-        0,
-        0
     ],
     "cost": 50000,
     "buildTime": 20

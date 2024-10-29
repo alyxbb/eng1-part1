@@ -5,6 +5,7 @@ import java.util.List;
 public interface TexturedRegistryObject {
     List<String> getTexturePaths();
 
+    //TODO make this work with texture configs
     interface Simple extends TexturedRegistryObject {
         String texturePath();
 

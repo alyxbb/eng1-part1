@@ -1,14 +1,13 @@
 {
     "id": "user_placed",
     "name": "User placed",
-    "texture": "MiniWorldSprites/Buildings/Red/RedResources.png",
+    "texture": {
+        "path": "MiniWorldSprites/Buildings/Red/RedResources.png",
+        "origin": [16,48]
+    },
     "size": [
         1,
         1
-    ],
-    "textureOrigin": [
-        16,
-        48
     ],
     "cost": 10000,
     "buildTime": 10

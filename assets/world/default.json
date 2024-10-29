@@ -5,12 +5,14 @@
     20,
     20
   ],
-  "background_texture": "MiniWorldSprites/Ground/TexturedGrass.png",
-  "incomplete_building_texture": "MiniWorldSprites/Buildings/Wood/Barracks.png",
-  "incomplete_building_origin": [
-    16,
-    32
-  ],
+  "background_texture":{
+      "path":"MiniWorldSprites/Ground/TexturedGrass.png",
+      "origin": [16,0]
+  },
+    "incomplete_building": {
+        "path": "MiniWorldSprites/Buildings/Wood/Barracks.png",
+        "origin": [16,32]
+    },
   "game_duration": 300,
   "features": [
     {

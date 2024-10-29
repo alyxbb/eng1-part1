@@ -14,9 +14,9 @@ public class Building extends AbstractBuilding {
             origin,
             main,
             new TextureRegion(
-                main.getAssetManager().get(type.texturePath(), Texture.class),
-                type.textureOrigin().x(),
-                type.textureOrigin().y(),
+                main.getAssetManager().get(type.texture().path(), Texture.class),
+                type.texture().origin().x(),
+                type.texture().origin().y(),
                 type.size().x() * 16,
                 type.size().y() * 16
             )

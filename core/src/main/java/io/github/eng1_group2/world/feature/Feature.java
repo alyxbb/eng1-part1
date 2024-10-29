@@ -26,7 +26,7 @@ public class Feature extends Actor implements HasBoundingBox {
         this.world = world;
         Vector2 screenPos = world.gridSquareToScreenPos(origin);
         this.setBounds(screenPos.x, screenPos.y, world.getGridUnit() * size.x(), world.getGridUnit() * size.y());
-        this.textureRegion = new TextureRegion(world.getMain().getAssetManager().get(this.type.texturePath(), Texture.class), this.type.textureOrigin().x(), this.type.textureOrigin().y(), 16, 16);
+        this.textureRegion = new TextureRegion(world.getMain().getAssetManager().get(this.type.texture().path(), Texture.class), this.type.texture().origin().x(), this.type.texture().origin().y(), 16, 16);
         this.boundingBox = new Rectangle(origin.x(), origin.y(), size.x(), size.y());
         this.setTouchable(Touchable.disabled);
     }

@@ -13,9 +13,9 @@ public class IncompleteBuilding extends AbstractBuilding {
             origin,
             main,
             new TextureRegion(
-                main.getAssetManager().get(main.getWorld().getConfig().incompleteBuildingTexture(), Texture.class),
-                main.getWorld().getConfig().incompleteBuildingOrigin().x(),
-                main.getWorld().getConfig().incompleteBuildingOrigin().y(),
+                main.getAssetManager().get(main.getWorld().getConfig().incompleteBuilding().path(), Texture.class),
+                main.getWorld().getConfig().incompleteBuilding().origin().x(),
+                main.getWorld().getConfig().incompleteBuilding().origin().y(),
                 16,
                 16
             )

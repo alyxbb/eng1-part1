@@ -40,8 +40,8 @@ public class World extends InputAdapter {
 
         this.stage = new Stage(this.main.getViewport());
 
-        Texture texture = main.getAssetManager().get(config.backgroundTexture(), Texture.class);
-        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
+        Texture texture = main.getAssetManager().get(config.backgroundTexture().path(), Texture.class);
+        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, config.backgroundTexture().origin().x(), config.backgroundTexture().origin().y(), 16, 16));
 
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);

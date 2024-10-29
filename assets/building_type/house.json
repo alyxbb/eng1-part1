@@ -1,14 +1,13 @@
 {
     "id": "house",
     "name": "House",
-    "texture": "MiniWorldSprites/Buildings/Red/RedHouses.png",
+    "texture": {
+        "path": "MiniWorldSprites/Buildings/Red/RedHouses.png",
+        "origin": [16,48]
+    },
     "size": [
         1,
         1
-    ],
-    "textureOrigin": [
-        16,
-        48
     ],
     "cost": 30000,
     "buildTime": 5
