@@ -16,7 +16,8 @@ public record WorldConfig(
     String backgroundTexture,
     List<FeatureConfig> features,
     String incompleteBuildingTexture,
-    Vec2 incompleteBuildingOrigin
+    Vec2 incompleteBuildingOrigin,
+    float gameDuration
 ) implements RegistryObject, TexturedRegistryObject {
     public static final String REGISTRY_NAME = "world";
 
@@ -27,7 +28,8 @@ public record WorldConfig(
         Codec.STRING.fieldOf("background_texture").forGetter(WorldConfig::backgroundTexture),
         FeatureConfig.CODEC.listOf().fieldOf("features").forGetter(WorldConfig::features),
         Codec.STRING.fieldOf("incomplete_building_texture").forGetter(WorldConfig::incompleteBuildingTexture),
-        Vec2.CODEC.fieldOf("incomplete_building_origin").forGetter(WorldConfig::incompleteBuildingOrigin)
+        Vec2.CODEC.fieldOf("incomplete_building_origin").forGetter(WorldConfig::incompleteBuildingOrigin),
+        Codec.FLOAT.fieldOf("game_duration").forGetter(WorldConfig::gameDuration)
     ).apply(instance, WorldConfig::new));
 
     @Override

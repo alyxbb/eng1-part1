@@ -1,18 +1,18 @@
 package io.github.eng1_group2;
 
 import com.badlogic.gdx.Gdx;
+import io.github.eng1_group2.world.World;
 import io.github.eng1_group2.world.building.IncompleteBuilding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Timer {
-    private static final float TOTAL_TIME = 5 * 60;
     private final List<IncompleteBuilding> incompleteBuildings;
     private float timeRemaining;
 
-    public Timer() {
-        timeRemaining = TOTAL_TIME;
+    public Timer(World world) {
+        timeRemaining = world.getConfig().gameDuration();
         incompleteBuildings = new ArrayList<>();
     }
 

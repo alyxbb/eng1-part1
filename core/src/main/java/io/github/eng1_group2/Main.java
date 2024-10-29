@@ -44,7 +44,7 @@ public class Main extends ApplicationAdapter {
         viewport = new ScreenViewport();
         ui = new UI(this);
         world = new World(this, this.registries.getWorldConfigs().get("default"));
-        timer = new Timer();
+        timer = new Timer(world);
 
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
