@@ -14,7 +14,9 @@ public record WorldConfig(
         String name,
         Vec2 mapSize,
         String backgroundTexture,
-        List<FeatureConfig> features
+        List<FeatureConfig> features,
+        String incompleteBuildingTexture,
+        Vec2 incompleteBuildingOrigin
 ) implements RegistryObject, TexturedRegistryObject {
     public static final String REGISTRY_NAME = "world";
 
@@ -23,13 +25,16 @@ public record WorldConfig(
             Codec.STRING.fieldOf("name").forGetter(WorldConfig::name),
             Vec2.CODEC.fieldOf("map_size").forGetter(WorldConfig::mapSize),
             Codec.STRING.fieldOf("background_texture").forGetter(WorldConfig::backgroundTexture),
-            FeatureConfig.CODEC.listOf().fieldOf("features").forGetter(WorldConfig::features)
+            FeatureConfig.CODEC.listOf().fieldOf("features").forGetter(WorldConfig::features),
+            Codec.STRING.fieldOf("incomplete_building_texture").forGetter(WorldConfig::incompleteBuildingTexture),
+            Vec2.CODEC.fieldOf("incomplete_building_origin").forGetter(WorldConfig::incompleteBuildingOrigin)
     ).apply(instance, WorldConfig::new));
 
     @Override
     public List<String> getTexturePaths() {
         return List.of(
-                this.backgroundTexture
+                this.backgroundTexture,
+                this.incompleteBuildingTexture
         );
     }
 }

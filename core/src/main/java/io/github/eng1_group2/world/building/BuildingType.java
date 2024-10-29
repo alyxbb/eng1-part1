@@ -7,7 +7,7 @@ import io.github.eng1_group2.registry.TexturedRegistryObject;
 import io.github.eng1_group2.utils.Vec2;
 
 public record BuildingType(String id, String name, String texturePath, Vec2 size,
-                           Vec2 textureOrigin, int cost) implements RegistryObject, TexturedRegistryObject.Simple {
+                           Vec2 textureOrigin, int cost, float buildTime) implements RegistryObject, TexturedRegistryObject.Simple {
     public static final String REGISTRY_NAME = "building_type";
 
     public static final Codec<BuildingType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -16,6 +16,7 @@ public record BuildingType(String id, String name, String texturePath, Vec2 size
         Codec.STRING.fieldOf("texture").forGetter(BuildingType::texturePath),
         Vec2.CODEC.fieldOf("size").forGetter(BuildingType::size),
         Vec2.CODEC.fieldOf("textureOrigin").forGetter(BuildingType::textureOrigin),
-        Codec.INT.fieldOf("cost").forGetter(BuildingType::cost)
+        Codec.INT.fieldOf("cost").forGetter(BuildingType::cost),
+        Codec.FLOAT.fieldOf("buildTime").forGetter(BuildingType::buildTime)
     ).apply(instance, BuildingType::new));
 }

@@ -1,4 +1,4 @@
-package io.github.eng1_group2.utils;
+package io.github.eng1_group2.utils.loader;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;

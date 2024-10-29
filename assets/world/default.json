@@ -6,6 +6,11 @@
     20
   ],
   "background_texture": "MiniWorldSprites/Ground/TexturedGrass.png",
+    "incomplete_building_texture": "MiniWorldSprites/Buildings/Wood/Barracks.png",
+    "incomplete_building_origin": [
+        16,
+        32
+    ],
   "features": [
     {
       "type": "road",

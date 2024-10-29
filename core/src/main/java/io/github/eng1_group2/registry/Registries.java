@@ -2,8 +2,8 @@ package io.github.eng1_group2.registry;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.mojang.serialization.Codec;
-import io.github.eng1_group2.utils.CodecAssetLoader;
-import io.github.eng1_group2.utils.TextureLoader;
+import io.github.eng1_group2.utils.loader.CodecAssetLoader;
+import io.github.eng1_group2.utils.loader.TextureLoader;
 import io.github.eng1_group2.world.WorldConfig;
 import io.github.eng1_group2.world.building.BuildingType;
 import io.github.eng1_group2.world.feature.FeatureType;
