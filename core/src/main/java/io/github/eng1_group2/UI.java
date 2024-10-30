@@ -35,10 +35,7 @@ public class UI {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 main.getTimer().togglePause();
-                String text = "pause";
-                if (main.getTimer().isPaused()) {
-                    text = "unpause";
-                }
+                String text = main.getTimer().isPaused() ? "unpause" : "pause";
                 pauseButton.setText(text);
             }
         });
