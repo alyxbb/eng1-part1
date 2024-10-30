@@ -36,7 +36,7 @@ public class UI {
             public void changed(ChangeEvent event, Actor actor) {
                 main.getTimer().togglePause();
                 String text = "pause";
-                if (main.getTimer().isPaused()){
+                if (main.getTimer().isPaused()) {
                     text = "unpause";
                 }
                 ((TextButton) actor).setText(text);

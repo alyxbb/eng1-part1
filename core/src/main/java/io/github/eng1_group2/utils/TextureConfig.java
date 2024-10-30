@@ -3,7 +3,7 @@ package io.github.eng1_group2.utils;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public record TextureConfig (
+public record TextureConfig(
     String path,
     Vec2 origin
 ) {

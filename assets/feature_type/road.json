@@ -3,6 +3,9 @@
     "name": "Road",
     "texture": {
         "path": "MiniWorldSprites/Ground/Grass.png",
-        "origin": [64,0]
+        "origin": [
+            64,
+            0
+        ]
     }
 }

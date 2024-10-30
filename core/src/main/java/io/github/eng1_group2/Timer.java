@@ -19,7 +19,7 @@ public class Timer {
     }
 
     public void render() {
-        if (paused){
+        if (paused) {
             return;
         }
         float delta = Gdx.graphics.getDeltaTime();
@@ -32,7 +32,6 @@ public class Timer {
     }
 
 
-
     public void registerBuilding(IncompleteBuilding building) {
         incompleteBuildings.add(building);
     }
@@ -40,6 +39,7 @@ public class Timer {
     public void unregisterBuilding(IncompleteBuilding incompleteBuilding) {
         incompleteBuildings.remove(incompleteBuilding);
     }
+
     public float getTimeRemaining() {
         return timeRemaining;
     }

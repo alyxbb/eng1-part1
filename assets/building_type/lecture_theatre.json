@@ -3,7 +3,10 @@
     "name": "Lecture Theatre",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedKeep.png",
-        "origin": [0,0]
+        "origin": [
+            0,
+            0
+        ]
     },
     "size": [
         2,

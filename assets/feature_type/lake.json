@@ -3,6 +3,9 @@
     "name": "Lake",
     "texture": {
         "path": "MiniWorldSprites/Ground/Shore.png",
-        "origin": [64,0]
+        "origin": [
+            64,
+            0
+        ]
     }
 }

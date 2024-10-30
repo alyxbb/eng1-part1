@@ -3,7 +3,10 @@
     "name": "Cafe",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedShip.png",
-        "origin": [0,0]
+        "origin": [
+            0,
+            0
+        ]
     },
     "size": [
         2,

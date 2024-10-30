@@ -3,7 +3,10 @@
     "name": "House",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedHouses.png",
-        "origin": [16,48]
+        "origin": [
+            16,
+            48
+        ]
     },
     "size": [
         1,

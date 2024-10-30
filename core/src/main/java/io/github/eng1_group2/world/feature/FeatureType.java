@@ -9,7 +9,8 @@ import io.github.eng1_group2.utils.TextureConfig;
 
 import java.util.List;
 
-public record FeatureType(String id, String name, TextureConfig texture) implements RegistryObject, TexturedRegistryObject{
+public record FeatureType(String id, String name,
+                          TextureConfig texture) implements RegistryObject, TexturedRegistryObject {
     public static final String REGISTRY_NAME = "feature_type";
 
     public static final Codec<FeatureType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
