@@ -39,7 +39,7 @@ public class UI {
                 if (main.getTimer().isPaused()) {
                     text = "unpause";
                 }
-                ((TextButton) actor).setText(text);
+                pauseButton.setText(text);
 
             }
         });

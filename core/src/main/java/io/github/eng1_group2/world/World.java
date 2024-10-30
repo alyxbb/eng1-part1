@@ -188,5 +188,4 @@ public class World extends InputAdapter {
     public WorldConfig getConfig() {
         return config;
     }
-
 }

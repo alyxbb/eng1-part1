@@ -46,7 +46,6 @@ public class Main extends ApplicationAdapter {
         world = new World(this, this.registries.getWorldConfigs().get("default"));
         timer = new Timer(world);
 
-
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
