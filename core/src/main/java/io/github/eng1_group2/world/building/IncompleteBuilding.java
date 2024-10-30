@@ -1,7 +1,5 @@
 package io.github.eng1_group2.world.building;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.utils.Vec2;
 
@@ -12,14 +10,7 @@ public class IncompleteBuilding extends AbstractBuilding {
         super(type,
             origin,
             main,
-            new TextureRegion(
-                main.getAssetManager().get(main.getWorld().getConfig().incompleteBuilding().path(), Texture.class),
-                main.getWorld().getConfig().incompleteBuilding().origin().x(),
-                main.getWorld().getConfig().incompleteBuilding().origin().y(),
-                16,
-                16
-            )
-        );
+            main.getWorld().getConfig().incompleteBuilding().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
         buildTimeRemaining = type.buildTime();
     }
 

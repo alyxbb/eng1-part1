@@ -18,7 +18,7 @@ public class Timer {
         paused = false;
     }
 
-    public void render() {
+    public void update() {
         if (paused) {
             return;
         }

@@ -40,7 +40,6 @@ public class UI {
                     text = "unpause";
                 }
                 pauseButton.setText(text);
-
             }
         });
         LabelStyle labelStyle = new LabelStyle();

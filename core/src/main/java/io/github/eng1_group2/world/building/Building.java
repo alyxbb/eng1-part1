@@ -1,7 +1,5 @@
 package io.github.eng1_group2.world.building;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.utils.Vec2;
 
@@ -13,13 +11,7 @@ public class Building extends AbstractBuilding {
             type,
             origin,
             main,
-            new TextureRegion(
-                main.getAssetManager().get(type.texture().path(), Texture.class),
-                type.texture().origin().x(),
-                type.texture().origin().y(),
-                type.size().x() * 16,
-                type.size().y() * 16
-            )
+            type.texture().getTextureRegion(main.getAssetManager(), new Vec2(type.size().x() * 16, type.size().y() * 16))
         );
     }
 }
