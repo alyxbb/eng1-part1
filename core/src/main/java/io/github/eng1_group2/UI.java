@@ -34,7 +34,13 @@ public class UI {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("clicky clicky click click");
+                main.getTimer().togglePause();
+                String text = "pause";
+                if (main.getTimer().isPaused()){
+                    text = "unpause";
+                }
+                ((TextButton) actor).setText(text);
+
             }
         });
         LabelStyle labelStyle = new LabelStyle();

@@ -10,13 +10,18 @@ import java.util.List;
 public class Timer {
     private final List<IncompleteBuilding> incompleteBuildings;
     private float timeRemaining;
+    private boolean paused;
 
     public Timer(World world) {
         timeRemaining = world.getConfig().gameDuration();
         incompleteBuildings = new ArrayList<>();
+        paused = false;
     }
 
     public void render() {
+        if (paused){
+            return;
+        }
         float delta = Gdx.graphics.getDeltaTime();
         timeRemaining -= delta;
 
@@ -26,9 +31,7 @@ public class Timer {
         }
     }
 
-    public float getTimeRemaining() {
-        return timeRemaining;
-    }
+
 
     public void registerBuilding(IncompleteBuilding building) {
         incompleteBuildings.add(building);
@@ -36,5 +39,16 @@ public class Timer {
 
     public void unregisterBuilding(IncompleteBuilding incompleteBuilding) {
         incompleteBuildings.remove(incompleteBuilding);
+    }
+    public float getTimeRemaining() {
+        return timeRemaining;
+    }
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void togglePause() {
+        this.paused = !this.paused;
     }
 }
