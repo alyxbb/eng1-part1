@@ -1,55 +1,69 @@
 {
-  "id": "default",
-  "name": "Default world",
-  "map_size": [
-    20,
-    20
-  ],
-  "background_texture": "MiniWorldSprites/Ground/TexturedGrass.png",
-  "features": [
-    {
-      "type": "road",
-      "position": [
-        14,
-        0
-      ],
-      "size": [
-        1,
+    "id": "default",
+    "name": "Default world",
+    "map_size": [
+        20,
         20
-      ]
+    ],
+    "background_texture": {
+        "path": "MiniWorldSprites/Ground/TexturedGrass.png",
+        "origin": [
+            16,
+            0
+        ]
     },
-    {
-      "type": "road",
-      "position": [
-        0,
-        4
-      ],
-      "size": [
-        14,
-        1
-      ]
+    "incomplete_building": {
+        "path": "MiniWorldSprites/Buildings/Wood/Barracks.png",
+        "origin": [
+            16,
+            32
+        ]
     },
-    {
-      "type": "lake",
-      "position": [
-        5,
-        8
-      ],
-      "size": [
-        8,
-        5
-      ]
-    },
-    {
-      "type": "lake",
-      "position": [
-        2,
-        15
-      ],
-      "size": [
-        3,
-        3
-      ]
-    }
-  ]
+    "game_duration": 300,
+    "features": [
+        {
+            "type": "road",
+            "position": [
+                14,
+                0
+            ],
+            "size": [
+                1,
+                20
+            ]
+        },
+        {
+            "type": "road",
+            "position": [
+                0,
+                4
+            ],
+            "size": [
+                14,
+                1
+            ]
+        },
+        {
+            "type": "lake",
+            "position": [
+                5,
+                8
+            ],
+            "size": [
+                8,
+                5
+            ]
+        },
+        {
+            "type": "lake",
+            "position": [
+                2,
+                15
+            ],
+            "size": [
+                3,
+                3
+            ]
+        }
+    ]
 }

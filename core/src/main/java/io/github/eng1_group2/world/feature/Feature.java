@@ -1,6 +1,5 @@
 package io.github.eng1_group2.world.feature;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -26,7 +25,7 @@ public class Feature extends Actor implements HasBoundingBox {
         this.world = world;
         Vector2 screenPos = world.gridSquareToScreenPos(origin);
         this.setBounds(screenPos.x, screenPos.y, world.getGridUnit() * size.x(), world.getGridUnit() * size.y());
-        this.textureRegion = new TextureRegion(world.getMain().getAssetManager().get(this.type.texturePath(), Texture.class), this.type.textureOrigin().x(), this.type.textureOrigin().y(), 16, 16);
+        this.textureRegion = this.type.texture().getTextureRegion(world.getMain().getAssetManager(), new Vec2(16, 16));
         this.boundingBox = new Rectangle(origin.x(), origin.y(), size.x(), size.y());
         this.setTouchable(Touchable.disabled);
     }

@@ -1,14 +1,17 @@
 {
     "id": "lecture_theatre",
     "name": "Lecture Theatre",
-    "texture": "MiniWorldSprites/Buildings/Red/RedKeep.png",
+    "texture": {
+        "path": "MiniWorldSprites/Buildings/Red/RedKeep.png",
+        "origin": [
+            0,
+            0
+        ]
+    },
     "size": [
         2,
         2
     ],
-    "textureOrigin": [
-        0,
-        0
-    ],
-    "cost": 200000
+    "cost": 200000,
+    "buildTime": 40
 }

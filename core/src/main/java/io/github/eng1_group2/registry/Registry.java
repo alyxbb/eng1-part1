@@ -1,7 +1,7 @@
 package io.github.eng1_group2.registry;
 
 import com.mojang.serialization.Codec;
-import io.github.eng1_group2.utils.CodecAssetLoader;
+import io.github.eng1_group2.utils.loader.CodecAssetLoader;
 
 import java.util.HashMap;
 import java.util.Iterator;

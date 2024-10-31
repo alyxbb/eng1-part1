@@ -3,8 +3,6 @@ package io.github.eng1_group2.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,10 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
-import io.github.eng1_group2.utils.BuildException;
 import io.github.eng1_group2.utils.Vec2;
-import io.github.eng1_group2.world.building.Building;
-import io.github.eng1_group2.world.building.BuildingType;
+import io.github.eng1_group2.world.building.*;
 import io.github.eng1_group2.world.feature.Feature;
 import io.github.eng1_group2.world.feature.FeatureConfig;
 
@@ -28,7 +24,7 @@ import java.util.List;
 
 public class World extends InputAdapter {
     private final WorldConfig config;
-    private final List<Building> buildings;
+    private final List<AbstractBuilding> buildings;
     private final List<Feature> features;
     private final Main main;
     private final Table map;
@@ -41,9 +37,7 @@ public class World extends InputAdapter {
         this.config = config;
 
         this.stage = new Stage(this.main.getViewport());
-
-        Texture texture = main.getAssetManager().get(config.backgroundTexture(), Texture.class);
-        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(texture, 16, 0, 16, 16));
+        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
 
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);
@@ -91,7 +85,7 @@ public class World extends InputAdapter {
             cell.width(gridUnit);
             cell.height(gridUnit);
         }
-        for (Building building : this.buildings) {
+        for (AbstractBuilding building : this.buildings) {
             building.resize();
         }
         for (Feature feature : this.features) {
@@ -109,8 +103,8 @@ public class World extends InputAdapter {
         if (location.x() + buildingType.size().x() > config.mapSize().x() || location.y() + buildingType.size().y() > config.mapSize().y()) {
             throw new BuildException("building would extend outside grid");
         }
-        Building building = new Building(buildingType, location, this.main);
-        for (Building testBuilding : buildings) {
+        IncompleteBuilding building = new IncompleteBuilding(buildingType, location, this.main);
+        for (AbstractBuilding testBuilding : buildings) {
             if (testBuilding.overlaps(building)) {
                 throw new BuildException("building would intersect with a building");
             }
@@ -121,9 +115,19 @@ public class World extends InputAdapter {
             }
         }
         buildings.add(building);
+        main.getTimer().registerBuilding(building);
         this.stage.addActor(building);
         System.out.println("placed building");
         balance -= buildingType.cost();
+    }
+
+    public void completeBuilding(IncompleteBuilding incompleteBuilding) {
+        buildings.remove(incompleteBuilding);
+        incompleteBuilding.remove();
+        main.getTimer().unregisterBuilding(incompleteBuilding);
+        Building building = new Building(incompleteBuilding.getType(), new Vec2((int) incompleteBuilding.getBoundingBox().x, (int) incompleteBuilding.getBoundingBox().y), main);
+        buildings.add(building);
+        this.stage.addActor(building);
     }
 
     public void addFeature(FeatureConfig featureConfig) {
@@ -175,5 +179,9 @@ public class World extends InputAdapter {
 
     public int getBalance() {
         return balance;
+    }
+
+    public WorldConfig getConfig() {
+        return config;
     }
 }

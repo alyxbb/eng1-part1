@@ -20,6 +20,7 @@ public class UI {
     private final Table table;
     private final Label balanceIndicator;
     private final Label warningBox;
+    private final Label timer;
     private float startX;
     private BuildingType selectedBuilding;
 
@@ -33,7 +34,9 @@ public class UI {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("clicky clicky click click");
+                main.getTimer().togglePause();
+                String text = main.getTimer().isPaused() ? "unpause" : "pause";
+                pauseButton.setText(text);
             }
         });
         LabelStyle labelStyle = new LabelStyle();
@@ -41,6 +44,8 @@ public class UI {
         Label balanceIndicator = new Label("£", labelStyle);
         this.balanceIndicator = balanceIndicator;
         VerticalGroup buildingSelector = new VerticalGroup();
+
+        this.timer = new Label("00:00", labelStyle);
 
         for (BuildingType buildingType : main.getRegistries().getBuildingTypes()) {
             Button button = new TextButton(buildingType.name(), style);
@@ -67,6 +72,8 @@ public class UI {
         this.table.add(balanceIndicator).top().left();
         this.table.add(pauseButton).top().right();
         this.table.row();
+        this.table.add(timer);
+        this.table.row();
         this.table.add(buildingSelectorScroller).colspan(2).expand();
         this.table.row();
         this.table.add(warningBox).bottom().colspan(2);
@@ -87,6 +94,8 @@ public class UI {
 
     public void render() {
         this.balanceIndicator.setText(String.format("£%,d", main.getWorld().getBalance()));
+        int timeRemaining = (int) main.getTimer().getTimeRemaining();
+        this.timer.setText(String.format("%d:%d", timeRemaining / 60, timeRemaining % 60));
         Viewport viewport = main.getViewport();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);

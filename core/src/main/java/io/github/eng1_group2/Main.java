@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.registry.Registries;
-import io.github.eng1_group2.utils.CodecAssetLoader;
+import io.github.eng1_group2.utils.loader.CodecAssetLoader;
 import io.github.eng1_group2.world.World;
 
 
@@ -26,6 +26,7 @@ public class Main extends ApplicationAdapter {
     private World world;
     private UI ui;
     private InputMultiplexer inputMultiplexer;
+    private Timer timer;
 
     @Override
     public void create() {
@@ -42,8 +43,8 @@ public class Main extends ApplicationAdapter {
 
         viewport = new ScreenViewport();
         ui = new UI(this);
-
         world = new World(this, this.registries.getWorldConfigs().get("default"));
+        timer = new Timer(world);
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -59,6 +60,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        timer.update();
         world.render();
         ui.render();
     }
@@ -86,5 +88,9 @@ public class Main extends ApplicationAdapter {
 
     public AssetManager getAssetManager() {
         return assetManager;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 }
