@@ -24,7 +24,6 @@ public class UI {
     private float startX;
     private BuildingType selectedBuilding;
 
-
     public UI(Main main) {
         this.main = main;
 
@@ -47,7 +46,7 @@ public class UI {
 
         this.timer = new Label("00:00", labelStyle);
 
-        for (BuildingType buildingType : main.getRegistries().getBuildingTypes()) {
+        for (BuildingType buildingType : main.getRegistries().getDynamic().getBuildingTypes()) {
             Button button = new TextButton(buildingType.name(), style);
             buildingSelector.addActor(button);
             button.addListener(new ChangeListener() {
@@ -57,7 +56,7 @@ public class UI {
                 }
             });
         }
-        selectedBuilding = main.getRegistries().getBuildingTypes().iterator().next();
+        selectedBuilding = main.getRegistries().getDynamic().getBuildingTypes().iterator().next();
 
         labelStyle.font = new BitmapFont();
         this.warningBox = new Label("", labelStyle);

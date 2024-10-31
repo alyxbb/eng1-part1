@@ -8,16 +8,16 @@ import java.util.stream.Stream;
 
 public class RegistryOps<T, Wrapped extends DynamicOps<T>> implements DynamicOps<T> {
     private final Wrapped wrapped;
-    private final DynamicRegistries dynamicRegistries;
+    private final Registries registries;
 
-    public RegistryOps(Wrapped wrapped, DynamicRegistries dynamicRegistries) {
+    public RegistryOps(Wrapped wrapped, Registries registries) {
         this.wrapped = wrapped;
-        this.dynamicRegistries = dynamicRegistries;
+        this.registries = registries;
     }
 
     @SuppressWarnings("unchecked")
     public <O extends RegistryObject> DataResult<O> getFromRegistry(String registryName, String id) {
-        Registry<O> registry = (Registry<O>) this.dynamicRegistries.getByName(registryName);
+        Registry<O> registry = (Registry<O>) this.registries.getByName(registryName);
         if (!registry.contains(id)) {
             return DataResult.error(() -> String.format("`%s` does not exist in registry `%s`", id, registryName));
         }
@@ -26,7 +26,7 @@ public class RegistryOps<T, Wrapped extends DynamicOps<T>> implements DynamicOps
 
     @SuppressWarnings("unchecked")
     public <O extends RegistryObject> boolean existsInRegistry(String registryName, O o) {
-        Registry<O> registry = (Registry<O>) this.dynamicRegistries.getByName(registryName);
+        Registry<O> registry = (Registry<O>) this.registries.getByName(registryName);
         return registry.contains(o);
     }
 
