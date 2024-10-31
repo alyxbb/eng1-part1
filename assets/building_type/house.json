@@ -1,6 +1,7 @@
 {
     "id": "house",
     "name": "House",
+    "category": "accommodation",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedHouses.png",
         "origin": [

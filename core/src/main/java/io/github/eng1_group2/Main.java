@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.eng1_group2.registry.DynamicRegistries;
+import io.github.eng1_group2.registry.Registries;
 import io.github.eng1_group2.utils.loader.CodecAssetLoader;
 import io.github.eng1_group2.world.World;
 
@@ -19,7 +19,7 @@ import io.github.eng1_group2.world.World;
  */
 public class Main extends ApplicationAdapter {
     private AssetManager assetManager;
-    private DynamicRegistries dynamicRegistries;
+    private Registries registries;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
@@ -31,19 +31,19 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         this.assetManager = new AssetManager();
-        this.dynamicRegistries = new DynamicRegistries();
+        this.registries = new Registries();
 
-        CodecAssetLoader loader = new CodecAssetLoader(this.dynamicRegistries);
+        CodecAssetLoader loader = new CodecAssetLoader(this.registries);
         loader.prepare(this.assetManager);
 
         // Initialise and load all dynamic objects (building types, events, etc.)
-        this.dynamicRegistries.loadAllFrom(loader);
-        this.dynamicRegistries.loadAllTextures(this.assetManager);
-        this.dynamicRegistries.freezeAll();
+        this.registries.getDynamic().loadAllFrom(loader);
+        this.registries.getDynamic().loadAllTextures(this.assetManager);
+        this.registries.getDynamic().freezeAll();
 
         viewport = new ScreenViewport();
         ui = new UI(this);
-        world = new World(this, this.dynamicRegistries.getWorldConfigs().get("default"));
+        world = new World(this, this.registries.getDynamic().getWorldConfigs().get("default"));
         timer = new Timer(world);
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
@@ -70,8 +70,8 @@ public class Main extends ApplicationAdapter {
         assetManager.dispose();
     }
 
-    public DynamicRegistries getRegistries() {
-        return dynamicRegistries;
+    public Registries getRegistries() {
+        return registries;
     }
 
     public Viewport getViewport() {

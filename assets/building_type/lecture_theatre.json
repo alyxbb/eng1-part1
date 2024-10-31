@@ -1,6 +1,7 @@
 {
     "id": "lecture_theatre",
     "name": "Lecture Theatre",
+    "category": "teaching",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedKeep.png",
         "origin": [
