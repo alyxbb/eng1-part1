@@ -47,7 +47,10 @@ public class UI {
         this.timer = new Label("00:00", labelStyle);
 
         for (BuildingType buildingType : main.getRegistries().getDynamic().getBuildingTypes()) {
-            Button button = new TextButton(buildingType.name(), style);
+            TextButtonStyle buildingTypeStyle = new TextButtonStyle();
+            buildingTypeStyle.font = new BitmapFont();
+            buildingTypeStyle.fontColor = buildingType.category().getColor();
+            Button button = new TextButton(buildingType.name(), buildingTypeStyle);
             buildingSelector.addActor(button);
             button.addListener(new ChangeListener() {
                 @Override

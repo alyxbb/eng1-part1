@@ -1,6 +1,7 @@
 {
     "id": "user_placed",
     "name": "User placed",
+    "category": "teaching",
     "texture": {
         "path": "MiniWorldSprites/Buildings/Red/RedResources.png",
         "origin": [
