@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.registry.DynamicRegistries;
 import io.github.eng1_group2.utils.loader.CodecAssetLoader;
 import io.github.eng1_group2.world.World;
 
@@ -19,7 +19,7 @@ import io.github.eng1_group2.world.World;
  */
 public class Main extends ApplicationAdapter {
     private AssetManager assetManager;
-    private Registries registries;
+    private DynamicRegistries dynamicRegistries;
     private Viewport viewport;
     private SpriteBatch batch;
     private Texture image;
@@ -31,19 +31,19 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         this.assetManager = new AssetManager();
-        this.registries = new Registries();
+        this.dynamicRegistries = new DynamicRegistries();
 
-        CodecAssetLoader loader = new CodecAssetLoader(this.registries);
+        CodecAssetLoader loader = new CodecAssetLoader(this.dynamicRegistries);
         loader.prepare(this.assetManager);
 
         // Initialise and load all dynamic objects (building types, events, etc.)
-        this.registries.loadAllFrom(loader);
-        this.registries.loadAllTextures(this.assetManager);
-        this.registries.freezeAll();
+        this.dynamicRegistries.loadAllFrom(loader);
+        this.dynamicRegistries.loadAllTextures(this.assetManager);
+        this.dynamicRegistries.freezeAll();
 
         viewport = new ScreenViewport();
         ui = new UI(this);
-        world = new World(this, this.registries.getWorldConfigs().get("default"));
+        world = new World(this, this.dynamicRegistries.getWorldConfigs().get("default"));
         timer = new Timer(world);
 
         inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
@@ -70,8 +70,8 @@ public class Main extends ApplicationAdapter {
         assetManager.dispose();
     }
 
-    public Registries getRegistries() {
-        return registries;
+    public DynamicRegistries getRegistries() {
+        return dynamicRegistries;
     }
 
     public Viewport getViewport() {
