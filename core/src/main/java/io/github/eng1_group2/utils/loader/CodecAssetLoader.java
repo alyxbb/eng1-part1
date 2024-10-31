@@ -14,7 +14,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
-import io.github.eng1_group2.registry.Registries;
+import io.github.eng1_group2.registry.DynamicRegistries;
 import io.github.eng1_group2.registry.RegistryOps;
 
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class CodecAssetLoader {
     private List<String> assetList;
     private boolean loaded = false;
 
-    public CodecAssetLoader(Registries registries) {
-        registryOps = new RegistryOps<>(JsonOps.INSTANCE, registries);
+    public CodecAssetLoader(DynamicRegistries dynamicRegistries) {
+        registryOps = new RegistryOps<>(JsonOps.INSTANCE, dynamicRegistries);
     }
 
     public void prepare(AssetManager manager) {

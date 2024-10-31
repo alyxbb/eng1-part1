@@ -18,12 +18,10 @@ import java.util.Map;
 public class Registry<T extends RegistryObject> implements Iterable<T> {
     private final String name;
     private final Map<String, T> contents;
-    private final Codec<T> codec;
     private boolean frozen = false;
 
-    public Registry(String name, Codec<T> codec) {
+    public Registry(String name) {
         this.name = name;
-        this.codec = codec;
         this.contents = new HashMap<>();
     }
 
@@ -42,14 +40,7 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
         return this.contents.get(id);
     }
 
-    public void loadFrom(CodecAssetLoader loader) {
-        List<T> items = loader.findByType(this.name, this.codec);
-        for (var item : items) {
-            this.register(item);
-        }
-    }
-
-    public void register(T object) {
+    public T register(T object) {
         if (this.frozen) {
             throw new IllegalStateException("`" + this.name + "` is frozen");
         }
@@ -58,6 +49,7 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
             throw new IllegalArgumentException("`" + id + "` is already registered in `" + this.name + "`");
         }
         this.contents.put(id, object);
+        return object;
     }
 
     public void freeze() {
@@ -74,5 +66,21 @@ public class Registry<T extends RegistryObject> implements Iterable<T> {
 
     public String getName() {
         return name;
+    }
+
+    public static class Dynamic<T extends RegistryObject> extends Registry<T> {
+        private final Codec<T> codec;
+
+        public Dynamic(String name, Codec<T> codec) {
+            super(name);
+            this.codec = codec;
+        }
+
+        public void loadFrom(CodecAssetLoader loader) {
+            List<T> items = loader.findByType(this.getName(), this.codec);
+            for (var item : items) {
+                this.register(item);
+            }
+        }
     }
 }

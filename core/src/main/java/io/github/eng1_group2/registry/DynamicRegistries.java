@@ -11,24 +11,24 @@ import io.github.eng1_group2.world.feature.FeatureType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Registries {
+public class DynamicRegistries {
     private final Map<String, Registry<?>> registries;
-    private final Registry<BuildingType> buildingTypes;
-    private final Registry<WorldConfig> worldConfigs;
-    private final Registry<FeatureType> featureTypes;
+    private final Registry.Dynamic<BuildingType> buildingTypes;
+    private final Registry.Dynamic<WorldConfig> worldConfigs;
+    private final Registry.Dynamic<FeatureType> featureTypes;
 
-    public Registries() {
+    public DynamicRegistries() {
         this.registries = new HashMap<>();
         this.buildingTypes = this.createRegistry(BuildingType.REGISTRY_NAME, BuildingType.CODEC);
         this.featureTypes = this.createRegistry(FeatureType.REGISTRY_NAME, FeatureType.CODEC);
         this.worldConfigs = this.createRegistry(WorldConfig.REGISTRY_NAME, WorldConfig.CODEC);
     }
 
-    private <T extends RegistryObject> Registry<T> createRegistry(String name, Codec<T> codec) {
+    private <T extends RegistryObject> Registry.Dynamic<T> createRegistry(String name, Codec<T> codec) {
         if (registries.containsKey(name)) {
             throw new IllegalArgumentException("registry named `" + name + "` has already been created");
         }
-        Registry<T> registry = new Registry<>(name, codec);
+        Registry.Dynamic<T> registry = new Registry.Dynamic<>(name, codec);
         this.registries.put(name, registry);
         return registry;
     }
