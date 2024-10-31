@@ -1,16 +1,26 @@
 package io.github.eng1_group2;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.world.building.BuildingType;
+
+import java.awt.*;
 
 public class UI {
     public static final float UI_RATIO = 0.8f;
@@ -61,8 +71,11 @@ public class UI {
         }
         selectedBuilding = main.getRegistries().getDynamic().getBuildingTypes().iterator().next();
 
-        labelStyle.font = new BitmapFont();
-        this.warningBox = new Label("", labelStyle);
+        LabelStyle warningLabelStyle = new LabelStyle(new BitmapFont(), Color.RED);
+        this.warningBox = new Label("", warningLabelStyle);
+        this.warningBox.setAlignment(Align.bottom);
+        this.warningBox.setWrap(true);
+
 
         ScrollPane buildingSelectorScroller = new ScrollPane(buildingSelector);
 
@@ -78,7 +91,7 @@ public class UI {
         this.table.row();
         this.table.add(buildingSelectorScroller).colspan(2).expand();
         this.table.row();
-        this.table.add(warningBox).bottom().colspan(2);
+        this.table.add(warningBox).bottom().colspan(2).height(75);
     }
 
     public Stage getStage() {
@@ -92,12 +105,13 @@ public class UI {
         this.table.setPosition(startX, 0);
         this.table.setWidth(viewport.getScreenWidth() - startX);
         this.table.setHeight(viewport.getWorldHeight());
+        this.table.getCell(this.warningBox).width(table.getWidth());
     }
 
     public void render() {
         this.balanceIndicator.setText(String.format("£%,d", main.getWorld().getBalance()));
         int timeRemaining = (int) main.getTimer().getTimeRemaining();
-        this.timer.setText(String.format("%d:%d", timeRemaining / 60, timeRemaining % 60));
+        this.timer.setText(String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60));
         Viewport viewport = main.getViewport();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
@@ -117,5 +131,11 @@ public class UI {
 
     public void setWarningMessage(String message) {
         this.warningBox.setText(message);
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                warningBox.setText("");
+            }
+        }, 5);
     }
 }
