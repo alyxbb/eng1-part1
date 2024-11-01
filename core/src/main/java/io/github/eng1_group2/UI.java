@@ -33,6 +33,7 @@ public class UI {
     private final Label timer;
     private float startX;
     private BuildingType selectedBuilding;
+    private Timer.Task hideWarningTask;
 
     public UI(Main main) {
         this.main = main;
@@ -131,11 +132,15 @@ public class UI {
 
     public void setWarningMessage(String message) {
         this.warningBox.setText(message);
-        Timer.schedule(new Timer.Task() {
+        if (this.hideWarningTask != null){
+            this.hideWarningTask.cancel();
+        }
+        this.hideWarningTask = new Timer.Task() {
             @Override
             public void run() {
                 warningBox.setText("");
             }
-        }, 5);
+        };
+        Timer.schedule(this.hideWarningTask,5);
     }
 }
