@@ -40,9 +40,6 @@ public class World extends InputAdapter {
         this.stage = new Stage(this.main.getViewport());
         this.buildings = new ArrayList<>();
         this.features = new ArrayList<>();
-        for (FeatureConfig feature : config.features()) {
-            this.addFeature(feature);
-        }
 
         TextureRegionDrawable backgroundTexture = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
 
@@ -70,6 +67,11 @@ public class World extends InputAdapter {
                 });
             }
             this.map.row();
+        }
+
+        // this needs to be at the bottom otherwise features render behind the background. ask alyx for more information
+        for (FeatureConfig feature : config.features()) {
+            this.addFeature(feature);
         }
     }
 
@@ -159,8 +161,7 @@ public class World extends InputAdapter {
         if (config.mapSize().x() <= gridPos.x() || config.mapSize().y() <= gridPos.y()) {
             throw new IllegalArgumentException("gridPos is too large");
         }
-        Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
-        return screenPos;
+        return new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
     }
 
     public Main getMain() {
