@@ -5,16 +5,18 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -32,15 +34,37 @@ public class UI {
     private final Label warningBox;
     private final Label timer;
     private float startX;
+    private final VerticalGroup buildingSelector;
     private BuildingType selectedBuilding;
     private Timer.Task hideWarningTask;
 
     public UI(Main main) {
         this.main = main;
+        this.stage = new Stage(this.main.getViewport());
 
-        TextButtonStyle style = new TextButtonStyle();
-        style.font = new BitmapFont();
-        TextButton pauseButton = new TextButton("pause", style);
+        // styles
+        // Do we want to add our own font?
+        BitmapFont font = new BitmapFont();
+        // label styles
+        LabelStyle whiteLabelStyle = new LabelStyle(font,Color.WHITE);
+        LabelStyle greenLabelStyle = new LabelStyle(font,Color.GREEN);
+        LabelStyle redLabelStyle = new LabelStyle(new BitmapFont(), Color.RED);
+        // buttons styles
+        TextButtonStyle textButtonStyle = new TextButtonStyle();
+        textButtonStyle.font = font;
+        ButtonStyle buildingTypeStyle = new ButtonStyle();
+
+        //create the ui layout table
+        this.table = new Table();
+        this.table.setDebug(DEBUG, true);
+        this.stage.addActor(this.table);
+
+        //balance
+        balanceIndicator = new Label("£", whiteLabelStyle);
+        this.table.add(balanceIndicator).top().left();
+
+        // pause button
+        TextButton pauseButton = new TextButton("pause", textButtonStyle);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -49,49 +73,61 @@ public class UI {
                 pauseButton.setText(text);
             }
         });
-        LabelStyle labelStyle = new LabelStyle();
-        labelStyle.font = new BitmapFont();
-        Label balanceIndicator = new Label("£", labelStyle);
-        this.balanceIndicator = balanceIndicator;
-        VerticalGroup buildingSelector = new VerticalGroup();
+        this.table.add(pauseButton).top().right();
+        this.table.row();
 
-        this.timer = new Label("00:00", labelStyle);
+        //timer
+        this.timer = new Label("00:00", whiteLabelStyle);
+        this.table.add(timer);
+        this.table.row();
 
+        //building Selector
+        buildingSelector = new VerticalGroup();
+        ScrollPane buildingSelectorScroller = new ScrollPane(buildingSelector);
+        this.table.add(buildingSelectorScroller).colspan(2).expand();
+        this.table.row();
+
+
+        //add buildings to building selector
         for (BuildingType buildingType : main.getRegistries().getDynamic().getBuildingTypes()) {
-            TextButtonStyle buildingTypeStyle = new TextButtonStyle();
-            buildingTypeStyle.font = new BitmapFont();
-            buildingTypeStyle.fontColor = buildingType.category().getColor();
-            Button button = new TextButton(buildingType.name(), buildingTypeStyle);
+
+            //the button
+            Button button = new Button(buildingTypeStyle);
+            button.setDebug(DEBUG,true);
             buildingSelector.addActor(button);
+
+
+
+            //add image to button
+            button.add(new Image(new TextureRegionDrawable(buildingType.texture().getTextureRegion(main.getAssetManager(),buildingType.size().mul(16))))).width(75).height(75);
+
+            //add text to button
+            //new line at start is to fix a weird bug where the first line of the first item gets cut off.
+            Label label = new Label(String.format("\nName: %s\nCost: £%,d\nBuildTime: %02d:%02d\nCategory: %s",buildingType.name(),buildingType.cost(),(int) (buildingType.buildTime()/60),(int)buildingType.buildTime()%60,buildingType.category().getName()),redLabelStyle);
+            button.add(label);
+
+            //add listener
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
+                    for (Actor child:buildingSelector.getChildren()){
+                        ((Label)((Button)child).getCells().get(1).getActor()).setStyle(redLabelStyle);
+                    }
+                    label.setStyle(greenLabelStyle);
                     selectedBuilding = buildingType;
                 }
             });
-        }
-        selectedBuilding = main.getRegistries().getDynamic().getBuildingTypes().iterator().next();
 
-        LabelStyle warningLabelStyle = new LabelStyle(new BitmapFont(), Color.RED);
-        this.warningBox = new Label("", warningLabelStyle);
+
+        }
+        //set default building
+        ((Button)buildingSelector.getChildren().get(0)).toggle();
+
+
+        //warning box
+        this.warningBox = new Label("", redLabelStyle);
         this.warningBox.setAlignment(Align.bottom);
         this.warningBox.setWrap(true);
-
-
-        ScrollPane buildingSelectorScroller = new ScrollPane(buildingSelector);
-
-        this.table = new Table();
-
-        this.stage = new Stage(this.main.getViewport());
-        this.stage.addActor(this.table);
-        this.table.setDebug(DEBUG, true);
-        this.table.add(balanceIndicator).top().left();
-        this.table.add(pauseButton).top().right();
-        this.table.row();
-        this.table.add(timer);
-        this.table.row();
-        this.table.add(buildingSelectorScroller).colspan(2).expand();
-        this.table.row();
         this.table.add(warningBox).bottom().colspan(2).height(75);
     }
 
@@ -99,7 +135,7 @@ public class UI {
         return stage;
     }
 
-    // in the constructor the viewport has no width but resize always gets called at init
+    // in the constructor the viewport has no width but resize always gets called at startup so we do all the sizing logic here
     public void resize() {
         Viewport viewport = main.getViewport();
         this.startX = viewport.getWorldWidth() * UI_RATIO;
