@@ -65,10 +65,10 @@ public class World extends InputAdapter {
                     public void changed(ChangeEvent event, Actor actor) {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
-                            main.getAssetManager().get(config.soundConfig().buildSuccess(), Sound.class).play();
+                            config.soundConfig().getBuildSuccessSound(main.getAssetManager()).play();
                         } catch (BuildException e) {
                             main.getUi().setWarningMessage(e.getMessage());
-                            main.getAssetManager().get(config.soundConfig().buildError(), Sound.class).play();
+                            config.soundConfig().getBuildErrorSound(main.getAssetManager()).play();
                         }
                     }
                 });
@@ -147,7 +147,7 @@ public class World extends InputAdapter {
         Building building = new Building(incompleteBuilding.getType(), new Vec2((int) incompleteBuilding.getBoundingBox().x, (int) incompleteBuilding.getBoundingBox().y), main);
         buildings.add(building);
         this.stage.addActor(building);
-        main.getAssetManager().get(config.soundConfig().buildComplete(), Sound.class).play();
+        config.soundConfig().getBuildCompleteSound(main.getAssetManager()).play();
     }
 
     public void addFeature(FeatureConfig featureConfig) {

@@ -2,6 +2,7 @@ package io.github.eng1_group2.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
@@ -65,6 +66,18 @@ public record WorldConfig(
                 new Pair<>(com.badlogic.gdx.audio.Sound.class, buildSuccess),
                 new Pair<>(com.badlogic.gdx.audio.Sound.class, buildComplete)
             );
+        }
+
+        public Sound getBuildErrorSound(AssetManager assetManager){
+            return assetManager.get(buildError, Sound.class);
+        }
+
+        public Sound getBuildSuccessSound(AssetManager assetManager) {
+            return assetManager.get(buildSuccess, Sound.class);
+        }
+
+        public Sound getBuildCompleteSound(AssetManager assetManager) {
+            return  assetManager.get(buildComplete, Sound.class);
         }
     }
 }
