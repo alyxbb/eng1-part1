@@ -141,16 +141,16 @@ public class UI {
         this.balanceIndicator.setText(String.format("£%,d", main.getWorld().getBalance()));
         int timeRemaining = (int) main.getTimer().getTimeRemaining();
         this.timer.setText(String.format("%02d:%02d", timeRemaining / 60, timeRemaining % 60));
-        Viewport viewport = main.getViewport();
+
+        //draw a line separating the ui from the map
         ShapeRenderer shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+        shapeRenderer.setProjectionMatrix(main.getViewport().getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1f, 1f, 1f, 1f);
-        // start of ui line
-        shapeRenderer.line(startX, 0, startX, viewport.getWorldHeight());
+        shapeRenderer.line(startX, 0, startX, main.getViewport().getWorldHeight());
         shapeRenderer.end();
-        float delta = Gdx.graphics.getDeltaTime();
-        stage.act(delta);
+
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 

@@ -19,6 +19,7 @@ public class Timer {
     }
 
     public void update() {
+        // this does all the logic related to time passing
         if (paused) {
             return;
         }
