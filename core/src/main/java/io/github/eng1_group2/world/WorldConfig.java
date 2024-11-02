@@ -1,9 +1,11 @@
 package io.github.eng1_group2.world;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.eng1_group2.registry.HasDependencies;
 import io.github.eng1_group2.registry.RegistryObject;
-import io.github.eng1_group2.registry.TexturedRegistryObject;
 import io.github.eng1_group2.utils.TextureConfig;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.feature.FeatureConfig;
@@ -18,7 +20,7 @@ public record WorldConfig(
     List<FeatureConfig> features,
     TextureConfig incompleteBuilding,
     float gameDuration
-) implements RegistryObject, TexturedRegistryObject {
+) implements RegistryObject, HasDependencies {
     public static final String REGISTRY_NAME = "world";
 
     public static final Codec<WorldConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -32,10 +34,10 @@ public record WorldConfig(
     ).apply(instance, WorldConfig::new));
 
     @Override
-    public List<String> getTexturePaths() {
+    public List<Pair<Class<?>, String>> getDependencies() {
         return List.of(
-            this.backgroundTexture().path(),
-            this.incompleteBuilding.path()
+            new Pair<>(Texture.class, this.backgroundTexture().path()),
+            new Pair<>(Texture.class, this.incompleteBuilding.path())
         );
     }
 }

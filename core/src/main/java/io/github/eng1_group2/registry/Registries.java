@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DynamicOps;
 import io.github.eng1_group2.utils.loader.CodecAssetLoader;
-import io.github.eng1_group2.utils.loader.TextureLoader;
+import io.github.eng1_group2.utils.loader.ObjectLoader;
 import io.github.eng1_group2.world.WorldConfig;
 import io.github.eng1_group2.world.building.BuildingType;
 import io.github.eng1_group2.world.building.categories.BuildingCategories;
@@ -80,9 +80,9 @@ public class Registries {
         }
 
         public void loadAllTextures(AssetManager manager) {
-            TextureLoader.loadTextures(manager, this.buildingTypes);
-            TextureLoader.loadTextures(manager, this.featureTypes);
-            TextureLoader.loadTextures(manager, this.worldConfigs);
+            ObjectLoader.loadDependencies(manager, this.buildingTypes);
+            ObjectLoader.loadDependencies(manager, this.featureTypes);
+            ObjectLoader.loadDependencies(manager, this.worldConfigs);
         }
 
         public void freezeAll() {
