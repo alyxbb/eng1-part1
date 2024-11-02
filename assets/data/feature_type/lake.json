@@ -1,0 +1,11 @@
+{
+    "id": "lake",
+    "name": "Lake",
+    "texture": {
+        "path": "textures/MiniWorldSprites/Ground/Shore.png",
+        "origin": [
+            64,
+            0
+        ]
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "id": "road",
+    "name": "Road",
+    "texture": {
+        "path": "textures/MiniWorldSprites/Ground/Grass.png",
+        "origin": [
+            64,
+            0
+        ]
+    }
+}

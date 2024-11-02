@@ -3,6 +3,7 @@ package io.github.eng1_group2.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -64,8 +65,12 @@ public class World extends InputAdapter {
                     public void changed(ChangeEvent event, Actor actor) {
                         try {
                             addBuilding(main.getUi().getSelectedBuilding(), new Vec2(gridX, gridY));
+                            main.getAssetManager().get(config.soundConfig().buildSuccess(), Sound.class).play();
+
+
                         } catch (BuildException e) {
                             main.getUi().setWarningMessage(e.getMessage());
+                            main.getAssetManager().get(config.soundConfig().buildError(), Sound.class).play();
                         }
                     }
                 });
@@ -144,6 +149,8 @@ public class World extends InputAdapter {
         Building building = new Building(incompleteBuilding.getType(), new Vec2((int) incompleteBuilding.getBoundingBox().x, (int) incompleteBuilding.getBoundingBox().y), main);
         buildings.add(building);
         this.stage.addActor(building);
+        main.getAssetManager().get(config.soundConfig().buildComplete(), Sound.class).play();
+
     }
 
     public void addFeature(FeatureConfig featureConfig) {
