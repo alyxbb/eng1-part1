@@ -6,10 +6,16 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -95,7 +101,7 @@ public class UI {
 
             //add text to button
             //new line at start is to fix a weird bug where the first line of the first item gets cut off.
-            Label label = new Label(String.format("\nName: %s\nCost: £%,d\nBuildTime: %02d:%02d\nCategory: %s", buildingType.name(), buildingType.cost(), (int) (buildingType.buildTime() / 60), (int) buildingType.buildTime() % 60, buildingType.category().getName()), redLabelStyle);
+            Label label = new Label(String.format("\nName: %s\nCost: £%,d\nBuildTime: %02d:%02d\nCategory: %s", buildingType.name(), buildingType.cost(), (int) (buildingType.buildTime() / 60), (int) buildingType.buildTime() % 60, buildingType.category().name()), redLabelStyle);
             button.add(label);
 
             //add listener
