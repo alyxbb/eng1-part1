@@ -1,0 +1,18 @@
+{
+    "id": "user_placed",
+    "name": "User placed",
+    "category": "teaching",
+    "texture": {
+        "path": "textures/MiniWorldSprites/Buildings/Red/RedResources.png",
+        "origin": [
+            16,
+            48
+        ]
+    },
+    "size": [
+        1,
+        1
+    ],
+    "cost": 10000,
+    "buildTime": 10
+}

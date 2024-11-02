@@ -55,7 +55,7 @@ public class CodecAssetLoader {
         }
         List<T> assets = new ArrayList<>();
         for (String asset : assetList) {
-            if (asset.startsWith(typeName + "/") && asset.endsWith(".json")) {
+            if (asset.startsWith("data/" + typeName + "/") && asset.endsWith(".json")) {
                 // Found one!!!
                 String content = this.manager.get(asset);
                 JsonElement ele = JsonParser.parseString(content);
