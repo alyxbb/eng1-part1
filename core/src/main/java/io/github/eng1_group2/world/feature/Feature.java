@@ -54,4 +54,8 @@ public class Feature extends Actor implements HasBoundingBox {
     public Rectangle getBoundingBox() {
         return this.boundingBox;
     }
+
+    public FeatureType getType() {
+        return type;
+    }
 }

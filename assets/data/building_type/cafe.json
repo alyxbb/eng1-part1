@@ -14,5 +14,6 @@
         2
     ],
     "cost": 50000,
-    "buildTime": 20
+    "buildTime": 20,
+    "can_place_on": ["lake"]
 }

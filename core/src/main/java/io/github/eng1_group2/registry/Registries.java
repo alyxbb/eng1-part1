@@ -68,27 +68,27 @@ public class Registries {
         private final Registry.Dynamic<FeatureType> featureTypes;
 
         private Dynamic(Registries registries) {
-            this.buildingTypes = registries.createDynamicRegistry(BuildingType.REGISTRY_NAME, BuildingType.CODEC);
             this.featureTypes = registries.createDynamicRegistry(FeatureType.REGISTRY_NAME, FeatureType.CODEC);
+            this.buildingTypes = registries.createDynamicRegistry(BuildingType.REGISTRY_NAME, BuildingType.CODEC);
             this.worldConfigs = registries.createDynamicRegistry(WorldConfig.REGISTRY_NAME, WorldConfig.CODEC);
         }
 
         public void loadAllFrom(CodecAssetLoader loader) {
-            this.buildingTypes.loadFrom(loader);
             this.featureTypes.loadFrom(loader);
+            this.buildingTypes.loadFrom(loader);
             this.worldConfigs.loadFrom(loader);
         }
 
         public void loadAllTextures(AssetManager manager) {
-            ObjectLoader.loadDependencies(manager, this.buildingTypes);
             ObjectLoader.loadDependencies(manager, this.featureTypes);
+            ObjectLoader.loadDependencies(manager, this.buildingTypes);
             ObjectLoader.loadDependencies(manager, this.worldConfigs);
         }
 
         public void freezeAll() {
+            this.featureTypes.freeze();
             this.buildingTypes.freeze();
             this.worldConfigs.freeze();
-            this.featureTypes.freeze();
         }
 
         public Registry<BuildingType> getBuildingTypes() {
