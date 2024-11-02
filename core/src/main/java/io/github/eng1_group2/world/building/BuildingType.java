@@ -12,7 +12,8 @@ import java.util.List;
 
 public record BuildingType(String id, String name, TextureConfig texture, Vec2 size,
                            int cost,
-                           float buildTime, BuildingCategory category) implements RegistryObject, TexturedRegistryObject {
+                           float buildTime,
+                           BuildingCategory category) implements RegistryObject, TexturedRegistryObject {
     public static final String REGISTRY_NAME = "building_type";
 
     public static final Codec<BuildingType> CODEC = RecordCodecBuilder.create(instance -> instance.group(

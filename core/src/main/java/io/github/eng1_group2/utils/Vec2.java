@@ -15,6 +15,6 @@ public record Vec2(int x, int y) {
     }
 
     public Vec2 mul(int i) {
-        return new Vec2(x*i, y*i);
+        return new Vec2(x * i, y * i);
     }
 }

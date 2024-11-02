@@ -11,13 +11,14 @@ public class BuildingCategories {
     private static final BuildingCategory NOM_NOMS = register("nom_noms", "Nom Noms", Color.GREEN);
     private static final BuildingCategory RECREATION = register("recreation", "Recreation", Color.MAGENTA);
 
-    private static BuildingCategory register(String id, String name, Color colour) {
-        return REGISTRY.register(new BuildingCategory(id, name, colour));
-    }
-
     static {
         REGISTRY.freeze();
     }
 
-    private BuildingCategories() {}
+    private BuildingCategories() {
+    }
+
+    private static BuildingCategory register(String id, String name, Color colour) {
+        return REGISTRY.register(new BuildingCategory(id, name, colour));
+    }
 }

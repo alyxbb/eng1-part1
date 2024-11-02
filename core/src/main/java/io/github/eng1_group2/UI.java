@@ -5,15 +5,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -21,8 +16,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.eng1_group2.world.building.BuildingType;
-
-import java.awt.*;
 
 public class UI {
     public static final float UI_RATIO = 0.8f;
@@ -33,8 +26,8 @@ public class UI {
     private final Label balanceIndicator;
     private final Label warningBox;
     private final Label timer;
-    private float startX;
     private final VerticalGroup buildingSelector;
+    private float startX;
     private BuildingType selectedBuilding;
     private Timer.Task hideWarningTask;
 
@@ -46,8 +39,8 @@ public class UI {
         // Do we want to add our own font?
         BitmapFont font = new BitmapFont();
         // label styles
-        LabelStyle whiteLabelStyle = new LabelStyle(font,Color.WHITE);
-        LabelStyle greenLabelStyle = new LabelStyle(font,Color.GREEN);
+        LabelStyle whiteLabelStyle = new LabelStyle(font, Color.WHITE);
+        LabelStyle greenLabelStyle = new LabelStyle(font, Color.GREEN);
         LabelStyle redLabelStyle = new LabelStyle(new BitmapFont(), Color.RED);
         // buttons styles
         TextButtonStyle textButtonStyle = new TextButtonStyle();
@@ -93,25 +86,24 @@ public class UI {
 
             //the button
             Button button = new Button(buildingTypeStyle);
-            button.setDebug(DEBUG,true);
+            button.setDebug(DEBUG, true);
             buildingSelector.addActor(button);
 
 
-
             //add image to button
-            button.add(new Image(new TextureRegionDrawable(buildingType.texture().getTextureRegion(main.getAssetManager(),buildingType.size().mul(16))))).width(75).height(75);
+            button.add(new Image(new TextureRegionDrawable(buildingType.texture().getTextureRegion(main.getAssetManager(), buildingType.size().mul(16))))).width(75).height(75);
 
             //add text to button
             //new line at start is to fix a weird bug where the first line of the first item gets cut off.
-            Label label = new Label(String.format("\nName: %s\nCost: £%,d\nBuildTime: %02d:%02d\nCategory: %s",buildingType.name(),buildingType.cost(),(int) (buildingType.buildTime()/60),(int)buildingType.buildTime()%60,buildingType.category().getName()),redLabelStyle);
+            Label label = new Label(String.format("\nName: %s\nCost: £%,d\nBuildTime: %02d:%02d\nCategory: %s", buildingType.name(), buildingType.cost(), (int) (buildingType.buildTime() / 60), (int) buildingType.buildTime() % 60, buildingType.category().getName()), redLabelStyle);
             button.add(label);
 
             //add listener
             button.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    for (Actor child:buildingSelector.getChildren()){
-                        ((Label)((Button)child).getCells().get(1).getActor()).setStyle(redLabelStyle);
+                    for (Actor child : buildingSelector.getChildren()) {
+                        ((Label) ((Button) child).getCells().get(1).getActor()).setStyle(redLabelStyle);
                     }
                     label.setStyle(greenLabelStyle);
                     selectedBuilding = buildingType;
@@ -121,7 +113,7 @@ public class UI {
 
         }
         //set default building
-        ((Button)buildingSelector.getChildren().get(0)).toggle();
+        ((Button) buildingSelector.getChildren().get(0)).toggle();
 
 
         //warning box
