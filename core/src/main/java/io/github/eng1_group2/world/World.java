@@ -30,20 +30,31 @@ public class World extends InputAdapter {
     private final Table map;
     private final Stage stage;
     private int gridUnit;
+
+    // TODO: move this to worldConfig
     private int balance = 10000000;
 
     public World(Main main, WorldConfig config) {
         this.main = main;
         this.config = config;
-
         this.stage = new Stage(this.main.getViewport());
-        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
+        this.buildings = new ArrayList<>();
+        this.features = new ArrayList<>();
+        for (FeatureConfig feature : config.features()) {
+            this.addFeature(feature);
+        }
 
+        TextureRegionDrawable backgroundTexture = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
+
+        //create the map, it's a table of buttons, so we can detect where the user clicked
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);
+        this.map.setPosition(0, 0);
+        this.stage.addActor(this.map);
+
         for (int i = 0; i < config.mapSize().y(); i++) {
             for (int j = 0; j < config.mapSize().x(); j++) {
-                Button button = new Button(textureRegionDrawable);
+                Button button = new Button(backgroundTexture);
                 this.map.add(button);
                 int gridX = j;
                 int gridY = config.mapSize().y() - i - 1;
@@ -60,14 +71,6 @@ public class World extends InputAdapter {
             }
             this.map.row();
         }
-        this.stage.addActor(this.map);
-
-        this.features = new ArrayList<>();
-        this.buildings = new ArrayList<>();
-
-        for (FeatureConfig feature : config.features()) {
-            this.addFeature(feature);
-        }
     }
 
     public void render() {
@@ -77,10 +80,14 @@ public class World extends InputAdapter {
     }
 
     public void resize() {
+
+        //gridUnit is the size of each unit on the grid. we make the grid as large as it can be while making each cell square
         gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / config.mapSize().x(), main.getViewport().getWorldHeight() / config.mapSize().y()));
-        this.map.setPosition(0, 0);
+
         this.map.setWidth(gridUnit * config.mapSize().x());
         this.map.setHeight(gridUnit * config.mapSize().y());
+        //despite the map having its size set, for some reason it decides the table inside the table object shouldn't
+        // take up all the space it's been given unless you tell the cells to have the right size
         for (Cell<?> cell : this.map.getCells()) {
             cell.width(gridUnit);
             cell.height(gridUnit);
@@ -115,16 +122,19 @@ public class World extends InputAdapter {
             }
         }
         buildings.add(building);
+        // register it with the timer, so it can become a building after its construction time has passed
         main.getTimer().registerBuilding(building);
         this.stage.addActor(building);
-        System.out.println("placed building");
         balance -= buildingType.cost();
     }
 
     public void completeBuilding(IncompleteBuilding incompleteBuilding) {
+        // delete the old incomplete building
         buildings.remove(incompleteBuilding);
         incompleteBuilding.remove();
         main.getTimer().unregisterBuilding(incompleteBuilding);
+
+        //create the building with the details from incomplete building
         Building building = new Building(incompleteBuilding.getType(), new Vec2((int) incompleteBuilding.getBoundingBox().x, (int) incompleteBuilding.getBoundingBox().y), main);
         buildings.add(building);
         this.stage.addActor(building);
@@ -144,25 +154,13 @@ public class World extends InputAdapter {
 
     public Vector2 gridSquareToScreenPos(Vec2 gridPos) {
         if (gridPos.x() < 0 || gridPos.y() < 0) {
-            throw new IllegalArgumentException("gridpos must be positive");
+            throw new IllegalArgumentException("gridPos must be positive");
         }
         if (config.mapSize().x() <= gridPos.x() || config.mapSize().y() <= gridPos.y()) {
-            throw new IllegalArgumentException("gridpos is too large");
+            throw new IllegalArgumentException("gridPos is too large");
         }
         Vector2 screenPos = new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
         return screenPos;
-    }
-
-
-    public Vec2 screenPosToGridSquare(Vector2 screenPos) {
-        if (screenPos.x < 0 || screenPos.y < 0) {
-            throw new IllegalArgumentException("screenpos must be positive");
-        }
-        Vec2 gridPos = new Vec2((int) screenPos.x / gridUnit, (int) screenPos.y / gridUnit);
-        if (gridPos.x() >= config.mapSize().x() || gridPos.y() >= config.mapSize().y()) {
-            throw new IllegalArgumentException("position is not in the grid");
-        }
-        return gridPos;
     }
 
     public Main getMain() {

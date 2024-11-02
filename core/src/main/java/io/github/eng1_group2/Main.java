@@ -25,7 +25,6 @@ public class Main extends ApplicationAdapter {
     private Texture image;
     private World world;
     private UI ui;
-    private InputMultiplexer inputMultiplexer;
     private Timer timer;
 
     @Override
@@ -41,13 +40,12 @@ public class Main extends ApplicationAdapter {
         this.registries.getDynamic().loadAllTextures(this.assetManager);
         this.registries.getDynamic().freezeAll();
 
-        viewport = new ScreenViewport();
-        ui = new UI(this);
-        world = new World(this, this.registries.getDynamic().getWorldConfigs().get("default"));
-        timer = new Timer(world);
+        this.viewport = new ScreenViewport();
+        this.ui = new UI(this);
+        this.world = new World(this, this.registries.getDynamic().getWorldConfigs().get("default"));
+        this.timer = new Timer(world);
 
-        inputMultiplexer = new InputMultiplexer(world.getStage(), ui.getStage());
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        Gdx.input.setInputProcessor(new InputMultiplexer(world.getStage(),ui.getStage()));
     }
 
     @Override
