@@ -45,7 +45,7 @@ public class Main extends ApplicationAdapter {
         this.world = new World(this, this.registries.getDynamic().getWorldConfigs().get("default"));
         this.timer = new Timer(world);
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(world.getStage(),ui.getStage()));
+        Gdx.input.setInputProcessor(new InputMultiplexer(world.getStage(), ui.getStage()));
     }
 
     @Override

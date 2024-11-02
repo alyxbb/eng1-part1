@@ -46,7 +46,7 @@ public class World extends InputAdapter {
 
         TextureRegionDrawable backgroundTexture = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
 
-        //create the map, it's a table of buttons, so we can detect where the user clicked
+        // create the map, it's a table of buttons, so we can detect where the user clicked
         this.map = new Table();
         this.map.setDebug(UI.DEBUG, true);
         this.map.setPosition(0, 0);
@@ -81,12 +81,12 @@ public class World extends InputAdapter {
 
     public void resize() {
 
-        //gridUnit is the size of each unit on the grid. we make the grid as large as it can be while making each cell square
+        // gridUnit is the size of each unit on the grid. we make the grid as large as it can be while making each cell square
         gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / config.mapSize().x(), main.getViewport().getWorldHeight() / config.mapSize().y()));
 
         this.map.setWidth(gridUnit * config.mapSize().x());
         this.map.setHeight(gridUnit * config.mapSize().y());
-        //despite the map having its size set, for some reason it decides the table inside the table object shouldn't
+        // despite the map having its size set, for some reason it decides the table inside the table object shouldn't
         // take up all the space it's been given unless you tell the cells to have the right size
         for (Cell<?> cell : this.map.getCells()) {
             cell.width(gridUnit);
