@@ -2,18 +2,16 @@ package io.github.eng1_group2.world.building;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.github.eng1_group2.registry.HasDependencies;
 import io.github.eng1_group2.registry.RegistryObject;
-import io.github.eng1_group2.registry.TexturedRegistryObject;
 import io.github.eng1_group2.utils.TextureConfig;
 import io.github.eng1_group2.utils.Vec2;
 import io.github.eng1_group2.world.building.categories.BuildingCategory;
 
-import java.util.List;
-
 public record BuildingType(String id, String name, TextureConfig texture, Vec2 size,
                            int cost,
                            float buildTime,
-                           BuildingCategory category) implements RegistryObject, TexturedRegistryObject {
+                           BuildingCategory category) implements RegistryObject, HasDependencies.Textured {
     public static final String REGISTRY_NAME = "building_type";
 
     public static final Codec<BuildingType> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -27,7 +25,7 @@ public record BuildingType(String id, String name, TextureConfig texture, Vec2 s
     ).apply(instance, BuildingType::new));
 
     @Override
-    public List<String> getTexturePaths() {
-        return List.of(texture.path());
+    public String texturePath() {
+        return texture.path();
     }
 }
