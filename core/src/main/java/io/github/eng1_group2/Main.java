@@ -40,9 +40,10 @@ public class Main extends ApplicationAdapter {
         this.registries.getDynamic().loadAllTextures(this.assetManager);
         this.registries.getDynamic().freezeAll();
 
+        String worldConfig = System.getProperty("unisim.world_config", "default");
         this.viewport = new ScreenViewport();
         this.ui = new UI(this);
-        this.world = new World(this, this.registries.getDynamic().getWorldConfigs().get("default"));
+        this.world = new World(this, this.registries.getDynamic().getWorldConfigs().get(worldConfig));
         this.timer = new Timer(world);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(world.getStage(), ui.getStage()));

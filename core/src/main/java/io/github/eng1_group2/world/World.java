@@ -3,7 +3,6 @@ package io.github.eng1_group2.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,11 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import io.github.eng1_group2.Main;
 import io.github.eng1_group2.UI;
 import io.github.eng1_group2.utils.Vec2;
-import io.github.eng1_group2.world.building.AbstractBuilding;
-import io.github.eng1_group2.world.building.BuildException;
-import io.github.eng1_group2.world.building.Building;
-import io.github.eng1_group2.world.building.BuildingType;
-import io.github.eng1_group2.world.building.IncompleteBuilding;
+import io.github.eng1_group2.world.building.*;
 import io.github.eng1_group2.world.feature.Feature;
 import io.github.eng1_group2.world.feature.FeatureConfig;
 
@@ -31,6 +26,7 @@ public class World extends InputAdapter {
     private final WorldConfig config;
     private final List<AbstractBuilding> buildings;
     private final List<Feature> features;
+    private final WorldStats stats;
     private final Main main;
     private final Table map;
     private final Stage stage;
@@ -45,6 +41,7 @@ public class World extends InputAdapter {
         this.stage = new Stage(this.main.getViewport());
         this.buildings = new ArrayList<>();
         this.features = new ArrayList<>();
+        this.stats = new WorldStats();
 
         TextureRegionDrawable backgroundTexture = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
 
@@ -89,7 +86,6 @@ public class World extends InputAdapter {
     }
 
     public void resize() {
-
         // gridUnit is the size of each unit on the grid. we make the grid as large as it can be while making each cell square
         gridUnit = Math.round(Math.min((main.getViewport().getWorldWidth()) / config.mapSize().x(), main.getViewport().getWorldHeight() / config.mapSize().y()));
 
@@ -148,6 +144,7 @@ public class World extends InputAdapter {
         buildings.add(building);
         this.stage.addActor(building);
         config.soundConfig().getBuildCompleteSound(main.getAssetManager()).play();
+        this.stats.onBuildingConstructed(incompleteBuilding.getType());
     }
 
     public void addFeature(FeatureConfig featureConfig) {
@@ -170,6 +167,10 @@ public class World extends InputAdapter {
             throw new IllegalArgumentException("gridPos is too large");
         }
         return new Vector2(gridPos.x() * gridUnit, gridPos.y() * gridUnit);
+    }
+
+    public WorldStats getStats() {
+        return stats;
     }
 
     public Main getMain() {
