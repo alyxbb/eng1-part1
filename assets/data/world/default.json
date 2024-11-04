@@ -1,6 +1,7 @@
 {
     "id": "default",
     "name": "Default world",
+    "balance": 1000000,
     "map_size": [
         20,
         20
@@ -22,7 +23,40 @@
     "sound": {
         "build_complete": "audio/interface_sounds/Audio/maximize_006.ogg",
         "build_success": "audio/interface_sounds/Audio/select_005.ogg",
-        "build_error": "audio/interface_sounds/Audio/error_002.ogg"
+        "build_error": "audio/interface_sounds/Audio/error_002.ogg",
+        "music": [
+            "audio/OpenMSX/5432gone_redfarn.ogg",
+            "audio/OpenMSX/be_sharp_bw_redfarn.ogg",
+            "audio/OpenMSX/boogi_marabi_redfarn.ogg",
+            "audio/OpenMSX/busy_schedule.ogg",
+            "audio/OpenMSX/careless_perc_redfarn.ogg",
+            "audio/OpenMSX/chemistry_lab.ogg",
+            "audio/OpenMSX/chuggachugga.ogg",
+            "audio/OpenMSX/city_blues_redfarn.ogg",
+            "audio/OpenMSX/coconut_run2.ogg",
+            "audio/OpenMSX/flying_scotsman.ogg",
+            "audio/OpenMSX/harp_harmony.ogg",
+            "audio/OpenMSX/keep_on_rolling.ogg",
+            "audio/OpenMSX/linns_basket.ogg",
+            "audio/OpenMSX/midnight_snow_run.ogg",
+            "audio/OpenMSX/mighty_giant_run.ogg",
+            "audio/OpenMSX/modern_motion.ogg",
+            "audio/OpenMSX/moo_redfarn.ogg",
+            "audio/OpenMSX/mosey_along_redfarn.ogg",
+            "audio/OpenMSX/no_work_song_redfarn.ogg",
+            "audio/OpenMSX/relax_song.ogg",
+            "audio/OpenMSX/run_for_your_life.ogg",
+            "audio/OpenMSX/say_what_redfarn.ogg",
+            "audio/OpenMSX/slow_neasy_redfarn.ogg",
+            "audio/OpenMSX/the_fast_route.ogg",
+            "audio/OpenMSX/the_hobo_redfarn.ogg",
+            "audio/OpenMSX/train_filled_with_cash.ogg",
+            "audio/OpenMSX/ttsong_iii_imuh3.ogg",
+            "audio/OpenMSX/ttsong_iv_imuh3.ogg",
+            "audio/OpenMSX/tttheme2.ogg",
+            "audio/OpenMSX/ultimate_run.ogg",
+            "audio/OpenMSX/wood_whistles.ogg"
+        ]
     },
     "game_duration": 300,
     "features": [

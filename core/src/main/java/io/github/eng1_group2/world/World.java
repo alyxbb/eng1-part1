@@ -3,6 +3,7 @@ package io.github.eng1_group2.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,9 +32,7 @@ public class World extends InputAdapter {
     private final Table map;
     private final Stage stage;
     private int gridUnit;
-
-    // TODO: move this to worldConfig
-    private int balance = 10000000;
+    private int balance;
 
     public World(Main main, WorldConfig config) {
         this.main = main;
@@ -42,6 +41,7 @@ public class World extends InputAdapter {
         this.buildings = new ArrayList<>();
         this.features = new ArrayList<>();
         this.stats = new WorldStats();
+        this.balance = config.balance();
 
         TextureRegionDrawable backgroundTexture = new TextureRegionDrawable(config.backgroundTexture().getTextureRegion(main.getAssetManager(), new Vec2(16, 16)));
 
@@ -76,6 +76,19 @@ public class World extends InputAdapter {
         // this needs to be at the bottom otherwise features render behind the background. ask alyx for more information
         for (FeatureConfig feature : config.features()) {
             this.addFeature(feature);
+        }
+        List<Music> songs = config.soundConfig().getMusic(main.getAssetManager());
+        for (int i = 0; i < songs.size(); i++) {
+            if (i == 0){
+                songs.get(i).play();
+            }
+            int nextSong = i + 1 == songs.size() ? 0 : i + 1;
+            songs.get(i).setOnCompletionListener(new Music.OnCompletionListener() {
+                @Override
+                public void onCompletion(Music music) {
+                    songs.get(nextSong).play();
+                }
+            });
         }
     }
 

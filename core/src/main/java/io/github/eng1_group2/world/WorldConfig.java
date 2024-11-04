@@ -1,7 +1,9 @@
 package io.github.eng1_group2.world;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.mojang.datafixers.util.Pair;
@@ -24,7 +26,8 @@ public record WorldConfig(
     List<FeatureConfig> features,
     TextureConfig incompleteBuilding,
     float gameDuration,
-    SoundConfig soundConfig
+    SoundConfig soundConfig,
+    int balance
 ) implements RegistryObject, HasDependencies {
     public static final String REGISTRY_NAME = "world";
 
@@ -36,7 +39,8 @@ public record WorldConfig(
         FeatureConfig.CODEC.listOf().fieldOf("features").forGetter(WorldConfig::features),
         TextureConfig.CODEC.fieldOf("incomplete_building").forGetter(WorldConfig::incompleteBuilding),
         Codec.FLOAT.fieldOf("game_duration").forGetter(WorldConfig::gameDuration),
-        SoundConfig.CODEC.fieldOf("sound").forGetter(WorldConfig::soundConfig)
+        SoundConfig.CODEC.fieldOf("sound").forGetter(WorldConfig::soundConfig),
+        Codec.INT.fieldOf("balance").forGetter(WorldConfig::balance)
     ).apply(instance, WorldConfig::new));
 
     @Override
@@ -52,20 +56,25 @@ public record WorldConfig(
     public record SoundConfig(
         String buildError,
         String buildSuccess,
-        String buildComplete
+        String buildComplete,
+        List<String> music
     ) {
         public static final Codec<SoundConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("build_error").forGetter(SoundConfig::buildError),
             Codec.STRING.fieldOf("build_success").forGetter(SoundConfig::buildSuccess),
-            Codec.STRING.fieldOf("build_complete").forGetter(SoundConfig::buildComplete)
+            Codec.STRING.fieldOf("build_complete").forGetter(SoundConfig::buildComplete),
+            Codec.STRING.listOf().fieldOf("music").forGetter(SoundConfig::music)
         ).apply(instance, SoundConfig::new));
 
         public List<Pair<Class<?>, String>> getDependencies() {
-            return List.of(
-                new Pair<>(com.badlogic.gdx.audio.Sound.class, buildError),
-                new Pair<>(com.badlogic.gdx.audio.Sound.class, buildSuccess),
-                new Pair<>(com.badlogic.gdx.audio.Sound.class, buildComplete)
-            );
+            List<Pair<Class<?>,String>> list = new ArrayList<>();
+            list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildError));
+            list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildSuccess));
+            list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildComplete));
+            for (String song : music) {
+                list.add(new Pair<>(com.badlogic.gdx.audio.Music.class, song));
+            }
+            return list;
         }
 
         public Sound getBuildErrorSound(AssetManager assetManager){
@@ -78,6 +87,14 @@ public record WorldConfig(
 
         public Sound getBuildCompleteSound(AssetManager assetManager) {
             return  assetManager.get(buildComplete, Sound.class);
+        }
+
+        public List<Music> getMusic(AssetManager assetManager) {
+            List<Music> list = new ArrayList<>();
+            for (String song: music){
+                list.add(assetManager.get(song, Music.class));
+            }
+            return list;
         }
     }
 }
