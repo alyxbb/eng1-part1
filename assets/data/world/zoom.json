@@ -1,0 +1,74 @@
+{
+    "id": "zoom",
+    "name": "Zoomie world",
+    "map_size": [
+        20,
+        20
+    ],
+    "background_texture": {
+        "path": "textures/MiniWorldSprites/Ground/TexturedGrass.png",
+        "origin": [
+            16,
+            0
+        ]
+    },
+    "incomplete_building": {
+        "path": "textures/MiniWorldSprites/Buildings/Wood/Barracks.png",
+        "origin": [
+            16,
+            32
+        ]
+    },
+    "sound": {
+        "build_complete": "audio/interface_sounds/Audio/maximize_006.ogg",
+        "build_success": "audio/interface_sounds/Audio/select_005.ogg",
+        "build_error": "audio/interface_sounds/Audio/error_002.ogg"
+    },
+    "game_duration": 30,
+    "features": [
+        {
+            "type": "road",
+            "position": [
+                14,
+                0
+            ],
+            "size": [
+                1,
+                20
+            ]
+        },
+        {
+            "type": "road",
+            "position": [
+                0,
+                4
+            ],
+            "size": [
+                14,
+                1
+            ]
+        },
+        {
+            "type": "lake",
+            "position": [
+                5,
+                8
+            ],
+            "size": [
+                8,
+                5
+            ]
+        },
+        {
+            "type": "lake",
+            "position": [
+                2,
+                15
+            ],
+            "size": [
+                3,
+                3
+            ]
+        }
+    ]
+}

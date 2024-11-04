@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Timer {
+    private final World world;
     private final List<IncompleteBuilding> incompleteBuildings;
     private float timeRemaining;
     private boolean paused;
 
     public Timer(World world) {
+        this.world = world;
         timeRemaining = world.getConfig().gameDuration();
         incompleteBuildings = new ArrayList<>();
         paused = false;
@@ -23,8 +25,17 @@ public class Timer {
         if (paused) {
             return;
         }
+
         float delta = Gdx.graphics.getDeltaTime();
-        timeRemaining -= delta;
+
+        if (timeRemaining > 0) {
+            timeRemaining -= delta;
+            if (timeRemaining < 0) {
+                timeRemaining = 0;
+                // TODO: UI
+                System.out.print(world.getStats().formatStats());
+            }
+        }
 
         // copy buildings array, so we can remove items from it if they have finished building.
         for (IncompleteBuilding building : new ArrayList<>(incompleteBuildings)) {
