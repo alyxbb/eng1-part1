@@ -124,7 +124,7 @@ public class World extends InputAdapter {
         for (Feature feature : features) {
             if (building.overlaps(feature)) {
                 if (!buildingType.canPlaceOn().contains(feature.getType())) {
-                    throw new BuildException("building would intersect with a "+feature.getType().name());
+                    throw new BuildException("building would intersect with a " + feature.getType().name());
                 }
             }
         }
