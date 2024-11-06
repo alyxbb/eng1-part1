@@ -133,6 +133,7 @@ public class World extends InputAdapter {
         main.getTimer().registerBuilding(building);
         this.stage.addActor(building);
         balance -= buildingType.cost();
+        this.stats.onBuildingConstructing(buildingType);
     }
 
     public void completeBuilding(IncompleteBuilding incompleteBuilding) {
