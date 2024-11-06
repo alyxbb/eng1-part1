@@ -8,9 +8,14 @@ import java.util.*;
 
 public class WorldStats {
     private final Map<BuildingCategory, Integer> buildingsConstructedByCategory;
+    private int balanceSpent = 0;
 
     public WorldStats() {
         buildingsConstructedByCategory = new HashMap<>();
+    }
+
+    public void onBuildingConstructing(BuildingType building) {
+        this.balanceSpent += building.cost();
     }
 
     public void onBuildingConstructed(BuildingType building) {
@@ -26,8 +31,13 @@ public class WorldStats {
         for (var entry : buildingsConstructedByCategory.entrySet()) {
             stats.add(new Pair<>(entry.getKey().name() + " constructed", entry.getValue()));
         }
+        stats.add(new Pair<>("money spent", this.balanceSpent));
         stats.sort(Comparator.comparing(Pair::getFirst));
         return stats;
+    }
+
+    public int getBalanceSpent() {
+        return balanceSpent;
     }
 
     public String formatStats() {
