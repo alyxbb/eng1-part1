@@ -1,1 +1,3 @@
 MiniWorldSprites by MerchantShade https://merchant-shade.itch.io/16x16-mini-world-sprites CCO
+InterfaceSounds by Kenny https://kenney.nl/assets/interface-sounds CC0
+OpenMsx by OpenTTD https://github.com/OpenTTD/OpenMSX/tree/master GPL2.0
