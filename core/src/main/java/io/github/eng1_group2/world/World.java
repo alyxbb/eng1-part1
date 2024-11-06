@@ -79,7 +79,7 @@ public class World extends InputAdapter {
         }
         List<Music> songs = config.soundConfig().getMusic(main.getAssetManager());
         for (int i = 0; i < songs.size(); i++) {
-            if (i == 0){
+            if (i == 0) {
                 songs.get(i).play();
             }
             int nextSong = i + 1 == songs.size() ? 0 : i + 1;

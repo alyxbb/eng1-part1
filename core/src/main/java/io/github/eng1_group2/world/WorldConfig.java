@@ -1,7 +1,5 @@
 package io.github.eng1_group2.world;
 
-import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -67,7 +65,7 @@ public record WorldConfig(
         ).apply(instance, SoundConfig::new));
 
         public List<Pair<Class<?>, String>> getDependencies() {
-            List<Pair<Class<?>,String>> list = new ArrayList<>();
+            List<Pair<Class<?>, String>> list = new ArrayList<>();
             list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildError));
             list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildSuccess));
             list.add(new Pair<>(com.badlogic.gdx.audio.Sound.class, buildComplete));
@@ -77,7 +75,7 @@ public record WorldConfig(
             return list;
         }
 
-        public Sound getBuildErrorSound(AssetManager assetManager){
+        public Sound getBuildErrorSound(AssetManager assetManager) {
             return assetManager.get(buildError, Sound.class);
         }
 
@@ -86,12 +84,12 @@ public record WorldConfig(
         }
 
         public Sound getBuildCompleteSound(AssetManager assetManager) {
-            return  assetManager.get(buildComplete, Sound.class);
+            return assetManager.get(buildComplete, Sound.class);
         }
 
         public List<Music> getMusic(AssetManager assetManager) {
             List<Music> list = new ArrayList<>();
-            for (String song: music){
+            for (String song : music) {
                 list.add(assetManager.get(song, Music.class));
             }
             return list;
