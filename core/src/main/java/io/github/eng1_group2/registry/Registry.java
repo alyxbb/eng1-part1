@@ -13,6 +13,7 @@ import java.util.Map;
  * <p>
  * Registries can be frozen by calling {@link Registry#freeze()}, which prevents modification once they have been initialised.
  *
+ * @see Registries
  * @param <T> The type of object stored in this registry. Must implement {@link RegistryObject}
  */
 public class Registry<T extends RegistryObject> implements Iterable<T> {

@@ -32,7 +32,7 @@ public class CodecAssetLoader {
 
     public void prepare(AssetManager manager) {
         if (this.loaded) {
-            throw new IllegalStateException("AssetScanner has already been prepared");
+            throw new IllegalStateException("CodecAssetLoader has already been prepared");
         }
         manager.setLoader(String.class, new StringLoader(manager.getFileHandleResolver()));
         String assetList = manager.getFileHandleResolver().resolve("assets.txt").readString();
