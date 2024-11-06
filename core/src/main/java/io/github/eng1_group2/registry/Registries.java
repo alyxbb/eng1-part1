@@ -14,6 +14,34 @@ import io.github.eng1_group2.world.feature.FeatureType;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Registries are used to store all game content that needs to be referenced by a global ID, and the {@link Registries}
+ * class encapsulates them all for easy access. This is used for things like {@link BuildingType} and {@link FeatureType}.
+ *
+ * <h1>Types of registries</h1>
+ * <p>
+ * There are two different types of registry, static and dynamic. Static registries are instances of {@link Registry},
+ * while dynamic registries use {@link Registry.Dynamic}.
+ * <h2>Static registries</h2>
+ * <p>
+ * Static registries are used for things that need to be directly referenced in source code, such as
+ * {@link BuildingCategory}, as these are required to be referenced by code for things like score calculation.
+ * <h2>Dynamic registries</h2>
+ * <p>
+ * Dynamic registries are used for objects that are designed to be uniform and where individual items do not need to be
+ * referenced in code. These are used for things like {@link BuildingType}, where the code only ever needs to reference
+ * the full list of items.
+ * <p>
+ * Dynamic registries are loaded from JSON files in the assets using the built-in libGDX {@link AssetManager}, and then
+ * loaded into Java objects using {@link Codec} and {@link RegistryOps}. The ordering of calls to
+ * {@link Registry.Dynamic#loadFrom(CodecAssetLoader)} in {@link Registries.Dynamic#loadAllFrom(CodecAssetLoader)} is
+ * important if there are dependencies between registries, for example {@link WorldConfig} references
+ * {@link FeatureType}, so must be loaded after.
+ *
+ * @see Registries.Dynamic
+ * @see Registry
+ * @see Registry.Dynamic
+ */
 public class Registries {
     private final Map<String, Registry<?>> registries;
     private final Registry<BuildingCategory> buildingCategories;

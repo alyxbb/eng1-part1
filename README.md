@@ -11,3 +11,13 @@ Once the project has opened, you will need to wait until IntelliJ finishes impor
 After the project has imported, go to File > Settings, then change the following settings to "IntelliJ IDEA":
 
 ![](docs/build-and-run.png)
+
+You should then be able to run the game by selecting "Run game" in the top-right, and then pressing play.
+
+### Useful things
+
+If assets (especially registry objects) are failing to load, make sure you have run the `generateAssetList` Gradle task (this should automatically be run when running the game in IntelliJ)
+
+To build a release of the game, run the `clean ``build` task in Gradle (eg. `./gradlew clean build` on the command line), and the output JAR file will be in `lwjgl3/build/libs/`.
+
+You can also automatically generate a list of libraries and their licenses using the `downloadLicenses` Gradle task, which will create a report in `lwjgl3/build/reports/license`.

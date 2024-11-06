@@ -12,6 +12,10 @@ buildscript {
   }
 }
 
+plugins {
+  id "com.github.hierynomus.license-report" version "0.16.1" apply false
+}
+
 allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
@@ -27,6 +31,8 @@ allprojects {
 
 configure(subprojects) {
   apply plugin: 'java-library'
+  apply plugin: 'com.github.hierynomus.license-report'
+
   sourceCompatibility = 17
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
@@ -52,10 +58,21 @@ configure(subprojects) {
   compileJava {
     options.incremental = true
   }
+
+  downloadLicenses {
+    includeProjectDependencies = true
+    dependencyConfiguration = 'runtimeClasspath'
+    excludeDependencies = [
+      "eng1-part1:core:$projectVersion"
+    ]
+    licenses = [
+      'com.mojang:datafixerupper:8.0.16': license('MIT License', 'https://github.com/Mojang/DataFixerUpper/blob/master/LICENSE')
+    ]
+  }
 }
 
 subprojects {
-  version = '$projectVersion'
+  version = "$projectVersion"
   ext.appName = 'UniSim'
   repositories {
     mavenCentral()

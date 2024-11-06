@@ -6,6 +6,14 @@ import com.mojang.serialization.DynamicOps;
 
 import java.util.stream.Stream;
 
+/**
+ * An implementation of {@link DynamicOps} that allows {@link RegistryEntryCodec} to accesses an {@link Registries}
+ * instance. All methods from {@link DynamicOps} are just delegated to the {@link Wrapped} class, and it provides two
+ * additional methods used to access {@link Registries}.
+ *
+ * @param <T> The input type of the {@link Wrapped} {@link DynamicOps}
+ * @param <Wrapped> The wrapped {@link DynamicOps} that will be used for the underlying (de)serialisation.
+ */
 public class RegistryOps<T, Wrapped extends DynamicOps<T>> implements DynamicOps<T> {
     private final Wrapped wrapped;
     private final Registries registries;
