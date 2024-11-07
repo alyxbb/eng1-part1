@@ -1,0 +1,74 @@
+@startuml
+
+skin rose
+
+title Simple Object Diagram
+
+object World
+object IncompleteBuilding
+object Building1
+object Building2
+object Feature1
+object Feature2
+object Feature3
+object BuildingType2
+object BuildingType1
+object FeatureType1
+object FeatureType2
+
+IncompleteBuilding *-up- World
+Building1 *-up- World
+Building2 *-up- World
+Feature1 *-up- World
+Feature2 *-up- World
+Feature3 *-up- World
+
+BuildingType1 *-up- IncompleteBuilding
+BuildingType1 *-up- Building1
+BuildingType2 *-up- Building2
+FeatureType1 *-up- Feature1
+FeatureType1 *-up- Feature2
+FeatureType2 *-up- Feature3
+
+World : balance = 500,000
+
+IncompleteBuilding : origin = [7,9]
+IncompleteBuilding : timeRemaining = 00:12
+
+Building1 : origin = [2,3]
+Building2 : origin = [5,6]
+
+Feature1 : origin = [2,3]
+Feature1 : size = [5,6]
+
+Feature2 : origin = [7,6]
+Feature2 : size = [3,3]
+
+Feature3 : origin = [0,3]
+Feature3 : size = [10,1]
+
+BuildingType1 : id = house
+BuildingType1 : name = House
+BuildingType1 : texture
+BuildingType1 : size = [1,1]
+BuildingType1 : cost = 20,000
+BuildingType1 : buildTime = 00:30
+
+BuildingType2 : id = cafe
+BuildingType2 : name = Cafe
+BuildingType2 : texture
+BuildingType2 : size = [2,2]
+BuildingType2 : cost = 200,000
+BuildingType2 : buildTime = 00:50
+
+FeatureType1 : id = lake
+FeatureType1 : name = Lake
+FeatureType1 : texture
+
+FeatureType2 : id = road
+FeatureType2 : name = Road
+FeatureType2 : texture
+
+
+
+@enduml

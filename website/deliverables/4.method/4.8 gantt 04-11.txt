@@ -1,0 +1,11 @@
+@startgantt
+Project starts 2024-11-04
+[Implementation] requires 3 days
+[Software Play-Testing] requires 1 day
+[Software Play-Testing] starts D+3
+[Architecture Writeup] requires 3 days
+[Reviews of Writeups] requires 3 days
+[Final Report Reviews] requires 1 days
+[Final Report Reviews] starts D+3
+[Assessment Due Date] starts D+7
+@endgantt

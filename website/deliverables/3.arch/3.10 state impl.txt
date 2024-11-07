@@ -1,0 +1,89 @@
+@startuml
+
+skin rose
+hide empty description
+
+title State Model (Implemented)
+
+state Idle {
+  UpdateTimer: update timer and \nbuildings in construction \n(if not paused)
+  UpdateWorld: draw world, \nupdate income \nand balance
+  UpdateUI: show updated \nbalance and timer
+  
+  [*] --> UpdateTimer: every update call
+  UpdateTimer --> UpdateWorld
+  UpdateWorld --> UpdateUI
+  UpdateUI --> [*]
+}
+
+state AddBuilding {
+  State BuildingCheckFunds <<choice>>
+  BuildingInsufficientFunds: show warnings
+  State BuildingInsufficientFundsEnd <<end>>
+  
+  State BuildingCheckLocation <<choice>>
+  BuildingInvalidLocation: show warnings
+  State BuildingInvalidLocationEnd <<end>>
+  
+  PlaceBuilding: add incomplete \nbuilding to world, \ngive feedback \nand update stats
+  State PlaceBuildingFork <<fork>>
+  BuildingComplete: give feedback and \nupdate stats
+  
+  [*] --> BuildingCheckFunds: user requests to add a building
+  BuildingCheckFunds -> BuildingInsufficientFunds
+  BuildingInsufficientFunds -> BuildingInsufficientFundsEnd
+  
+  BuildingCheckFunds --> BuildingCheckLocation: sufficient funds
+  BuildingCheckLocation -> BuildingInvalidLocation
+  BuildingInvalidLocation -> BuildingInvalidLocationEnd
+  
+  BuildingCheckLocation --> PlaceBuilding: valid location
+  PlaceBuilding --> PlaceBuildingFork 
+  PlaceBuildingFork -> [*]
+  PlaceBuildingFork --> BuildingComplete: construction timer runs out
+}
+
+state AddFeature {
+  State FeatureCheckFunds <<choice>>
+  FeatureInsufficientFunds: show warnings
+  State FeatureInsufficientFundsEnd <<end>>
+  
+  State FeatureCheckLocation <<choice>>
+  FeatureInvalidLocation: show warnings
+  State FeatureInvalidLocationEnd <<end>>
+  
+  PlaceFeature: add feature to world, \ngive feedback \nand update stats
+  
+  [*] --> FeatureCheckFunds: user requests to add a feature
+  FeatureCheckFunds -> FeatureInsufficientFunds
+  FeatureInsufficientFunds -> FeatureInsufficientFundsEnd
+  
+  FeatureCheckFunds --> FeatureCheckLocation: sufficient funds
+  FeatureCheckLocation -> FeatureInvalidLocation
+  FeatureInvalidLocation -> FeatureInvalidLocationEnd
+  
+  FeatureCheckLocation --> PlaceFeature: valid location
+  PlaceFeature --> [*]
+}
+
+state PauseTime: pause/resume timer
+state ResizeWindow: resize UI and \nworld elements
+
+[*] --> StartGame: user requests to start the game
+StartGame: initialise world, UI, timer, etc
+StartGame --> Idle: the game begins
+
+Idle -l-> AddBuilding: user requests to add a building
+AddBuilding -> Idle
+Idle -> AddFeature: user requests to add a feature 
+AddFeature -> Idle
+Idle -u-> PauseTime: user requests to pause/resume in-game time 
+PauseTime -> Idle
+Idle -u-> ResizeWindow: user resizes the game window
+ResizeWindow -> Idle
+
+Idle --> GameOver: 5 minutes is over 
+GameOver: show stats
+GameOver --> [*]: user quits the game
+
+@enduml
