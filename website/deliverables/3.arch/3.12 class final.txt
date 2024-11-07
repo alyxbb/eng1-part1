@@ -1,0 +1,127 @@
+@startuml
+
+skin rose
+
+title Relationships - Class Diagram
+
+class Main {
+  +Int difficulty
+  +Int money
+  +Int score
+  +void PauseGame()
+}
+class Menu {
+}
+class PauseMenu{
+  +void render()
+}
+
+class World {
+  +AbstractBuilding[] buildings
+  +Feature[] features
+  +Int balance
+  +Int satisfaction
+  +static final Vec2 MAPSIZE
+ 
+  +void render()
+  +void addBuilding(BuildingType type, Vec2 location)
+  +void completeBuilding(IncompleteBuilding building)
+  +void addFeature(FeatureType type, Vec2 position, Vec2 size)
+}
+class Timer {
+  +Float timeRemaining
+  +Boolean paused
+  +IncompleteBuilding[] buildings
+  +void update()
+  +void registerBuilding(IncompleteBuilding building)
+  +void unregisterBuilding(IncompleteBuilding building)
+  +void registerEvent(ClockEvent event)
+  +void unregisterEvent(ClockEvent event)
+}
+abstract class AbstractBuilding{
+  +Vec2 origin
+  +BuildingType type
+  +void draw()
+  +Boolean overlaps(HasBoundingBox)
+  +Event triggerBuildingEvent()
+}
+
+class IncompleteBuilding{
+  +Int buildTimeRemaining
+  +void update()
+
+}
+
+class BuildingType{
+  +String id
+  +String name
+  +TextureC texture
+  +Int[] size
+  +Int cost
+  +Float buildTime
+  +BuildingCategory category
+}
+
+class UI {
+  +void render()
+  +void setWarningMessage()
+}
+
+abstract class Event {
+  +String name
+  +String description
+}
+class BuildingEvent {
+  +Building Building
+}
+
+class Feature {
+  +Vec2 size
+  +Vec2 origin
+  +FeatureType type
+  +void draw()
+}
+
+class FeatureType{
+  +String id
+  +String name
+  +TextureConfig texture
+}
+
+class BuildingCategory {
+  +String id
+  +String name
+}
+class ClockEvent{
+  EventAction[] actions
+}
+
+class EventAction{
+  +String text
+  +Int balanceChange
+  +Int satisfactionChange
+}
+
+Event <|-down- BuildingEvent: Inheritance
+Event <|-down- ClockEvent: Inheritance
+AbstractBuilding <|-down- Building: Inheritance
+AbstractBuilding <|-down- IncompleteBuilding: Inheritance
+World "1" *-up- "1" Main: Composition
+Timer "1" *-up- "1" Main
+AbstractBuilding "Many" o-up- "1" World
+Feature "Many" o-up- "1" World
+BuildingType "1" *-up- "Many" AbstractBuilding
+FeatureType "1" *-up- "1" Feature
+UI "1" *-up- "1" Main
+Event "Many" *-up- "1" Main
+Menu *-up- Main
+PauseMenu *-up- Main
+BuildingType "1" *-down- "1" BuildingCategory
+
+Building -- BuildingEvent
+Timer -- ClockEvent
+IncompleteBuilding -- Timer
+
+ClockEvent "M" -- "1" EventAction
+
+@enduml
