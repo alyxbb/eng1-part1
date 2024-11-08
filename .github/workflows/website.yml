@@ -2,7 +2,7 @@ name: Deploy static content to Pages
 
 on:
   push:
-    branches: ["yawshi-website"]
+    branches: ["main"]
     paths: ["website/**/*"]
 
   workflow_dispatch:
