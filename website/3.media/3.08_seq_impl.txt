@@ -1,0 +1,108 @@
+@startuml
+
+skin rose
+
+title Sequence Diagram (Implemented)
+
+actor user
+participant Menu
+participant MainGame
+participant UI
+participant World
+participant WorldStats
+participant Timer
+participant Building
+participant Feature
+
+==init==
+
+user --> Menu: "start game" 
+Menu -> MainGame: start game 
+MainGame -> World: initialise world 
+MainGame -> Timer: start 5 minute countdown
+
+==render==
+
+MainGame --> Timer: update call
+alt timer not paused
+  Timer -> Timer: update time
+  Timer --> Building: update incomplete buildings
+  Building -> Building: update remaining construction time
+end
+
+MainGame --> World: update call
+World -> user: draw world 
+
+MainGame --> UI: update call
+UI --> World: request balance
+World -> UI: return balance
+UI --> Timer: request remaining time
+Timer -> UI: return remaining time
+UI -> user: show
+
+==resize==
+
+user --> MainGame: resize game window
+MainGame --> UI: request resize
+UI -> UI: resize
+MainGame --> World: request resize
+World -> World: resize
+
+==pause timer==
+user --> MainGame: request pause/resume in-game timer 
+MainGame -> Timer: pause/resume
+
+==add building==
+
+user --> MainGame: add building
+MainGame --> World: add building 
+alt insufficient funds
+  World --> UI: insufficient funds
+  UI -> user: show warning
+else invalid location
+  World --> UI: invalid location
+  UI -> user: show warning
+else success
+  World --> Building: initialise incomplete building 
+  Building -> World: incomplete building added to world 
+  Building -> Timer: register incomplete building 
+  World -> World: subtract funds
+  World -> WorldStats: update
+  World --> UI: feedback
+  UI -> user: show feedback
+end
+
+==building complete==
+
+Building --> World: building complete
+World -> World: remove incomplete building
+Building -> Timer: unregister incomplete building 
+World --> Building: initialise complete building 
+Building -> World: complete building added to world 
+World -> WorldStats: update
+World --> UI: feedback
+UI -> user: show feedback
+
+==add feature==
+
+user --> MainGame: add feature
+MainGame -> World: add feature
+alt invalid location
+  World --> UI: invalid location
+  UI -> user: show warning
+else success
+  World --> Feature: initialise feature 
+  Feature -> World: feature added to world 
+  World --> UI: feedback
+  UI -> user: show feedback
+end 
+
+==gameover==
+
+Timer --> MainGame: 5 minute countdown is over
+MainGame -> user: gameover
+MainGame --> WorldStats: request stats
+WorldStats -> MainGame: return stats
+MainGame -> user: show stats
+
+@enduml

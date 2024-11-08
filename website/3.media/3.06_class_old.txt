@@ -1,0 +1,72 @@
+@startuml
+
+skin rose
+
+title Relationships - Class Diagram
+
+class Main
+class MainGame {
+  +Int difficulty
+  +Int money
+  +Int score
+  +void PauseGame()
+}
+class Menu {
+  +void SetDifficulty()
+  +void NewGame()
+}
+class Tutorial
+
+class World {
+  +Building[] buildings
+  +getters/setters
+  +void render(screen)
+}
+class Clock {
+  +void SetClock()
+  +int GetClock()
+  +Event triggerClockEvent()
+  +null gameEnd()
+}
+class Building{
+  +getters/setters
+  +Event triggerBuildingEvent()
+}
+
+class BuildingType{
+  +String name
+  +Image texture
+  +Int[] size
+}
+
+class UI
+
+abstract class Event {
+  +String name
+  +String description
+}
+class BuildingEvent {
+  +Building Building
+}
+
+Event <|-down- BuildingEvent: Inheritance
+Event <|-down- ClockEvent: Inheritance
+World "1" *-up- "1" MainGame: Composition
+Clock "1" *-up- "1" World
+Building "Many" o-up- "1" World
+Feature "Many" o-up- "1" World
+BuildingType "1" *-up- "1" Building
+FeatureType "1" *-up- "1" Feature
+UI "1" *-up- "1" MainGame
+Event "Many" *-up- "1" MainGame
+MainGame *-up- Main
+Menu *-up- Main
+Tutorial *-up- Menu
+
+Building -- BuildingEvent
+Clock -- ClockEvent
+
+@enduml
+
+
+

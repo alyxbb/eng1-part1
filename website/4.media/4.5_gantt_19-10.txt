@@ -1,0 +1,21 @@
+@startgantt
+Project starts 2024-10-19
+[Architecture Planning] requires 2 days
+[Implementation] requires 14 days
+[Implementation] starts D+2
+[Software Play-Testing] requires 5 days
+[Software Play-Testing] starts D+16
+[Architecture Writeup] requires 10 days
+[Architecture Writeup] starts D+2
+[Planning Writeup] requires 7 days
+[Planning Writeup] starts D+2
+[Website Finalisation] requires 4 days
+[Website Finalisation] starts D+2
+[Licenses Writeup] requires 3 days
+[Licenses Writeup] starts D+6
+[Reviews of Writeups] requires 7 days
+[Reviews of Writeups] starts D+9
+[Final Report Reviews] requires 5 days
+[Final Report Reviews] starts D+16
+[Assessment Due Date] starts D+23
+@endgantt
