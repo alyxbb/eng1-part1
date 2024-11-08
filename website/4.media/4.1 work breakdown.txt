@@ -1,0 +1,30 @@
+@startwbs
+* Assessment 1
+** Website
+** Requirements
+*** Introduction
+*** Customer Meeting
+*** Statement of User and System Requirements
+**** User Requirements Table
+**** Functional Requirements Table
+**** Non-Functional Requirements Table
+** Architecture
+*** Initial Structural Planning
+*** Structural Diagrams (UML)
+*** Behavioural Diagrams (UML)
+** Method Selection and Planning
+*** Statement on Software Engineering Methods
+*** Statement on Team Organisation
+*** Final Plan Documents
+**** Gantt Charts
+**** Weekly Snapshots
+** Risk Assessment and Mitigation
+*** Statement of Risk Management Process
+*** Presentation of Risks
+**** Risk Register
+**** Weekly Review of Risk Register
+** Implementation
+*** Documented Software Code (Excecutable JAR)
+*** Statement on Libraries and Licenses
+**** Statement on Features Not Fully Implemented
+@endwbs
